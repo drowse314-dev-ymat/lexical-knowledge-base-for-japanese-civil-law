@@ -1,0 +1,4 @@
+Attest==0.5.3
+Pygments==1.6
+progressbar==2.3
+requests==1.2.3
