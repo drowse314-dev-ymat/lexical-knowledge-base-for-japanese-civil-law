@@ -8,7 +8,7 @@ from lkbutils import nodeprovider
 from lkbutils.nodeprovider import kakasicall
 
 
-nodeprovider_unit = Tests()
+nameprovider_unit = Tests()
 kakasi_unit = Tests()
 
 
@@ -22,7 +22,7 @@ def empty_nameprovider(romanize=False):
 
 # Adding names.
 
-@nodeprovider_unit.test
+@nameprovider_unit.test
 def add_simple_names():
     """NameProvider.add."""
     with empty_nameprovider() as provider:
@@ -49,7 +49,7 @@ def add_simple_names():
         assert u'yumi_is_waiting_at_the_door' in namespace
         assert namespace.yumi_is_waiting_at_the_door == u'Yumi is waiting at the door'
 
-@nodeprovider_unit.test
+@nameprovider_unit.test
 def add_invalid_names():
     """NameProvider.add refuses invalid names."""
     with empty_nameprovider() as provider:
@@ -60,7 +60,7 @@ def add_invalid_names():
         with raises(nodeprovider.InvalidName):
             provider.add(u"I'm fine")
 
-@nodeprovider_unit.test
+@nameprovider_unit.test
 def handle_kana_name_addition():
     """
     NameProvider with romanize=True accepts kanji/kana names.
