@@ -12,12 +12,22 @@ from lkbutils.nodeprovider import nodemodel
 nameprovider_unit = Tests()
 kakasi_unit = Tests()
 nodemodel_unit = Tests()
+nodeprovider_unit = Tests()
 
 
 @contextmanager
 def empty_nameprovider(romanize=False):
     try:
         yield nodeprovider.NameProvider(romanize=romanize)
+    finally:
+        pass
+
+@contextmanager
+def empty_rdflib_nodeprovider(romanize=True):
+    try:
+        yield nodeprovider.RDFLibNodeProvider(
+            romanize=romanize,
+        )
     finally:
         pass
 
@@ -150,3 +160,39 @@ def create_label():
         list(g.triples((None, None, None)))[0] ==
             node, rdflib.RDFS.label, rdflib.Literal(u'label')
     )
+
+
+# Adding nodes.
+
+@nodeprovider_unit.test
+def nodeprovider_on_toplevel():
+    """NodeProvider subclasses are accessible on pkg's toplevel ns."""
+    from lkbutils import RDFLibNodeProvider
+
+@nodeprovider_unit.test
+def add_nodes():
+    """(.*)NodeProvider.add."""
+    import rdflib
+
+    with empty_rdflib_nodeprovider() as provider:
+
+        ret_john = provider.add(u'John')
+        assert isinstance(ret_john, provider.classes['bnode'])
+        assert provider.ns.john == ret_john
+        assert u'john' in provider.ns
+        assert (
+            (provider.ns.john, rdflib.RDFS.label, rdflib.Literal(u'john'))
+            in list(provider.graph.triples((None, None, None)))
+        )
+
+        with raises(nodeprovider.InvalidName):
+            provider.add(u'3way')
+
+        ret_soul =  provider.add(u'魂')
+        assert isinstance(ret_soul, provider.classes['bnode'])
+        assert provider.ns.tamashii == ret_soul
+        assert u'tamashii' in provider.ns
+        assert (
+            (provider.ns.tamashii, rdflib.RDFS.label, rdflib.Literal(u'tamashii'))
+            in list(provider.graph.triples((None, None, None)))
+        )

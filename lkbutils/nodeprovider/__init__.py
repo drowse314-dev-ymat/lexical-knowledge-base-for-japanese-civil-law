@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 import re
-from . import kakasicall
+from . import kakasicall, nodemodel
 
 
 class NameRegistrationError(ValueError):
@@ -80,6 +80,85 @@ class NameProvider(object):
 
 def try_romanize(name):
     return kakasicall.romanize(name)
+
+
+class NodeProvider(object):
+    """
+    Manages unique nodes, refs. to labels.
+    """
+
+    def __init__(self, romanize=False):
+        """
+        Manages unique nodes, refs. to labels.
+
+        Options:
+            * romanize: 'romanize' option for internal NameProvider.
+        """
+        self._nameprovider = NameProvider(romanize=romanize)
+        self._nodestore = {}
+        self._nodestore_attr_proxy = DictAccessor(self._nodestore)
+        self._graph = self.create_graph()
+
+    @property
+    def ns(self):
+        """Namespace for registered nodes."""
+        return self._nodestore_attr_proxy
+
+    @property
+    def graph(self):
+        """Entire nodes graph."""
+        return self._graph
+
+    def create_graph(self):
+        """Create an empty node graph."""
+        raise NotImplementedError('create_graph must be implemented in subclasses')
+
+    def add(self, name):
+        """
+        Register a node without conflicts.
+        """
+        valid_name = self._add_to_namestore(name)
+        node = self.create_bnode()
+        registered_node = self._add_to_store(valid_name, node)
+        return registered_node
+
+    def _add_to_namestore(self, name):
+        return self._nameprovider.add(name)
+
+    def _add_to_store(self, valid_name, node):
+        self._add_node_to_store(valid_name, node)
+        self.label(self.graph, node, valid_name)
+        return node
+
+    def _add_node_to_store(self, name, node):
+        self._nodestore[name] = node
+
+    def label(self, graph, node, valid_name):
+        """
+        Create label link from node to literal label node..
+        """
+        raise NotImplementedError('label must be implemented in subclasses')
+
+    def create_bnode(self):
+        """
+        Create blank node, with the reference to label with given name.
+        """
+        raise NotImplementedError('create_bnode must be implemented in subclasses')
+
+
+class RDFLibNodeProvider(NodeProvider):
+    """NodeProvider subclass using rdflib models."""
+
+    classes = nodemodel.rdflib_classes()
+
+    def create_graph(self):
+        return nodemodel.create_rdflib_graph()
+
+    def create_bnode(self):
+        return nodemodel.create_rdflib_node()
+
+    def label(self, graph, node, label_text):
+        nodemodel.link_rdflib_label(graph, node, label_text)
 
 
 class DictAccessor(object):

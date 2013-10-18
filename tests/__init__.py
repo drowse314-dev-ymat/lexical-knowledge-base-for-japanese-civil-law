@@ -3,7 +3,7 @@
 from attest import Tests
 from .nodeprovider import (
     nameprovider_unit, kakasi_unit,
-    nodemodel_unit,
+    nodemodel_unit, nodeprovider_unit
 )
 
 
@@ -12,5 +12,6 @@ tests = Tests(
         nameprovider_unit,
         kakasi_unit,
         nodemodel_unit,
+        nodeprovider_unit,
     ]
 )
