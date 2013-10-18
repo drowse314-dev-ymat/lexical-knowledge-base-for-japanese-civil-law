@@ -61,6 +61,11 @@ def add_simple_names():
         assert u'yumi_is_waiting_at_the_door' in namespace
         assert namespace.yumi_is_waiting_at_the_door == u'Yumi is waiting at the door'
 
+        assert provider.get_ns_identifier(u'John') == u'john'
+        assert provider.get_ns_identifier(u'Yumi is waiting at the door') == u'yumi_is_waiting_at_the_door'
+        with raises(nodeprovider.NameNotRegistered):
+            provider.get_ns_identifier(u'poupou')
+
 @nameprovider_unit.test
 def add_invalid_names():
     """NameProvider.add refuses invalid names."""
@@ -92,6 +97,11 @@ def handle_kana_name_addition():
         assert namespace.tamashii == u'魂'
         assert namespace.teitouken == u'抵当権'
         assert namespace.hojokaishinoshinpan == u'補助開始の審判'
+
+        assert provider.get_ns_identifier(u'魂') == u'tamashii'
+        assert provider.get_ns_identifier(u'補助開始の審判') == u'hojokaishinoshinpan'
+        with raises(nodeprovider.NameNotRegistered):
+            provider.get_ns_identifier(u'hitanposaiken')
 
 
 # simple kakasi caller.
@@ -184,6 +194,7 @@ def add_nodes():
             (provider.ns.john, rdflib.RDFS.label, rdflib.Literal(u'john'))
             in list(provider.graph.triples((None, None, None)))
         )
+        assert provider.get(u'John') == provider.ns.john
 
         with raises(nodeprovider.InvalidName):
             provider.add(u'3way')
@@ -196,3 +207,7 @@ def add_nodes():
             (provider.ns.tamashii, rdflib.RDFS.label, rdflib.Literal(u'tamashii'))
             in list(provider.graph.triples((None, None, None)))
         )
+        assert provider.get(u'魂') == provider.ns.tamashii
+
+        with raises(nodeprovider.NameNotRegistered):
+            provider.get(u'詐害行為取消権')

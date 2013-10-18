@@ -13,6 +13,9 @@ class InvalidName(NameRegistrationError):
 class NameConflict(NameRegistrationError):
     pass
 
+class NameNotRegistered(KeyError):
+    pass
+
 
 re_formal_name = re.compile(u'^[^\W\d]\w+$')
 
@@ -76,6 +79,16 @@ class NameProvider(object):
         if name in namestore:
             raise NameConflict(u'name already exists: "{}"'.format(name))
         namestore[name] = orig_name
+
+    def get_ns_identifier(self, name):
+        """
+        Get stored identifier in NodeProvider.ns from source text.
+        """
+        namestore = self._namestore
+        for identifier in namestore:
+            if namestore[identifier] == name:
+                return identifier
+        raise NameNotRegistered(u'"{}" not found in namespace'.format(name))
 
 
 def try_romanize(name):
@@ -144,6 +157,11 @@ class NodeProvider(object):
         Create blank node, with the reference to label with given name.
         """
         raise NotImplementedError('create_bnode must be implemented in subclasses')
+
+    def get(self, name):
+        """Get node stored in NodeProvider.ns from label."""
+        identifier = self._nameprovider.get_ns_identifier(name)
+        return getattr(self.ns, identifier)
 
 
 class RDFLibNodeProvider(NodeProvider):
