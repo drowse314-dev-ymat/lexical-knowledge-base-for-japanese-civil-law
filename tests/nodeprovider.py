@@ -196,6 +196,7 @@ def nodeprovider_on_toplevel():
 @nodeprovider_unit.test
 def add_nodes():
     """(.*)NodeProvider.add."""
+
     import rdflib
 
     with empty_rdflib_nodeprovider() as provider:

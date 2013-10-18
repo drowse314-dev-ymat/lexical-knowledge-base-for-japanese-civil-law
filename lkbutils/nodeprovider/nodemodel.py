@@ -20,7 +20,7 @@ def create_rdflib_literal(data):
     return rdflib.Literal(data)
 
 def link_rdflib_label(graph, node, label_text):
-    """Create a RDFS.label link from node to literal label node in rdflib."""
+    """Create an RDFS.label link from node to literal label node in rdflib."""
     graph.add(
         (node, rdflib.RDFS.label, create_rdflib_literal(label_text))
     )
