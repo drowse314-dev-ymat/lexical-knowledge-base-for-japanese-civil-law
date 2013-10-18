@@ -126,13 +126,15 @@ class NodeProvider(object):
         """Create an empty node graph."""
         raise NotImplementedError('create_graph must be implemented in subclasses')
 
-    def add(self, name):
+    def add(self, name, as_property=False):
         """
         Register a node without conflicts.
         """
         valid_name = self._add_to_namestore(name)
         node = self.create_bnode()
         registered_node = self._add_to_store(valid_name, node)
+        if as_property:
+            self._as_property(registered_node)
         return registered_node
 
     def _add_to_namestore(self, name):
@@ -158,6 +160,13 @@ class NodeProvider(object):
         """
         raise NotImplementedError('create_bnode must be implemented in subclasses')
 
+    def _as_property(self, node):
+        self.type_property(self.graph, node)
+
+    def type_property(self, graph, node):
+        """Set the node type as property/relation."""
+        raise NotImplementedError('type_property must be implemented in subclasses')
+
     def get(self, name):
         """Get node stored in NodeProvider.ns from label."""
         identifier = self._nameprovider.get_ns_identifier(name)
@@ -177,6 +186,9 @@ class RDFLibNodeProvider(NodeProvider):
 
     def label(self, graph, node, label_text):
         nodemodel.link_rdflib_label(graph, node, label_text)
+
+    def type_property(self, graph, node):
+        nodemodel.rdflib_type_property(graph, node)
 
 
 class DictAccessor(object):

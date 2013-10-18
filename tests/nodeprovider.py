@@ -225,3 +225,39 @@ def add_nodes():
 
         with raises(nodeprovider.NameNotRegistered):
             provider.get(u'詐害行為取消権')
+
+@nodeprovider_unit.test
+def add_nodes_as_properties():
+    """(.*)NodeProvider.add(..., as_property=True)."""
+
+    import rdflib
+
+    with empty_rdflib_nodeprovider() as provider:
+
+        ret_part_of = provider.add(u'part_of', as_property=True)
+        assert isinstance(ret_part_of, provider.classes['bnode'])
+        assert provider.ns.part_of == ret_part_of
+        assert u'part_of' in provider.ns
+        assert (
+            (provider.ns.part_of, rdflib.RDFS.label, rdflib.Literal(u'part_of'))
+            in list(provider.graph.triples((None, None, None)))
+        )
+        assert (
+            (provider.ns.part_of, rdflib.RDF.type, rdflib.RDF.Property)
+            in list(provider.graph.triples((None, None, None)))
+        )
+        assert provider.get(u'part_of') == provider.ns.part_of
+
+        ret_hyper = provider.add(u'hyper', as_property=True)
+        assert isinstance(ret_hyper, provider.classes['bnode'])
+        assert provider.ns.hyper == ret_hyper
+        assert u'hyper' in provider.ns
+        assert (
+            (provider.ns.hyper, rdflib.RDFS.label, rdflib.Literal(u'hyper'))
+            in list(provider.graph.triples((None, None, None)))
+        )
+        assert (
+            (provider.ns.hyper, rdflib.RDF.type, rdflib.RDF.Property)
+            in list(provider.graph.triples((None, None, None)))
+        )
+        assert provider.get(u'hyper') == provider.ns.hyper
