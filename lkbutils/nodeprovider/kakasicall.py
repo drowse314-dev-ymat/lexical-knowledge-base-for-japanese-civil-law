@@ -14,6 +14,7 @@ kakasi_charset_identifiers = {
     'hiragana': 'H',
     'kanji': 'J',
 }
+
 CharSet = collections.namedtuple(
     'KakasiCharSet',
     sorted(kakasi_charset_identifiers.keys()),
