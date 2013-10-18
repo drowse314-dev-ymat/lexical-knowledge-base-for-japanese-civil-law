@@ -6,12 +6,10 @@ from attest import (
 )
 from lkbutils import nodeprovider
 from lkbutils.nodeprovider import kakasicall
-from lkbutils.nodeprovider import nodemodel
 
 
 nameprovider_unit = Tests()
 kakasi_unit = Tests()
-nodemodel_unit = Tests()
 nodeprovider_unit = Tests()
 
 
@@ -117,73 +115,6 @@ def kakasi_conversino():
     for target in desired_yomi:
         yomi = desired_yomi[target]
         assert kakasicall.romanize(target) == yomi
-
-
-# node creaters dependent on 3rd party modules.
-@nodemodel_unit.test
-def create_node():
-    """Check creations of RDF nodes dependent on 3rd party modules."""
-    namespace = u'http://example.com/ymat/2013/10/18/nodecreate_test/'
-    names = [
-        u'john', u'kay', u'lee', u'mat', u'nai',
-    ]
-    literals = [
-        u'alen', u'beth', u'coo', u'dee', 88,
-    ]
-
-    import rdflib
-
-    rdflib_bnode = nodemodel.create_rdflib_node()
-    assert isinstance(rdflib_bnode, rdflib.BNode)
-
-    rdflib_refs = [
-        nodemodel.create_rdflib_node(name=name, ns=namespace)
-        for name in names
-    ]
-    for node in rdflib_refs:
-        assert isinstance(node, rdflib.URIRef)
-
-    rdflib_literals = [
-        nodemodel.create_rdflib_literal(data)
-        for data in literals
-    ]
-    for node in rdflib_literals:
-        assert isinstance(node, rdflib.Literal)
-
-@nodemodel_unit.test
-def create_graph():
-    """Check creations of RDF graph dependent on 3rd party modules."""
-    import rdflib
-    rdflib_graph = nodemodel.create_rdflib_graph()
-    assert isinstance(rdflib_graph, rdflib.Graph)
-
-@nodemodel_unit.test
-def create_label():
-    """
-    Check linking some RDF node to a literal with RDFS:label dependent on 3rd party modules.
-    """
-    import rdflib
-    g = rdflib.Graph()
-    node = rdflib.BNode()
-    nodemodel.link_rdflib_label(g, node, u'label')
-    assert (
-        list(g.triples((None, None, None)))[0] ==
-            node, rdflib.RDFS.label, rdflib.Literal(u'label')
-    )
-
-@nodemodel_unit.test
-def create_property():
-    """
-    Check setting some RDF node as an RDF:Property dependent on 3rd party modules.
-    """
-    import rdflib
-    g = rdflib.Graph()
-    node = rdflib.BNode()
-    nodemodel.rdflib_type_property(g, node)
-    assert (
-        list(g.triples((None, None, None)))[0] ==
-            node, rdflib.RDF.type, rdflib.RDF.Property
-    )
 
 
 # Adding nodes.

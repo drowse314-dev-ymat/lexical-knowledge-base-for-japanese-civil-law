@@ -1,7 +1,8 @@
 # encoding: utf-8
 
 import re
-from . import kakasicall, nodemodel
+from . import kakasicall
+from lkbutils import nodemodel
 
 
 class NameRegistrationError(ValueError):
@@ -124,7 +125,7 @@ class NodeProvider(object):
 
     def create_graph(self):
         """Create an empty node graph."""
-        raise NotImplementedError('create_graph must be implemented in subclasses')
+        return self.depending_library.create_graph()
 
     def add(self, name, as_property=False):
         """
@@ -152,43 +153,35 @@ class NodeProvider(object):
         """
         Create label link from node to literal label node..
         """
-        raise NotImplementedError('label must be implemented in subclasses')
+        return self.depending_library.link_label(graph, node, valid_name)
 
     def create_bnode(self):
         """
         Create blank node, with the reference to label with given name.
         """
-        raise NotImplementedError('create_bnode must be implemented in subclasses')
+        return self.depending_library.create_node()
 
     def _as_property(self, node):
         self.type_property(self.graph, node)
 
     def type_property(self, graph, node):
         """Set the node type as property/relation."""
-        raise NotImplementedError('type_property must be implemented in subclasses')
+        return self.depending_library.type_property(graph, node)
 
     def get(self, name):
         """Get node stored in NodeProvider.ns from label."""
         identifier = self._nameprovider.get_ns_identifier(name)
         return getattr(self.ns, identifier)
 
+    @property
+    def classes(self):
+        """class components of depending library."""
+        return self.depending_library.classes()
+
 
 class RDFLibNodeProvider(NodeProvider):
     """NodeProvider subclass using rdflib models."""
-
-    classes = nodemodel.rdflib_classes()
-
-    def create_graph(self):
-        return nodemodel.create_rdflib_graph()
-
-    def create_bnode(self):
-        return nodemodel.create_rdflib_node()
-
-    def label(self, graph, node, label_text):
-        nodemodel.link_rdflib_label(graph, node, label_text)
-
-    def type_property(self, graph, node):
-        nodemodel.rdflib_type_property(graph, node)
+    depending_library = nodemodel.RDFLib()
 
 
 class DictAccessor(object):
