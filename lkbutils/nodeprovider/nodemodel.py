@@ -25,6 +25,16 @@ def link_rdflib_label(graph, node, label_text):
         (node, rdflib.RDFS.label, create_rdflib_literal(label_text))
     )
 
+def rdflib_type_property(graph, node):
+    """Set a node type to RDF:Property in rdflib."""
+    rdflib_extend(graph, node, rdflib.RDF.Property)
+
+def rdflib_extend(graph, node, supernode):
+    """Create an RDFS.type link from node to supernode in rdflib."""
+    graph.add(
+        (node, rdflib.RDF.type, supernode)
+    )
+
 def rdflib_classes():
     """References to rdflib component classes."""
     return dict(

@@ -171,6 +171,20 @@ def create_label():
             node, rdflib.RDFS.label, rdflib.Literal(u'label')
     )
 
+@nodemodel_unit.test
+def create_property():
+    """
+    Check setting some RDF node as an RDF:Property dependent on 3rd party modules.
+    """
+    import rdflib
+    g = rdflib.Graph()
+    node = rdflib.BNode()
+    nodemodel.rdflib_type_property(g, node)
+    assert (
+        list(g.triples((None, None, None)))[0] ==
+            node, rdflib.RDF.type, rdflib.RDF.Property
+    )
+
 
 # Adding nodes.
 
