@@ -10,6 +10,7 @@ from .nodemodel import (
 )
 from .relationprovider import (
     relationchecker_unit,
+    relationprovider_unit,
 )
 
 
@@ -20,5 +21,6 @@ tests = Tests(
         nodeprovider_unit,
         rdflib_nodemodel_unit,
         relationchecker_unit,
+        relationprovider_unit,
     ]
 )

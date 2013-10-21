@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 import collections
+from lkbutils import nodemodel
 
 
 class RedundantRelation(ValueError):
@@ -96,3 +97,67 @@ class RelationChecker(object):
         for node in links.keys():
             if node not in visited:
                 visit(node)
+
+
+class RelationProvider(object):
+    """
+    Manages a consistent relation graph.
+    """
+
+    def __init__(self, relation=None,
+                 dry=False, nointerlinks=False, acyclic=False):
+        """
+        Manages a consistent relation graph.
+
+        Options:
+            relation: object used for linking nodes in the
+                      underlying graph model.
+            dry, nointerlinks, acyclic:
+                options for connection rules / see RelationChecker.
+        """
+        self._relation = relation
+        self._graph = self.create_graph()
+
+        self._relation_checker = RelationChecker(
+            relation=relation,
+            dry=dry, nointerlinks=nointerlinks, acyclic=acyclic,
+        )
+
+    @property
+    def graph(self):
+        """Entire nodes graph."""
+        return self._graph
+
+    def create_graph(self):
+        """Create an empty node graph."""
+        return self.depending_library.create_graph()
+
+    def add(self, src, dest, src_id=None, dest_id=None):
+        """
+        Add a link from src to dest.
+
+        Options:
+            src_id/dest_id: Used for identifying src/dest nodes,
+                            internally for RelationProvider._relation_checker.
+                            For efficiency & error trace message.
+        """
+        self._check_link(src, dest, src_id=src_id, dest_id=dest_id)
+        self.link(src, dest)
+        return (src, dest)
+
+    def _check_link(self, src, dest, src_id=None, dest_id=None):
+        """Check link validity against the rules."""
+        if src_id is not None:
+            src = src_id
+        if dest_id is not None:
+            dest = dest_id
+        self._relation_checker.add(src, dest)
+
+    def link(self, src, dest):
+        """Create a link with RelationProvider.relation."""
+        self.depending_library.link(self.graph, src, self._relation, dest)
+
+
+class RDFLibRelationProvider(RelationProvider):
+    """RelationProvider subclass using rdflib models."""
+    depending_library = nodemodel.RDFLib()
