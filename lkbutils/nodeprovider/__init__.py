@@ -151,7 +151,7 @@ class NodeProvider(object):
 
     def label(self, graph, node, valid_name):
         """
-        Create label link from node to literal label node..
+        Create label link from node to literal label node.
         """
         return self.depending_library.link_label(graph, node, valid_name)
 
