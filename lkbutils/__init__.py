@@ -3,3 +3,6 @@
 from .nodeprovider import (
     RDFLibNodeProvider,
 )
+from .relationprovider import (
+    RDFLibRelationProvider,
+)

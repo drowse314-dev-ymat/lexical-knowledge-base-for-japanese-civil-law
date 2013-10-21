@@ -124,6 +124,11 @@ def mixed_rules():
 # Adding relations under policies.
 
 @relationprovider_unit.test
+def relationprovider_on_toplevel():
+    """RelationProvider subclasses are accessible on pkg's toplevel ns."""
+    from lkbutils import RDFLibRelationProvider
+
+@relationprovider_unit.test
 def add_relations():
     """(.*)RelationProvider.add / with no restrictions."""
 
