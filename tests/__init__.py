@@ -13,6 +13,9 @@ from .relationprovider import (
     relationchecker_unit,
     relationprovider_unit,
 )
+from .declarative import (
+    termloader_unit,
+)
 
 
 tests = Tests(
@@ -24,5 +27,6 @@ tests = Tests(
         rdflib_nodemodel_unit,
         relationchecker_unit,
         relationprovider_unit,
+        termloader_unit,
     ]
 )
