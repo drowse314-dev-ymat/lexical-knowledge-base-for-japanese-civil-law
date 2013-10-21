@@ -20,16 +20,17 @@ class RDFLib(NodeModel):
         return rdflib.Literal(data)
 
     def link_label(self, graph, node, label_text):
-        graph.add(
-            (node, rdflib.RDFS.label, self.create_literal(label_text))
-        )
+        self.link(graph, node, rdflib.RDFS.label, self.create_literal(label_text))
 
     def type_property(self, graph, node):
         self.extend(graph, node, rdflib.RDF.Property)
 
     def extend(self, graph, node, supernode):
+        self.link(graph, node, rdflib.RDF.type, supernode)
+
+    def link(self, graph, src, relation, dest):
         graph.add(
-            (node, rdflib.RDF.type, supernode)
+            (src, relation, dest)
         )
 
     def classes(self):
