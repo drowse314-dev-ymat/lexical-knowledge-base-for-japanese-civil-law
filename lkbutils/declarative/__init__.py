@@ -142,3 +142,99 @@ class RelationLoader(object):
 class RDFLibRelationLoader(RelationLoader):
     """RelationLoader subclass using RDFLibRelationProvider."""
     relationprovider_class = RDFLibRelationProvider
+
+
+class YamlRelationConfigLoader(object):
+    """Utility for loading YAML relation configurations."""
+
+    @classmethod
+    def load_yaml(klass, yaml_data):
+        """
+        Load a YAML to get configs. for RelationLoaders.
+
+        SampleFormat:
+            +++++++++++++++++++++
+            # YAML
+            options:  # yaml-global options
+                dry: yes
+                nointerlinks: yes
+                acyclic: yes
+            relations:
+                relation1:
+                    options:  # override for specific relation
+                        dry: no
+                    pairs:
+                        subcategory1:
+                            - term1 term2
+                            - term2 term3
+                        subcategory2:
+                            - term3 term4
+                        ...
+                relation2:
+                    ...
+            +++++++++++++++++++++
+        """
+        data = parse_yaml(yaml_data)
+        base_options = data.get(u'options', {})
+        relations = data.get(u'relations', {})
+        configs = {}
+        for relation in relations:
+            configs[relation] = klass._create_config(
+                relation,
+                relations[relation],
+                base_options.copy()
+            )
+        return configs
+
+    @classmethod
+    def relation_providers_from(klass, yaml_data, nodeprovider=None):
+        """Parse config YAML, create {relation => RelationLoader} map."""
+        configs = klass.load_yaml(yaml_data)
+        return {
+            relation: klass._create_loader(configs[relation], nodeprovider)
+            for relation in configs
+        }
+
+    @classmethod
+    def _create_config(klass, relation, data, base_options):
+
+        config_override = data.get(u'options', {})
+        base_options.update(config_override)
+
+        data_pairs = data.get(u'pairs', [])
+        pairs = [
+            klass._parse_pair(pair_repr)
+            for pair_repr in leaves_from_struct(data_pairs)
+        ]
+
+        return {
+            u'relation': relation,
+            u'options': base_options,
+            u'pairs': pairs,
+        }
+
+    @classmethod
+    def _parse_pair(klass, pair_repr):
+        return tuple(pair_repr.split(u' '))
+
+    @classmethod
+    def _create_loader(klass, loader_config, nodeprovider):
+        relation = loader_config.get(u'relation')
+        options = loader_config.get(u'options', {})
+        relation_loader = klass.loader_class(
+            nodeprovider=nodeprovider,
+            relation=relation,
+            **options
+        )
+        pairs = loader_config.get(u'pairs', [])
+        relation_loader.load(pairs)
+        return relation_loader
+
+
+class RDFLibYamlRelationConfigLoader(YamlRelationConfigLoader):
+    """YamlRelationConfigLoader using RDFLibRelationLoader."""
+    loader_class = RDFLibRelationLoader
+
+
+load_relcfg = RDFLibYamlRelationConfigLoader.load_yaml
+load_relations = RDFLibYamlRelationConfigLoader.relation_providers_from

@@ -211,3 +211,139 @@ def load_relations_from_data():
             relloader.load([(u'buri', u'wakashi')])
         with raises(RedundantRelation):
             relloader.load([(u'warasa', u'buri')])
+
+@relationloader_unit.test
+def relation_configs_from_yaml():
+    """
+    Parse YAML representation & generate configs. to create RelationLoader.
+    """
+
+    yaml_data = u"""\
+options:
+    dry: yes
+    nointerlinks: no
+    acyclic: no
+relations:
+    next_to:
+        options:
+            acyclic: yes
+        pairs:
+            南:
+                - missisippi arkansas
+            北西:
+                - washington oregon
+    far_from:
+        options:
+            dry: no
+        pairs:
+            - alabama nebraska
+"""
+
+    relation_definitions = declarative.load_relcfg(yaml_data)
+
+    expected_next_to_cfg = {
+        u'relation': u'next_to',
+        u'options': {u'dry': True, u'nointerlinks': False, u'acyclic': True},
+        u'pairs': [
+            (u'washington', u'oregon'),
+            (u'missisippi', u'arkansas'),
+        ],
+    }
+    parsed_next_to_cgf = relation_definitions[u'next_to']
+    for key in (u'relation', u'options'):
+        assert parsed_next_to_cgf[key] == expected_next_to_cfg[key]
+    assert (
+        set(parsed_next_to_cgf[u'pairs']) ==
+        set(expected_next_to_cfg[u'pairs'])
+    )
+
+    expected_far_from_cfg = {
+        u'relation': u'far_from',
+        u'options': {u'dry': False, u'nointerlinks': False, u'acyclic': False},
+        u'pairs': [
+            (u'alabama', u'nebraska'),
+        ],
+    }
+    parsed_far_from_cgf = relation_definitions[u'far_from']
+    for key in (u'relation', u'options'):
+        assert parsed_far_from_cgf[key] == expected_far_from_cfg[key]
+    assert (
+        set(parsed_far_from_cgf[u'pairs']) ==
+        set(expected_far_from_cfg[u'pairs'])
+    )
+
+@relationloader_unit.test
+def load_relations_from_yaml():
+    """Load node relations from YAML representation."""
+
+    import rdflib
+
+    terms = [
+        u'next_to',
+        u'tikai',
+        u'missisippi', u'arkansas', u'tennessee', u'alabama',
+    ]
+
+    nodeprovider = MockRDFLibNamespace(terms)
+
+    relations_yaml = u"""\
+options:
+    dry: yes
+    nointerlinks: yes
+    acyclic: no
+relations:
+    next_to:
+        options:
+            acyclic: yes
+        pairs:
+            南:
+                - missisippi arkansas
+                - arkansas tennessee
+                - tennessee alabama
+    tikai:
+        pairs:
+            - missisippi arkansas
+            - arkansas tennessee
+            - tennessee alabama
+"""
+
+    relations_next_to = [
+        (u'missisippi', u'next_to', u'arkansas'),
+        (u'arkansas', u'next_to', u'tennessee'),
+        (u'tennessee', u'next_to', u'alabama'),
+    ]
+    relations_tikai = [
+        (u'missisippi', u'tikai', u'arkansas'),
+        (u'arkansas', u'tikai', u'tennessee'),
+        (u'tennessee', u'tikai', u'alabama'),
+    ]
+
+    relloaders = declarative.load_relations(relations_yaml, nodeprovider=nodeprovider)
+
+    relloader_next_to = relloaders[u'next_to']
+    relloader_tikai = relloaders[u'tikai']
+
+    # pairs loaded
+
+    triples_next_to = list(relloader_next_to.graph.triples((None, None, None)))
+    for relsrc, relprop, reldest in relations_next_to:
+        noderel = (
+            getattr(nodeprovider.ns, relsrc),
+            getattr(nodeprovider.ns, relprop),
+            getattr(nodeprovider.ns, reldest),
+        )
+        assert noderel in triples_next_to
+
+    triples_tikai = list(relloader_tikai.graph.triples((None, None, None)))
+    for relsrc, relprop, reldest in relations_tikai:
+        noderel = (
+            getattr(nodeprovider.ns, relsrc),
+            getattr(nodeprovider.ns, relprop),
+            getattr(nodeprovider.ns, reldest),
+        )
+        assert noderel in triples_tikai
+
+    # rules
+    with raises(Cyclic):
+        relloader_next_to.load([(u'alabama', u'missisippi')])
+    relloader_tikai.load([(u'alabama', u'missisippi')])
