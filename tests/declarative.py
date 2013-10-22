@@ -2,18 +2,27 @@
 
 from attest import (
     Tests, assert_hook,
-    contextmanager,
+    raises, contextmanager,
 )
 from lkbutils import declarative
+from lkbutils.relationprovider import RedundantRelation, Cyclic
 
 
 termloader_unit = Tests()
+relationloader_unit = Tests()
 
 
 @contextmanager
 def new_rdflib_termloader(**options):
     try:
         yield declarative.RDFLibTermLoader(**options)
+    finally:
+        pass
+
+@contextmanager
+def new_rdflib_relationloader(**options):
+    try:
+        yield declarative.RDFLibRelationLoader(**options)
     finally:
         pass
 
@@ -145,3 +154,60 @@ terms:
             assert id_label in ns
             assert isinstance(getattr(ns, id_label), rdflib.BNode)
             assert (getattr(ns, id_label), rdflib.RDF.type, rdflib.RDF.Property)
+
+
+class MockRDFLibNamespace(object):
+
+    def __init__(self, names):
+        self.namespace = self.create_ns(names)
+
+    @property
+    def ns(self):
+        return self.namespace
+
+    def create_ns(self, names):
+        import rdflib
+        class NS:
+            pass
+        ns = NS()
+        for name in names:
+            setattr(ns, name, rdflib.BNode())
+        return ns
+
+
+@relationloader_unit.test
+def load_relations_from_data():
+    """Load node relations directly from structured data."""
+
+    import rdflib
+
+    nodeprovider = MockRDFLibNamespace(
+        [
+            u'shusse_uo',
+            u'wakashi', u'inada', u'warasa', u'buri',
+        ]
+    )
+    relations = [
+        (u'wakashi', u'inada'),
+        (u'inada', u'warasa'),
+        (u'warasa', u'buri'),
+    ]
+
+    with new_rdflib_relationloader(
+        nodeprovider=nodeprovider, relation=u'shusse_uo',
+        dry=True, acyclic=True,
+    ) as relloader:
+        relloader.load(relations)
+        triples = list(relloader.graph.triples((None, None, None)))
+        for relsrc, reldest in relations:
+            noderel = (
+                getattr(nodeprovider.ns, relsrc),
+                nodeprovider.ns.shusse_uo,
+                getattr(nodeprovider.ns, reldest),
+            )
+            assert noderel in triples
+
+        with raises(Cyclic):
+            relloader.load([(u'buri', u'wakashi')])
+        with raises(RedundantRelation):
+            relloader.load([(u'warasa', u'buri')])

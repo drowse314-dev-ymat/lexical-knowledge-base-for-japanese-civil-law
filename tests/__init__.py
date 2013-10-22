@@ -15,6 +15,7 @@ from .relationprovider import (
 )
 from .declarative import (
     termloader_unit,
+    relationloader_unit,
 )
 
 
@@ -28,5 +29,6 @@ tests = Tests(
         relationchecker_unit,
         relationprovider_unit,
         termloader_unit,
+        relationloader_unit,
     ]
 )

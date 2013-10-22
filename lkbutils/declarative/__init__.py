@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 import yaml
-from lkbutils import RDFLibNodeProvider
+from lkbutils import RDFLibNodeProvider, RDFLibRelationProvider
 
 
 def parse_yaml(yaml_data):
@@ -100,3 +100,45 @@ class TermLoader(object):
 class RDFLibTermLoader(TermLoader):
     """TermLoader subclass using RDFLibNodeProvider."""
     nodeprovider_class = RDFLibNodeProvider
+
+
+class RelationLoader(object):
+    """Loads relation definitions."""
+
+    def __init__(self, nodeprovider=None, relation=None, **graph_options):
+        relation_node = getattr(nodeprovider.ns, relation)
+        self._relation_provider = self.create_relation_provider(
+            relation=relation_node,
+            **graph_options
+        )
+        self._nodeprovider = nodeprovider
+
+    @property
+    def graph(self):
+        """Proxy to self._relation_provider.graph."""
+        return self._relation_provider.graph
+
+    def create_relation_provider(self, **options):
+        """Delegate RelationProvider creation to subclasses."""
+        return self.relationprovider_class(**options)
+
+    def load(self, pairs):
+        """
+        Load terms from list of pairs.
+
+        pairs: list of pairs: (src, dest) whose elements are
+               names provided by the given node provider.
+        """
+        for src, dest in pairs:
+            self._register_relation(src, dest)
+
+    def _register_relation(self, src, dest):
+        self._relation_provider.add(self._get_node(src), self._get_node(dest))
+
+    def _get_node(self, identifier):
+        return getattr(self._nodeprovider.ns, identifier)
+
+
+class RDFLibRelationLoader(RelationLoader):
+    """RelationLoader subclass using RDFLibRelationProvider."""
+    relationprovider_class = RDFLibRelationProvider
