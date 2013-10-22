@@ -6,6 +6,7 @@ from .nodeprovider import (
     nodeprovider_unit,
 )
 from .nodemodel import (
+    nodemodel_unit,
     rdflib_nodemodel_unit,
 )
 from .relationprovider import (
@@ -19,6 +20,7 @@ tests = Tests(
         nameprovider_unit,
         kakasi_unit,
         nodeprovider_unit,
+        nodemodel_unit,
         rdflib_nodemodel_unit,
         relationchecker_unit,
         relationprovider_unit,

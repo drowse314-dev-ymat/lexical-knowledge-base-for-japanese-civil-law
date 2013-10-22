@@ -41,6 +41,11 @@ class NodeModel(with_metaclass(abc.ABCMeta)):
         pass
 
     @abc.abstractmethod
+    def link(self, graph, src, relation, dest):
+        """Create an arbitrary property link from node to dest."""
+        pass
+
+    @abc.abstractmethod
     def classes(self):
         """References to depending library component classes."""
         pass
