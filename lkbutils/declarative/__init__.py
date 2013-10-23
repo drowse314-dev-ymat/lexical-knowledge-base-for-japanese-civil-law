@@ -102,6 +102,50 @@ class RDFLibTermLoader(TermLoader):
     nodeprovider_class = RDFLibNodeProvider
 
 
+class YamlTermConfigLoader(object):
+    """Utility for loading YAML term configurations."""
+
+    @classmethod
+    def load_yaml(klass, yaml_data):
+        """
+        Load a YAML to get configs. for TermLoaders.
+
+        SampleFormat:
+            +++++++++++++++++++++
+            # YAML
+            options:
+                romanize: yes
+            terms:
+                subcategory1:
+                    - term1
+                    - term2
+                subcategory2:
+                    - term3
+                ...
+            +++++++++++++++++++++
+        """
+        data = parse_yaml(yaml_data)
+        data_options = data.get(u'options', {})
+        term_loader = klass._create_termloader(**data_options)
+
+        data_terms = data.get(u'terms', [])
+        term_loader.load(data_terms)
+
+        return term_loader
+
+    @classmethod
+    def _create_termloader(klass, **options):
+        return klass.loader_class(**options)
+
+
+class RDFLibYamlTermConfigLoader(YamlTermConfigLoader):
+    """YamlTermConfigLoader using RDFLibTermLoader."""
+    loader_class = RDFLibTermLoader
+
+
+rdflib_load_terms = RDFLibYamlTermConfigLoader.load_yaml
+
+
 class RelationLoader(object):
     """Loads relation definitions."""
 
@@ -236,5 +280,5 @@ class RDFLibYamlRelationConfigLoader(YamlRelationConfigLoader):
     loader_class = RDFLibRelationLoader
 
 
-load_relcfg = RDFLibYamlRelationConfigLoader.load_yaml
-load_relations = RDFLibYamlRelationConfigLoader.relation_providers_from
+rdflib_load_relcfg = RDFLibYamlRelationConfigLoader.load_yaml
+rdflib_load_relations = RDFLibYamlRelationConfigLoader.relation_providers_from

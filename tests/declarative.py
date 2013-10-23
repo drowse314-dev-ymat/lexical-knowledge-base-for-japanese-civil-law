@@ -100,6 +100,27 @@ class Fixtures(object):
         u'isinstance', u'issubclass', u'hasattr',
     ]
 
+    # world & japanese rivers
+    world_rivers = NS()
+    world_rivers.definition_yaml = (
+        u"options:\n"
+        u"    romanize: yes\n"
+        u"terms:\n"
+        u"    egypt:\n"
+        u"        - nile\n"
+        u"    brazil:\n"
+        u"        - amazon\n"
+        u"    china:\n"
+        u"        - 長江\n"
+        u"    japan:\n"
+        u"        中部地方:\n"
+        u"            - 信濃川\n"
+    )
+    world_rivers.identifiers = [
+        u'nile', u'amazon',
+        u'choukou', u'shinanokawa',
+    ]
+
     # 出世魚
     shusse_uo = NS()
     shusse_uo.core_relation = u'shusse_uo'
@@ -267,6 +288,21 @@ def load_terms_from_yaml():
             assert isinstance(getattr(ns, id_label), rdflib.BNode)
             assert (getattr(ns, id_label), rdflib.RDF.type, rdflib.RDF.Property)
 
+@termloader_unit.test
+def load_terms_from_yaml_on_demand():
+    """Load terms from YAML representation using declarative.load_terms."""
+    import rdflib
+    termloader = declarative.rdflib_load_terms(Fixtures.world_rivers.definition_yaml)
+    ns = termloader.ns
+    for id_label in Fixtures.world_rivers.identifiers:
+        assert id_label in ns
+        assert isinstance(getattr(ns, id_label), rdflib.BNode)
+
+@termloader_unit.test
+def toplevel_termloader():
+    """lkbutils.declarative.load_terms is accessible from top-level."""
+    from lkbutils import rdflib_load_terms
+
 
 class MockRDFLibNamespace(object):
 
@@ -378,3 +414,8 @@ def load_relations_from_yaml():
     with raises(RedundantRelation):
         relloader_tikai.load(Fixtures.def_us_geo_rels.additions.redundant)
     relloader_tikai.load(Fixtures.def_us_geo_rels.additions.addcycle)
+
+@relationloader_unit.test
+def toplevel_relationloader():
+    """lkbutils.declarative.load_relations is accessible from top-level."""
+    from lkbutils import rdflib_load_relations

@@ -6,3 +6,7 @@ from .nodeprovider import (
 from .relationprovider import (
     RDFLibRelationProvider,
 )
+from .declarative import (
+    rdflib_load_terms,
+    rdflib_load_relations,
+)
