@@ -56,3 +56,8 @@ class NodeModel(with_metaclass(abc.ABCMeta)):
     def classes(self):
         """References to depending library component classes."""
         pass
+
+    @abc.abstractmethod
+    def to_networkx(self, graph):
+        """Generate a DiGraph instance of networkx from given graph model."""
+        pass

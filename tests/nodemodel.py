@@ -4,6 +4,7 @@ from attest import (
     Tests, assert_hook,
     raises,
 )
+import networkx
 import rdflib
 from lkbutils import nodemodel
 
@@ -14,6 +15,7 @@ APIs = [
     'link', 'link_label', 'extend', 'type_property',
     'label_text',
     'classes',
+    'to_networkx',
 ]
 
 # NodeModel spec.
@@ -58,6 +60,42 @@ class Fixture(object):
         u'alen', u'beth', u'coo', u'dee', 88,
     ]
 
+    graph_sample = NS()
+    graph_sample.node_terms = [
+        u'node1', u'node2', u'node3',
+        #  u'Property',  # reserved
+    ]
+    graph_sample.property_terms = [
+        u'prop1', u'prop2',
+        #  u'type', u'label',  # reserved
+    ]
+    graph_sample.terms = (
+        graph_sample.node_terms + graph_sample.property_terms
+    )
+    graph_sample.property_definitions = [
+        (u'prop1', u'type', u'Property'),
+        (u'prop2', u'type', u'Property'),
+    ]
+    graph_sample.relations = [
+        (u'node1', u'prop1', u'node2'),
+        (u'node1', u'prop1', u'node3'),
+        (u'node2', u'prop2', u'node3'),
+    ]
+    graph_sample.rdflib_nodes = NS()
+    for __t in graph_sample.terms:
+        setattr(graph_sample.rdflib_nodes, __t, rdflib.BNode())
+    graph_sample.rdflib_nodes.type = rdflib.RDF.type
+    graph_sample.rdflib_nodes.Property = rdflib.RDF.Property
+    graph_sample.rdflib_nodes.label = rdflib.RDFS.label
+    graph_sample.rdflib_graph = rdflib.Graph()
+    for __t in graph_sample.terms:
+        graph_sample.rdflib_graph.add((getattr(graph_sample.rdflib_nodes, __t),
+                                       graph_sample.rdflib_nodes.label,
+                                       rdflib.Literal(__t)))
+    for __s,__p,__o in (graph_sample.relations + graph_sample.property_definitions):
+        graph_sample.rdflib_graph.add((getattr(graph_sample.rdflib_nodes, __s),
+                                       getattr(graph_sample.rdflib_nodes, __p),
+                                       getattr(graph_sample.rdflib_nodes, __o)))
 
 
 @rdflib_nodemodel_unit.test
@@ -152,3 +190,22 @@ def create_link():
         (node_src, node_property, node_dest) in
         list(g.triples((None, None, None)))
     )
+
+@rdflib_nodemodel_unit.test
+def convert_to_networkx():
+    """Check model conversion to NetworkX DiGraph."""
+
+    rdflib_graph = Fixture.graph_sample.rdflib_graph
+    nx_graph = rdflib_model.to_networkx(rdflib_graph)
+
+    assert isinstance(nx_graph, networkx.DiGraph)
+    assert set(nx_graph.nodes()) == set(Fixture.graph_sample.node_terms)
+
+    nx_graph_edges = []
+    for src in nx_graph:
+        for dest in nx_graph[src]:
+            attrs = nx_graph[src][dest]
+            if u'label' in attrs:
+                link = nx_graph[src][dest][u'label']
+                nx_graph_edges.append((src, link, dest))
+    assert set(nx_graph_edges) == set(Fixture.graph_sample.relations)
