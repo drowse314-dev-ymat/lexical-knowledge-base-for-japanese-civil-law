@@ -31,6 +31,13 @@ class NodeModel(with_metaclass(abc.ABCMeta)):
         pass
 
     @abc.abstractmethod
+    def label_text(self, graph, node):
+        """
+        Retrieve label text of the node from RDFS.label destination literal node.
+        """
+        pass
+
+    @abc.abstractmethod
     def type_property(self, graph, node):
         """Set a node type to RDF:Property."""
         pass

@@ -12,6 +12,7 @@ APIs = [
     'create_graph',
     'create_node', 'create_literal',
     'link', 'link_label', 'extend', 'type_property',
+    'label_text',
     'classes',
 ]
 
@@ -98,6 +99,15 @@ def create_label():
         list(g.triples((None, None, None)))[0] ==
             node, rdflib.RDFS.label, rdflib.Literal(u'label')
     )
+
+@rdflib_nodemodel_unit.test
+def get_label_test():
+    """Retrieve label text from graph dependent on rdflib."""
+    g = rdflib.Graph()
+    node = rdflib.BNode()
+    label = rdflib.Literal(u'something')
+    g.add((node, rdflib.RDFS.label, label))
+    assert rdflib_model.label_text(g, node) == u'something'
 
 @rdflib_nodemodel_unit.test
 def create_property():

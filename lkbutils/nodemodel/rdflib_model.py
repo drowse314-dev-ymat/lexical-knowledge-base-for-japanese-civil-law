@@ -22,6 +22,9 @@ class RDFLib(NodeModel):
     def link_label(self, graph, node, label_text):
         self.link(graph, node, rdflib.RDFS.label, self.create_literal(label_text))
 
+    def label_text(self, graph, node):
+        return graph.label(node).value
+
     def type_property(self, graph, node):
         self.extend(graph, node, rdflib.RDF.Property)
 
