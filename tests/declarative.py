@@ -317,7 +317,7 @@ def relation_configs_from_yaml():
     Parse YAML representation & generate configs. to create RelationLoader.
     """
     # mapping {relation => config}
-    relation_definitions = declarative.load_relcfg(Fixtures.us_geo_rel_cfg.yaml)
+    relation_definitions = declarative.rdflib_load_relcfg(Fixtures.us_geo_rel_cfg.yaml)
 
     config_attr_casts = Fixtures.us_geo_rel_cfg.expects.attr_casts
 
@@ -345,7 +345,7 @@ def load_relations_from_yaml():
 
     nodeprovider = MockRDFLibNamespace(Fixtures.def_us_geo_rels.terms)
 
-    relloaders = declarative.load_relations(
+    relloaders = declarative.rdflib_load_relations(
         Fixtures.def_us_geo_rels.definition_yaml,
         nodeprovider=nodeprovider,
     )
