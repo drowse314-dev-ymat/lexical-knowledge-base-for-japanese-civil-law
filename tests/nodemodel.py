@@ -41,30 +41,41 @@ def api_managed():
         if not name.startswith('_'):
             assert name in APIs
 
+
+class Fixture(object):
+    """Test fixture namespace."""
+
+    class NS(object):
+        pass
+
+    sample_names = NS()
+    sample_names.namespace = u'http://example.com/ymat/2013/10/18/nodecreate_test/'
+    sample_names.for_nodes = [
+        u'john', u'kay', u'lee', u'mat', u'nai',
+    ]
+    sample_names.for_literals = [
+        u'alen', u'beth', u'coo', u'dee', 88,
+    ]
+
+
+
 @rdflib_nodemodel_unit.test
 def create_node():
     """Check creations of RDF nodes dependent on rdflib."""
-    namespace = u'http://example.com/ymat/2013/10/18/nodecreate_test/'
-    names = [
-        u'john', u'kay', u'lee', u'mat', u'nai',
-    ]
-    literals = [
-        u'alen', u'beth', u'coo', u'dee', 88,
-    ]
 
     bnode = rdflib_model.create_node()
     assert isinstance(bnode, rdflib.BNode)
 
     refs = [
-        rdflib_model.create_node(name=name, ns=namespace)
-        for name in names
+        rdflib_model.create_node(name=name, ns=Fixture.sample_names.namespace)
+        for name in Fixture.sample_names.for_nodes
     ]
     for node in refs:
         assert isinstance(node, rdflib.URIRef)
 
     literals = [
         rdflib_model.create_literal(data)
-        for data in literals
+        for data in Fixture.sample_names.for_literals
     ]
     for node in literals:
         assert isinstance(node, rdflib.Literal)
