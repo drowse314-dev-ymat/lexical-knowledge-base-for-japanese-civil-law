@@ -4,6 +4,7 @@ from attest import (
     Tests, assert_hook,
     raises, contextmanager,
 )
+import rdflib
 from lkbutils import declarative
 from lkbutils.relationprovider import RedundantRelation, Cyclic
 
@@ -228,8 +229,6 @@ class Fixtures(object):
 def load_terms_from_data():
     """Load terms directly from data."""
 
-    import rdflib
-
     # flat
     with new_rdflib_termloader(romanize=True) as termloader:
         termloader.load(Fixtures.law_terms.flat)
@@ -250,17 +249,16 @@ def load_terms_from_data():
     with new_rdflib_termloader(romanize=True) as termloader:
         termloader.load(Fixtures.basic_properties, as_property=True)
         ns = termloader.ns
-        tripes = list(termloader.graph.triples((None, None, None)))
+        triples = list(termloader.graph.triples((None, None, None)))
         for id_label in Fixtures.basic_properties:
+            node = getattr(ns, id_label)
             assert id_label in ns
-            assert isinstance(getattr(ns, id_label), rdflib.BNode)
-            assert (getattr(ns, id_label), rdflib.RDF.type, rdflib.RDF.Property)
+            assert isinstance(node, rdflib.BNode)
+            assert (node, rdflib.RDF.type, rdflib.RDF.Property) in triples
 
 @termloader_unit.test
 def load_terms_from_yaml():
     """Load terms from YAML representation."""
-
-    import rdflib
 
     # flat
     with new_rdflib_termloader(romanize=True) as termloader:
@@ -282,16 +280,16 @@ def load_terms_from_yaml():
     with new_rdflib_termloader(romanize=True) as termloader:
         termloader.load_yaml(Fixtures.python_predicates.yaml)
         ns = termloader.ns
-        tripes = list(termloader.graph.triples((None, None, None)))
+        triples = list(termloader.graph.triples((None, None, None)))
         for id_label in Fixtures.python_predicates.identifiers:
+            node = getattr(ns, id_label)
             assert id_label in ns
-            assert isinstance(getattr(ns, id_label), rdflib.BNode)
-            assert (getattr(ns, id_label), rdflib.RDF.type, rdflib.RDF.Property)
+            assert isinstance(node, rdflib.BNode)
+            assert (node, rdflib.RDF.type, rdflib.RDF.Property) in triples
 
 @termloader_unit.test
 def load_terms_from_yaml_on_demand():
     """Load terms from YAML representation using declarative.load_terms."""
-    import rdflib
     termloader = declarative.rdflib_load_terms(Fixtures.world_rivers.definition_yaml)
     ns = termloader.ns
     for id_label in Fixtures.world_rivers.identifiers:
@@ -314,7 +312,6 @@ class MockRDFLibNamespace(object):
         return self.namespace
 
     def create_ns(self, names):
-        import rdflib
         class NS:
             pass
         ns = NS()
@@ -326,8 +323,6 @@ class MockRDFLibNamespace(object):
 @relationloader_unit.test
 def load_relations_from_data():
     """Load node relations directly from structured data."""
-
-    import rdflib
 
     nodeprovider = MockRDFLibNamespace(Fixtures.shusse_uo.terms)
 
@@ -376,8 +371,6 @@ def relation_configs_from_yaml():
 @relationloader_unit.test
 def load_relations_from_yaml():
     """Load node relations from YAML representation."""
-
-    import rdflib
 
     nodeprovider = MockRDFLibNamespace(Fixtures.def_us_geo_rels.terms)
 
