@@ -43,6 +43,11 @@ class NameProvider(object):
         """Namespace for registered names."""
         return self._namestore_attr_proxy
 
+    @property
+    def origin_names(self):
+        """Given original names used to create identifiers."""
+        return self._namestore.values()
+
     def add(self, name):
         """
         Register a name without conflicts.

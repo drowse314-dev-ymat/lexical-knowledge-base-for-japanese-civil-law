@@ -104,6 +104,10 @@ def add_simple_names():
         with raises(nodeprovider.NameNotRegistered):
             provider.get_ns_identifier(Fixtures.simple_names.not_added)
 
+        # property for source texts
+        assert (set(provider.origin_names) ==
+                set(Fixtures.simple_names.formalized_map.keys()))
+
 @nameprovider_unit.test
 def add_invalid_names():
     """NameProvider.add refuses invalid names."""
@@ -143,6 +147,10 @@ def handle_kana_name_addition():
         # reference error
         with raises(nodeprovider.NameNotRegistered):
             provider.get_ns_identifier(Fixtures.kana_kanji_names.not_added)
+
+        # property for source texts
+        assert (set(provider.origin_names) ==
+                set(Fixtures.kana_kanji_names.formalized_map.keys()))
 
 
 # simple kakasi caller.
