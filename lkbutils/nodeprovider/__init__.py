@@ -185,10 +185,46 @@ class NodeProvider(object):
         """class components of depending library."""
         return self.depending_library.classes()
 
+    def _merge(self, provider):
+        """Merge all information from another provider."""
+        self._merge_names(provider)
+        self._merge_nodes(provider)
+        self._merge_graph(provider)
+
+    def _merge_names(self, provider):
+        for name in provider._nameprovider.origin_names:
+            self._nameprovider.add(name)
+    def _merge_nodes(self, provider):
+        # directly merge nodes set to keep node identities.
+        self._nodestore.update(provider._nodestore)
+    def _merge_graph(self, provider):
+        self._graph += provider.graph
+
 
 class RDFLibNodeProvider(NodeProvider):
     """NodeProvider subclass using rdflib models."""
     depending_library = nodemodel.RDFLib()
+
+
+def merge_nodeproviders(*nodeproviders):
+    """
+    Create a term-mixed NodeProvider from multiple instances.
+    """
+    # General checks.
+    if len(nodeproviders) == 0:
+        return None
+    elif len(nodeproviders) == 1:
+        return nodeproviders[0]
+    if not len(set(type(np) for np in nodeproviders)) == 1:
+        raise TypeError('inconsistent provider types')
+
+    provider_class = type(nodeproviders[0])
+    new_provider = provider_class(romanize=True)
+
+    for provider in nodeproviders:
+        new_provider._merge(provider)
+
+    return new_provider
 
 
 class DictAccessor(object):

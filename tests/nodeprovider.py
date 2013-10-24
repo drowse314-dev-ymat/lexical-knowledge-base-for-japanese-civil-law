@@ -73,6 +73,27 @@ class Fixtures:
             u'公共のベランダ': u'koukyounoberanda',
         }
 
+    class term_mixtures:
+        class terms:
+            formalized_map_ja = {
+                u'食道': u'shokudou',
+                u'胃': u'i',
+                u'小腸': u'shouchou',
+                u'大腸': u'daichou',
+            }
+            formalized_map_en = {
+                u'esophagus': u'esophagus',
+                u'stomach': u'stomach',
+                u'small intestine': u'small_intestine',
+                u'large intestine': u'large_intestine',
+            }
+        class properties:
+            formalized_map = {
+                u'つづく': u'tsuduku',
+                u'next': u'next',
+            }
+        not_added = u'rectum'
+
 
 # Adding names.
 
@@ -217,3 +238,66 @@ def add_nodes_as_properties():
                 in list(provider.graph.triples((None, None, None)))
             )
             assert provider.get(propname) == ret
+
+@nodeprovider_unit.test
+def merge_node_providers():
+    """Merge multiple (.*)NodeProviders."""
+
+    with empty_rdflib_nodeprovider(romanize=True) as provider_ja,\
+         empty_rdflib_nodeprovider(romanize=False) as provider_en,\
+         empty_rdflib_nodeprovider(romanize=True) as provider_prop:
+
+        # Build each provider.
+        for name in Fixtures.term_mixtures.terms.formalized_map_ja:
+            provider_ja.add(name)
+        for name in Fixtures.term_mixtures.terms.formalized_map_en:
+            provider_en.add(name)
+        for name in Fixtures.term_mixtures.properties.formalized_map:
+            provider_prop.add(name, as_property=True)
+
+        # Merge & check returned object.
+        merged_provider = nodeprovider.merge_nodeproviders(
+            provider_ja, provider_en, provider_prop,
+        )
+
+        assert isinstance(merged_provider, nodeprovider.RDFLibNodeProvider)
+
+        # Check namespace integrations.
+
+        formalized_map_all = {}
+        formalized_map_all.update(Fixtures.term_mixtures.terms.formalized_map_ja)
+        formalized_map_all.update(Fixtures.term_mixtures.terms.formalized_map_en)
+        formalized_map_all.update(Fixtures.term_mixtures.properties.formalized_map)
+
+        merged_ns = merged_provider.ns
+        for name in formalized_map_all:
+
+            formalized_name = formalized_map_all[name]
+            assert formalized_name in merged_ns
+
+            node = getattr(merged_ns, formalized_name)
+            assert isinstance(node, merged_provider.classes['bnode'])
+            assert merged_provider.get(name) == node
+
+        # Check graph integratoins.
+        graph = merged_provider.graph
+        triples = list(graph.triples((None, None, None)))
+        ## labels
+        for name in formalized_map_all:
+            formalized_name = formalized_map_all[name]
+            node = getattr(merged_ns, formalized_name)
+            assert (node, rdflib.RDFS.label, rdflib.Literal(name)) in triples
+        ## properties
+        for name in Fixtures.term_mixtures.properties.formalized_map:
+            formalized_name = formalized_map_all[name]
+            propnode = getattr(merged_ns, formalized_name)
+            assert (propnode, rdflib.RDF.type, rdflib.RDF.Property) in triples
+
+        # Check namespace management.
+        for name in formalized_map_all:
+            with raises(nodeprovider.NameConflict):
+                merged_provider.add(name)
+
+        # reference error
+        with raises(nodeprovider.NameNotRegistered):
+            merged_provider.get(Fixtures.term_mixtures.not_added)
