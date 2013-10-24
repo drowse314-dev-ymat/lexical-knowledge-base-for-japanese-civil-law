@@ -10,3 +10,6 @@ from .declarative import (
     rdflib_load_terms,
     rdflib_load_relations,
 )
+from .nodemodel import (
+    rdflib_to_networkx,
+)

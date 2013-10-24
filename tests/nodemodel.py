@@ -192,6 +192,20 @@ def create_link():
     )
 
 @rdflib_nodemodel_unit.test
+def toplevel_to_networkx():
+    """lkbutils.rdflib_to_networkx is available."""
+    from lkbutils import rdflib_to_networkx
+
+    rdflib_graph = Fixture.graph_sample.rdflib_graph
+    converted_on_toplevel = rdflib_to_networkx(rdflib_graph)
+    converted_on_instance = rdflib_model.to_networkx(rdflib_graph)
+
+    # equality of nodes, edges + adge attributes
+    assert converted_on_toplevel.nodes() == converted_on_instance.nodes()
+    assert (list(networkx.generate_edgelist(converted_on_toplevel)) ==
+            list(networkx.generate_edgelist(converted_on_instance)))
+
+@rdflib_nodemodel_unit.test
 def convert_to_networkx():
     """Check model conversion to NetworkX DiGraph."""
 
