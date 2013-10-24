@@ -18,7 +18,7 @@ class NameNotRegistered(KeyError):
     pass
 
 
-re_formal_name = re.compile(u'^[^\W\d]\w+$')
+re_formal_name = re.compile(u'^[^\W\d](?:\w+)?$')
 
 
 class NameProvider(object):
