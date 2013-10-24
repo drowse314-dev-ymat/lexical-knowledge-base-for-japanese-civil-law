@@ -137,7 +137,7 @@ def add_nodes():
         assert provider.ns.john == ret_john
         assert u'john' in provider.ns
         assert (
-            (provider.ns.john, rdflib.RDFS.label, rdflib.Literal(u'john'))
+            (provider.ns.john, rdflib.RDFS.label, rdflib.Literal(u'John'))
             in list(provider.graph.triples((None, None, None)))
         )
         assert provider.get(u'John') == provider.ns.john
@@ -150,7 +150,7 @@ def add_nodes():
         assert provider.ns.tamashii == ret_soul
         assert u'tamashii' in provider.ns
         assert (
-            (provider.ns.tamashii, rdflib.RDFS.label, rdflib.Literal(u'tamashii'))
+            (provider.ns.tamashii, rdflib.RDFS.label, rdflib.Literal(u'魂'))
             in list(provider.graph.triples((None, None, None)))
         )
         assert provider.get(u'魂') == provider.ns.tamashii

@@ -133,7 +133,7 @@ class NodeProvider(object):
         """
         valid_name = self._add_to_namestore(name)
         node = self.create_bnode()
-        registered_node = self._add_to_store(valid_name, node)
+        registered_node = self._add_to_store(valid_name, node, label=name)
         if as_property:
             self._as_property(registered_node)
         return registered_node
@@ -141,9 +141,11 @@ class NodeProvider(object):
     def _add_to_namestore(self, name):
         return self._nameprovider.add(name)
 
-    def _add_to_store(self, valid_name, node):
+    def _add_to_store(self, valid_name, node, label=None):
         self._add_node_to_store(valid_name, node)
-        self.label(self.graph, node, valid_name)
+        if label is None:
+            label = valid_name
+        self.label(self.graph, node, label)
         return node
 
     def _add_node_to_store(self, name, node):

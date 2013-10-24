@@ -46,12 +46,12 @@ class Fixtures(object):
         ],
         u'人': [u'制限行為能力者'],
     }
-    law_terms.identifiers = [
-        u'teitouken',
-        u'shichiken',
-        u'sagaikouitorikeshiken',
-        u'seigenkouinouryokumono',
-    ]
+    law_terms.identifiers = {
+        u'teitouken': u'抵当権',
+        u'shichiken': u'質権',
+        u'sagaikouitorikeshiken': u'詐害行為取消権',
+        u'seigenkouinouryokumono': u'制限行為能力者',
+    }
 
     # general properties
     basic_properties = [u'hyper', u'part_of', u'contrary']
@@ -79,13 +79,13 @@ class Fixtures(object):
         u"            - 島根\n"
         u"            - 福島\n"
     )
-    jp_prefectures.identifiers = [
-        u'kyouto',
-        u'nara',
-        u'shimane',
-        u'kanagawa',
-        u'fukushima',
-    ]
+    jp_prefectures.identifiers = {
+        u'kyouto': u'京都',
+        u'nara': u'奈良',
+        u'shimane': u'島根',
+        u'kanagawa': u'神奈川',
+        u'fukushima': u'福島',
+    }
 
     # predicate-style python funcs
     python_predicates = NS()
@@ -117,10 +117,10 @@ class Fixtures(object):
         u"        中部地方:\n"
         u"            - 信濃川\n"
     )
-    world_rivers.identifiers = [
-        u'nile', u'amazon',
-        u'choukou', u'shinanokawa',
-    ]
+    world_rivers.identifiers = {
+        u'nile': u'nile', u'amazon': u'amazon',
+        u'choukou': u'長江', u'shinanokawa': u'信濃川',
+    }
 
     # 出世魚
     shusse_uo = NS()
@@ -225,6 +225,10 @@ class Fixtures(object):
     def_us_geo_rels.additions.addcycle = [(u'alabama', u'missisippi')]
 
 
+def rdflib_getlabel(graph, node):
+    return list(graph.objects(subject=node, predicate=rdflib.RDFS.label))[0].value
+
+
 @termloader_unit.test
 def load_terms_from_data():
     """Load terms directly from data."""
@@ -233,17 +237,25 @@ def load_terms_from_data():
     with new_rdflib_termloader(romanize=True) as termloader:
         termloader.load(Fixtures.law_terms.flat)
         ns = termloader.ns
+        graph = termloader.graph
         for id_label in Fixtures.law_terms.identifiers:
+            node = getattr(ns, id_label)
             assert id_label in ns
-            assert isinstance(getattr(ns, id_label), rdflib.BNode)
+            assert isinstance(node, rdflib.BNode)
+            assert (rdflib_getlabel(graph, node) ==
+                    Fixtures.law_terms.identifiers[id_label])
 
     # structured
     with new_rdflib_termloader(romanize=True) as termloader:
         termloader.load(Fixtures.law_terms.struct)
         ns = termloader.ns
+        graph = termloader.graph
         for id_label in Fixtures.law_terms.identifiers:
+            node = getattr(ns, id_label)
             assert id_label in ns
-            assert isinstance(getattr(ns, id_label), rdflib.BNode)
+            assert isinstance(node, rdflib.BNode)
+            assert (rdflib_getlabel(graph, node) ==
+                    Fixtures.law_terms.identifiers[id_label])
 
     # properties
     with new_rdflib_termloader(romanize=True) as termloader:
@@ -264,17 +276,25 @@ def load_terms_from_yaml():
     with new_rdflib_termloader(romanize=True) as termloader:
         termloader.load_yaml(Fixtures.jp_prefectures.flat_yaml)
         ns = termloader.ns
+        graph = termloader.graph
         for id_label in Fixtures.jp_prefectures.identifiers:
+            node = getattr(ns, id_label)
             assert id_label in ns
-            assert isinstance(getattr(ns, id_label), rdflib.BNode)
+            assert isinstance(node, rdflib.BNode)
+            assert (rdflib_getlabel(graph, node) ==
+                    Fixtures.jp_prefectures.identifiers[id_label])
 
     # structured
     with new_rdflib_termloader(romanize=True) as termloader:
         termloader.load_yaml(Fixtures.jp_prefectures.struct_yaml)
         ns = termloader.ns
+        graph = termloader.graph
         for id_label in Fixtures.jp_prefectures.identifiers:
+            node = getattr(ns, id_label)
             assert id_label in ns
             assert isinstance(getattr(ns, id_label), rdflib.BNode)
+            assert (rdflib_getlabel(graph, node) ==
+                    Fixtures.jp_prefectures.identifiers[id_label])
 
     # properties
     with new_rdflib_termloader(romanize=True) as termloader:
@@ -292,9 +312,13 @@ def load_terms_from_yaml_on_demand():
     """Load terms from YAML representation using declarative.load_terms."""
     termloader = declarative.rdflib_load_terms(Fixtures.world_rivers.definition_yaml)
     ns = termloader.ns
+    graph = termloader.graph
     for id_label in Fixtures.world_rivers.identifiers:
+        node = getattr(ns, id_label)
         assert id_label in ns
-        assert isinstance(getattr(ns, id_label), rdflib.BNode)
+        assert isinstance(node, rdflib.BNode)
+        assert (rdflib_getlabel(graph, node) ==
+                Fixtures.world_rivers.identifiers[id_label])
 
 @termloader_unit.test
 def toplevel_termloader():
