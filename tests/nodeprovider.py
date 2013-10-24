@@ -81,15 +81,18 @@ def add_simple_names():
     """NameProvider.add."""
     with empty_nameprovider() as provider:
 
+        # additions & returned values
         for name in Fixtures.simple_names.formalized_map:
             ret = provider.add(name)
             expected_formalized = Fixtures.simple_names.formalized_map[name]
             assert ret == expected_formalized
 
+        # avoiding name conflicts
         for name in Fixtures.simple_names.formalized_map:
             with raises(nodeprovider.NameConflict):
                 provider.add(name)
 
+        # namespace & reverse lookup
         namespace = provider.ns
         for name in Fixtures.simple_names.formalized_map:
             formalized_name = Fixtures.simple_names.formalized_map[name]
@@ -97,6 +100,7 @@ def add_simple_names():
             assert getattr(namespace, formalized_name) == name
             assert provider.get_ns_identifier(name) == formalized_name
 
+        # reference error
         with raises(nodeprovider.NameNotRegistered):
             provider.get_ns_identifier(Fixtures.simple_names.not_added)
 
@@ -115,11 +119,13 @@ def handle_kana_name_addition():
     """
     with empty_nameprovider(romanize=True) as provider:
 
+        # additions & returned values
         for name in Fixtures.kana_kanji_names.formalized_map:
             ret = provider.add(name)
             expected_formalized = Fixtures.kana_kanji_names.formalized_map[name]
             assert ret == expected_formalized
 
+        # avoiding name conflicts
         for name in Fixtures.kana_kanji_names.formalized_map:
             formalized_name = Fixtures.kana_kanji_names.formalized_map[name]
             with raises(nodeprovider.NameConflict):
@@ -127,19 +133,21 @@ def handle_kana_name_addition():
             with raises(nodeprovider.NameConflict):
                 provider.add(formalized_name)
 
+        # namespace & reverse lookup
         namespace = provider.ns
         for name in Fixtures.kana_kanji_names.formalized_map:
             formalized_name = Fixtures.kana_kanji_names.formalized_map[name]
             assert getattr(namespace, formalized_name) == name
             assert provider.get_ns_identifier(name) == formalized_name
 
+        # reference error
         with raises(nodeprovider.NameNotRegistered):
             provider.get_ns_identifier(Fixtures.kana_kanji_names.not_added)
 
 
 # simple kakasi caller.
 @kakasi_unit.test
-def kakasi_conversino():
+def kakasi_conversion():
     """Roughly check kakasi conversion."""
     for target in Fixtures.kakasi_conversion.desired_conversion:
         yomi = Fixtures.kakasi_conversion.desired_conversion[target]
@@ -159,6 +167,7 @@ def add_nodes():
 
     with empty_rdflib_nodeprovider() as provider:
 
+        # additions & returned values
         for name in Fixtures.simple_nodenames.formalized_map:
             ret = provider.add(name)
             formalized_name = Fixtures.simple_nodenames.formalized_map[name]
@@ -171,9 +180,11 @@ def add_nodes():
             )
             assert provider.get(name) == ret
 
+        # avoiding name conflicts
         with raises(nodeprovider.InvalidName):
             provider.add(Fixtures.simple_nodenames.invalid_name)
 
+        # reverse lookup
         with raises(nodeprovider.NameNotRegistered):
             provider.get(Fixtures.simple_nodenames.invalid_name)
 
