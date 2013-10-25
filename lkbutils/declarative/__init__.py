@@ -56,6 +56,11 @@ class TermLoader(object):
         """Proxy to TermLoader._nodeprovider.graph."""
         return self._nodeprovider.graph
 
+    @property
+    def nodeprovider(self):
+        """Proxy to TermLoader._nodeprovider."""
+        return self._nodeprovider
+
     def get_node_provider(self, **options):
         """Delegate NodeProvider creation to subclasses."""
         return self.nodeprovider_class(**options)
