@@ -17,6 +17,9 @@ class NameConflict(NameRegistrationError):
 class NameNotRegistered(KeyError):
     pass
 
+class NodeNotRegistered(ValueError):
+    pass
+
 
 re_formal_name = re.compile(u'^[^\W\d](?:\w+)?$')
 
@@ -179,6 +182,16 @@ class NodeProvider(object):
         """Get node stored in NodeProvider.ns from label."""
         identifier = self._nameprovider.get_ns_identifier(name)
         return getattr(self.ns, identifier)
+
+    def get_identifier_from(self, node):
+        """
+        Get stored identifier in NodeProvider.ns from node object.
+        """
+        nodestore = self._nodestore
+        for identifier in nodestore:
+            if nodestore[identifier] == node:
+                return identifier
+        raise NodeNotRegistered(u'"{}" not found in namespace'.format(node))
 
     @property
     def classes(self):
