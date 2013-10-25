@@ -6,7 +6,10 @@ from lkbutils import RDFLibNodeProvider, RDFLibRelationProvider
 
 def parse_yaml(yaml_data):
     """Parse YAML stiring by PyYAML."""
-    return yaml.load(yaml_data)
+    data = yaml.load(yaml_data)
+    if data is None:
+        return {}
+    return data
 
 def leaves_from_struct(data):
     """
