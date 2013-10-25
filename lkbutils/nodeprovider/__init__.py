@@ -131,6 +131,11 @@ class NodeProvider(object):
         """Entire nodes graph."""
         return self._graph
 
+    @property
+    def nameprovider(self):
+        """Proxy to NodeProvider._nameprovider."""
+        return self._nameprovider
+
     def create_graph(self):
         """Create an empty node graph."""
         return self.depending_library.create_graph()

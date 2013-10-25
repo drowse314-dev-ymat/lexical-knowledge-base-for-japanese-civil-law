@@ -221,6 +221,6 @@ def add_relations_with_rules():
             )
 
         error_prepend = u'cyclic path found on "{}": '.format(hyper)
-        empty, error_prepend, path = error.msg.partition(error_prepend)
+        empty, error_prepend, path = error.custom_msg.partition(error_prepend)
         traced_path = path.split(u' -> ')
         assert set(traced_path) == set(entries)

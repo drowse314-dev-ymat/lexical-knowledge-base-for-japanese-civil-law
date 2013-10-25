@@ -2,6 +2,7 @@
 
 import yaml
 from lkbutils import RDFLibNodeProvider, RDFLibRelationProvider
+from lkbutils.relationprovider import Cyclic
 
 
 def parse_yaml(yaml_data):
@@ -189,10 +190,29 @@ class RelationLoader(object):
 
     def _register_relation(self, src, dest):
         src_node, dest_node = self._get_node(src), self._get_node(dest)
-        self._relation_provider.add(src_node, dest_node)
+        try:
+            self._relation_provider.add(src_node, dest_node)
+        except Cyclic as cyclic_err:
+            self._handle_cyclic_error(cyclic_err)
 
     def _get_node(self, identifier):
         return getattr(self._nodeprovider.ns, identifier)
+
+    def _handle_cyclic_error(self, cyclic_err):
+        mod_relation = self._get_original_name(cyclic_err.relation)
+        mod_path = [
+            self._get_original_name(node)
+            for node in cyclic_err.path
+        ]
+        raise Cyclic(mod_path, relation=mod_relation)
+
+    def _get_original_name(self, node):
+        nodeprovider = self._nodeprovider
+        if not hasattr(nodeprovider, 'get_identifier_from'):
+            return node
+        identifier = nodeprovider.get_identifier_from(node)
+        origin_name = getattr(nodeprovider.nameprovider.ns, identifier)
+        return origin_name
 
 
 class RDFLibRelationLoader(RelationLoader):

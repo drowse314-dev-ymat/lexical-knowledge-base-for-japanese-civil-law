@@ -11,13 +11,18 @@ class InterLink(ValueError):
     pass
 
 class Cyclic(ValueError):
-    def __init__(self, path, relation=u'?'):
-        self.msg = u'cyclic path found on "{}": {}'.format(
+
+    def __init__(self, path, relation=u'?', encoding='utf-8'):
+        self.path = path
+        self.relation = relation
+        self.custom_msg = self.mkmsg(path, relation)
+        super(Cyclic, self).__init__(self.custom_msg.encode(encoding))
+
+    def mkmsg(self, path, relation):
+        return u'cyclic path found on "{}": {}'.format(
             relation,
             u' -> '.join(path),
         )
-    def __str__(self):
-        return self.msg
 
 
 class RelationChecker(object):
