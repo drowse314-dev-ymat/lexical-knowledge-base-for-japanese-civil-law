@@ -121,6 +121,19 @@ class Fixtures(object):
         u'nile': u'nile', u'amazon': u'amazon',
         u'choukou': u'長江', u'shinanokawa': u'信濃川',
     }
+    world_rivers.prop_definition_yaml = (
+        u"options:\n"
+        u"    romanize: yes\n"
+        u"load_options:\n"
+        u"    as_property: yes\n"
+        u"terms:\n"
+        u"    - longer than\n"
+        u"    - wider than\n"
+    )
+    world_rivers.prop_identifiers = {
+        u'longer_than': u'longer than',
+        u'wider_than': u'wider than',
+    }
 
     # 出世魚
     shusse_uo = NS()
@@ -319,6 +332,21 @@ def load_terms_from_yaml_on_demand():
         assert isinstance(node, rdflib.BNode)
         assert (rdflib_getlabel(graph, node) ==
                 Fixtures.world_rivers.identifiers[id_label])
+
+@termloader_unit.test
+def load_properties_from_yaml_on_demand():
+    """Load properties from YAML representation using declarative.load_terms."""
+    termloader = declarative.rdflib_load_terms(Fixtures.world_rivers.prop_definition_yaml)
+    ns = termloader.ns
+    graph = termloader.graph
+    triples = list(graph.triples((None, None, None)))
+    for id_label in Fixtures.world_rivers.prop_identifiers:
+        node = getattr(ns, id_label)
+        assert id_label in ns
+        assert isinstance(node, rdflib.BNode)
+        assert (rdflib_getlabel(graph, node) ==
+                Fixtures.world_rivers.prop_identifiers[id_label])
+        assert (node, rdflib.RDF.type, rdflib.RDF.Property) in triples
 
 @termloader_unit.test
 def toplevel_termloader():

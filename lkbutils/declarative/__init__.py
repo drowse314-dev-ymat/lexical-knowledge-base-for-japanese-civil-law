@@ -115,6 +115,8 @@ class YamlTermConfigLoader(object):
             # YAML
             options:
                 romanize: yes
+            load_options:
+                as_property: no
             terms:
                 subcategory1:
                     - term1
@@ -129,7 +131,8 @@ class YamlTermConfigLoader(object):
         term_loader = klass._create_termloader(**data_options)
 
         data_terms = data.get(u'terms', [])
-        term_loader.load(data_terms)
+        data_load_options = data.get(u'load_options', {})
+        term_loader.load(data_terms, **data_load_options)
 
         return term_loader
 
