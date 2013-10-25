@@ -213,7 +213,7 @@ def add_nodes():
         with raises(nodeprovider.InvalidName):
             provider.add(Fixtures.simple_nodenames.invalid_name)
 
-        # reverse lookup
+        # reference error
         with raises(nodeprovider.NameNotRegistered):
             provider.get(Fixtures.simple_nodenames.invalid_name)
 

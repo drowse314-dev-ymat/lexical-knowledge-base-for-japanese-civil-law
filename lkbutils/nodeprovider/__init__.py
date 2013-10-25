@@ -88,7 +88,7 @@ class NameProvider(object):
 
     def get_ns_identifier(self, name):
         """
-        Get stored identifier in NodeProvider.ns from source text.
+        Get stored identifier in NameProvider.ns from source text.
         """
         namestore = self._namestore
         for identifier in namestore:

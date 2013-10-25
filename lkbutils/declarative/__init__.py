@@ -183,7 +183,8 @@ class RelationLoader(object):
             self._register_relation(src, dest)
 
     def _register_relation(self, src, dest):
-        self._relation_provider.add(self._get_node(src), self._get_node(dest))
+        src_node, dest_node = self._get_node(src), self._get_node(dest)
+        self._relation_provider.add(src_node, dest_node)
 
     def _get_node(self, identifier):
         return getattr(self._nodeprovider.ns, identifier)
