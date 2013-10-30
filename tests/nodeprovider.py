@@ -52,6 +52,8 @@ class Fixtures:
             u'魂': u'tamashii',
             u'抵当権': u'teitouken',
             u'補助開始の審判': u'hojokaishinoshinpan',
+            u'順位': u'junni',
+            u'コンクリート': u'konkuriito',
         }
         not_added = u'hitanposaiken'
 
@@ -71,6 +73,7 @@ class Fixtures:
             u'抵当権': u'teitouken',
             u'国民の休日': u'kokuminnokyuujitsu',
             u'公共のベランダ': u'koukyounoberanda',
+            u'範囲': u'hanni',
         }
 
     class term_mixtures:

@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+import re
 import subprocess
 import collections
 
@@ -77,4 +78,13 @@ def romanize(text,
     for kakasi in kakasi_procs:
         kakasi.stdout.close()
     output = fin_iconv.communicate()[0]
-    return output.strip()
+    return _prettify(output)
+
+def _prettify(kakasi_output):
+    kakasi_output = kakasi_output.strip()
+    kakasi_output = _handle_euphonic(kakasi_output)
+    return kakasi_output
+
+re_euphonic_repr = re.compile(u'(.)[\'\^]')
+def _handle_euphonic(kakasi_output):
+    return re_euphonic_repr.sub(u'\\1\\1', kakasi_output)
