@@ -57,6 +57,16 @@ class Fixtures:
         }
         not_added = u'hitanposaiken'
 
+    class kana_kanji_names_specified:
+        formalized_map = {
+            u'宇宙{sora}': u'sora',
+            u'大地{gaia}': u'gaia',
+        }
+        modification_map = {
+            u'宇宙{sora}': u'宇宙',
+            u'大地{gaia}': u'大地',
+        }
+
     class simple_nodenames:
         formalized_map = {
             u'John': u'john',
@@ -82,7 +92,15 @@ class Fixtures:
                 u'食道': u'shokudou',
                 u'胃': u'i',
                 u'小腸': u'shouchou',
+                u'省庁{chuuoukanchou}': u'chuuoukanchou',
                 u'大腸': u'daichou',
+            }
+            name_modification_map_ja = {
+                u'食道': u'食道',
+                u'胃': u'胃',
+                u'小腸': u'小腸',
+                u'省庁{chuuoukanchou}': u'省庁',
+                u'大腸': u'大腸',
             }
             formalized_map_en = {
                 u'esophagus': u'esophagus',
@@ -175,6 +193,27 @@ def handle_kana_name_addition():
         # property for source texts
         assert (set(provider.origin_names) ==
                 set(Fixtures.kana_kanji_names.formalized_map.keys()))
+
+@nameprovider_unit.test
+def handle_specified_reading_addition():
+    """
+    NameProvider with romanize=True, with specified kana reading.
+    """
+    with empty_nameprovider(romanize=True) as provider:
+
+        # additions & returned values
+        for name in Fixtures.kana_kanji_names_specified.formalized_map:
+            ret = provider.add(name)
+            expected_formalized = Fixtures.kana_kanji_names_specified.formalized_map[name]
+            assert ret == expected_formalized
+
+        # namespace & reverse lookup
+        namespace = provider.ns
+        for name in Fixtures.kana_kanji_names_specified.formalized_map:
+            formalized_name = Fixtures.kana_kanji_names_specified.formalized_map[name]
+            modified_name = Fixtures.kana_kanji_names_specified.modification_map[name]
+            assert getattr(namespace, formalized_name) == modified_name
+            assert provider.get_ns_identifier(modified_name) == formalized_name
 
 
 # simple kakasi caller.
@@ -277,15 +316,25 @@ def merge_node_providers():
         formalized_map_all.update(Fixtures.term_mixtures.terms.formalized_map_en)
         formalized_map_all.update(Fixtures.term_mixtures.properties.formalized_map)
 
+        name_modification_map = {}
+        name_modification_map.update(Fixtures.term_mixtures.terms.name_modification_map_ja)
+        name_modification_map.update(
+            {key:key for key in Fixtures.term_mixtures.terms.formalized_map_en}
+        )
+        name_modification_map.update(
+            {key:key for key in Fixtures.term_mixtures.properties.formalized_map}
+        )
+
         merged_ns = merged_provider.ns
         for name in formalized_map_all:
 
+            modified_name = name_modification_map[name]
             formalized_name = formalized_map_all[name]
             assert formalized_name in merged_ns
 
             node = getattr(merged_ns, formalized_name)
             assert isinstance(node, merged_provider.classes['bnode'])
-            assert merged_provider.get(name) == node
+            assert merged_provider.get(modified_name) == node
             assert merged_provider.get_identifier_from(node) == formalized_name
 
         # Check graph integratoins.
@@ -293,9 +342,10 @@ def merge_node_providers():
         triples = list(graph.triples((None, None, None)))
         ## labels
         for name in formalized_map_all:
+            modified_name = name_modification_map[name]
             formalized_name = formalized_map_all[name]
             node = getattr(merged_ns, formalized_name)
-            assert (node, rdflib.RDFS.label, rdflib.Literal(name)) in triples
+            assert (node, rdflib.RDFS.label, rdflib.Literal(modified_name)) in triples
         ## properties
         for name in Fixtures.term_mixtures.properties.formalized_map:
             formalized_name = formalized_map_all[name]

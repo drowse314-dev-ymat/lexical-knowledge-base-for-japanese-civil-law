@@ -61,8 +61,8 @@ class NameProvider(object):
             * Lower
             * Character validation
         """
-        valid_name = self._valid_name_from(name)
-        self._add_to_store(valid_name, name)
+        mod_name, valid_name = self._valid_name_from(name)
+        self._add_to_store(valid_name, mod_name)
         return valid_name
 
     def _valid_name_from(self, name):
@@ -72,11 +72,12 @@ class NameProvider(object):
         return name, valid_name
 
     def _preprocess_name(self, name):
+        name_or_mod_name = name
         if self._romanize_on:
-            name = try_romanize(name)
+            name_or_mod_name, name = try_romanize(name)
         name = self._handle_spacing_chars(name)
         name = name.lower()
-        return name
+        return name_or_mod_name, name
 
     def _handle_spacing_chars(self, name):
         return u'_'.join(name.split())
@@ -106,8 +107,15 @@ class NameProvider(object):
         raise NameNotRegistered(u'"{}" not found in namespace'.format(name))
 
 
+re_specified_reading = re.compile(u'^(?P<name>.+){(?P<reading>.+)}$')
+
 def try_romanize(name):
-    return kakasicall.romanize(name)
+    match_specified = re_specified_reading.match(name)
+    if match_specified:
+        matchmap = match_specified.groupdict()
+        return matchmap[u'name'], matchmap[u'reading']
+    else:
+        return name, kakasicall.romanize(name)
 
 
 class NodeProvider(object):
@@ -152,7 +160,7 @@ class NodeProvider(object):
         """
         valid_name = self._add_to_namestore(name)
         node = self.create_bnode()
-        registered_node = self._add_to_store(valid_name, node, label=name)
+        registered_node = self._add_to_store(valid_name, node)
         if as_property:
             self._as_property(registered_node)
         return registered_node
@@ -160,10 +168,9 @@ class NodeProvider(object):
     def _add_to_namestore(self, name):
         return self._nameprovider.add(name)
 
-    def _add_to_store(self, valid_name, node, label=None):
+    def _add_to_store(self, valid_name, node):
         self._add_node_to_store(valid_name, node)
-        if label is None:
-            label = valid_name
+        label = getattr(self._nameprovider.ns, valid_name)
         self.label(self.graph, node, label)
         return node
 
@@ -216,8 +223,20 @@ class NodeProvider(object):
         self._merge_graph(provider)
 
     def _merge_names(self, provider):
-        for name in provider._nameprovider.origin_names:
-            self._nameprovider.add(name)
+        my_identifiers = self._nameprovider._namestore
+        your_identifiers = provider._nameprovider._namestore
+        conflicts = set(my_identifiers).intersection(set(your_identifiers))
+        if conflicts:
+            confmap = {}
+            for key in conflicts:
+                confmap[key] = [my_identifiers[key], your_identifiers[key]]
+            raise NameConflict(u'name conflicts while merging: {}'.format(
+                u', '.join(
+                    [u'"{}": {{{}}}'.format(key, u','.join(confmap[key]))
+                     for key in confmap]
+                )
+            ))
+        my_identifiers.update(your_identifiers)
     def _merge_nodes(self, provider):
         # directly merge nodes set to keep node identities.
         self._nodestore.update(provider._nodestore)
