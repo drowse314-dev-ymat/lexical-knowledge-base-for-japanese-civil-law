@@ -6,7 +6,8 @@ from lkbutils import nodemodel
 
 
 class NameRegistrationError(ValueError):
-    pass
+    def __init__(self, message, encoding='utf8'):
+        super(NameRegistrationError, self).__init__(message.encode(encoding))
 
 class InvalidName(NameRegistrationError):
     pass
@@ -65,10 +66,10 @@ class NameProvider(object):
         return valid_name
 
     def _valid_name_from(self, name):
-        name = self._preprocess_name(name)
-        if not self._is_valid_name(name):
-            raise InvalidName(u'name not acceptable: "{}"'.format(name))
-        return name
+        name, valid_name = self._preprocess_name(name)
+        if not self._is_valid_name(valid_name):
+            raise InvalidName(u'name not acceptable: "{}" from "{}"'.format(valid_name, name))
+        return name, valid_name
 
     def _preprocess_name(self, name):
         if self._romanize_on:
@@ -86,7 +87,12 @@ class NameProvider(object):
     def _add_to_store(self, name, orig_name):
         namestore = self._namestore
         if name in namestore:
-            raise NameConflict(u'name already exists: "{}"'.format(name))
+            raise NameConflict(
+                u'name already exists for "{}": "{}" from "{}"'.format(
+                    namestore[name],
+                    name, orig_name
+                )
+            )
         namestore[name] = orig_name
 
     def get_ns_identifier(self, name):
