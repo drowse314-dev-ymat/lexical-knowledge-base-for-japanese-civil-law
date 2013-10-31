@@ -12,3 +12,9 @@ echo ""
 echo "==> Generate ${BUILD_PATH}/graph.png..."
 dot -Tpng "${BUILD_PATH}/graph.dot" > "${BUILD_PATH}/graph.png"
 echo "==> Done."
+
+# Post process. For re-rendering graph, etc.
+POSTPROC='postbuild.sh'
+if [ -f $POSTPROC ]; then
+    sh $POSTPROC
+fi
