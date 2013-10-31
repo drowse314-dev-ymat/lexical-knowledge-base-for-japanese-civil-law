@@ -42,6 +42,7 @@ terms:
         top:
             - actionframe
             - person action
+            - 法律行為
         frames:
             - 行使
             - 履行
