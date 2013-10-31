@@ -1,0 +1,16 @@
+# Link properties for LKB
+
+options:
+    romanize: yes
+load_options:
+    as_property: yes
+
+terms:
+    frame transition:
+        - hyper
+        - status of
+    in frame:
+        - sbj
+        - obj
+        - auth by
+        - attr

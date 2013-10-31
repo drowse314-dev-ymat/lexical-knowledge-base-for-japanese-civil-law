@@ -1,0 +1,45 @@
+# LKB Hierarchies.
+
+options:
+    dry: yes
+    acyclic: yes
+
+relations:
+
+    hyper:
+        pairs:
+
+            top:
+                abstract:
+                    - firstness root
+                    - secondness root
+                    - thirdness root
+
+                top concepts:
+                    - kenri thirdness
+                    - gimu thirdness
+                    - kitei thirdness
+                    - person thirdness
+                    - actionframe thirdness
+                    - person_action actionframe
+
+            actionframes:
+                top concepts:
+                    - kaishaku actionframe
+                    - koushi person_action
+                    - rikou person_action
+                koushi:
+                    - ranyou koushi
+
+            legislations:
+                top concepts:
+                    - houritsu kitei
+
+    status_of:
+        pairs:
+
+            rights:
+                - shiken kenri
+
+            personals:
+                - kojin person

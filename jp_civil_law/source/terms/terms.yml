@@ -1,0 +1,42 @@
+# Term definitions for LKB
+
+options:
+    romanize: yes
+
+terms:
+
+    抽象:
+        - root
+        - firstness
+        - secondness
+        - thirdness
+
+    権利:
+        top:
+            - 権利
+        status:
+            - 私権
+    義務:
+        top:
+            - 義務
+    規定:
+        top:
+            - 規定
+        frames:
+            - 法律
+    人:
+        top:
+            - person
+        status:
+            - 個人
+
+    行為:
+        top:
+            - actionframe
+            - person action
+        frames:
+            - 行使
+            - 履行
+            - 解釈
+        sub_権利行使:
+            - 濫用

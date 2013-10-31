@@ -1,0 +1,28 @@
+# Relations within frames.
+
+options:
+    dry: yes
+    nointerlinks: yes
+
+relations:
+
+    sbj:
+        pairs:
+
+            abstract:
+                - person_action person
+
+    obj:
+        pairs:
+
+            abstract:
+                - koushi kenri
+                - rikou gimu
+                - kaishaku kitei
+
+    auth_by:
+        pairs:
+
+            abstract:
+                - kenri kitei
+                - gimu kitei
