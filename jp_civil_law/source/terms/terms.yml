@@ -11,6 +11,21 @@ terms:
         - secondness
         - thirdness
 
+    物:
+        top:
+            - 物{butsu}
+        statuses:
+            - 有体物{yuutaibutsu}
+            - 財産
+            - 主物{shubutsu}
+            - 従物{juubutsu}
+        classes:
+            - 不動産
+            - 動産
+            - 土地
+            - 定着物{teichakubutsu}
+            - 無記名債権
+
     権利:
         top:
             - 権利
@@ -35,6 +50,7 @@ terms:
             - 外国人
             - 成年
             - 未成年者
+            - 所有者
         attrs:
             - 年齢
 
@@ -49,5 +65,8 @@ terms:
             - 解釈
             - 享有{ukeireyuusuru}
             - 出生{shussei}
+            - 所有
+            - 附属
+            - 処分
         sub_権利行使:
             - 濫用

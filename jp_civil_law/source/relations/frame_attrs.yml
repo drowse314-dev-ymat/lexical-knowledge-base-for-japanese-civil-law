@@ -12,11 +12,18 @@ relations:
             personals:
                 - kojin nenrei
 
+            entities:
+                - tochi teichakubutsu
+
     sbj:
         pairs:
 
             abstract:
                 - person_action person
+
+            物・財産:
+                - shoyuu shoyuusha
+                - fuzoku juubutsu
 
     obj:
         pairs:
@@ -25,9 +32,15 @@ relations:
                 - koushi kenri
                 - rikou gimu
                 - kaishaku kitei
+                - shobun zaisan
+                - shobun kenri
 
             権利能力:
                 - ukeireyuusuru shiken
+
+            物・財産:
+                - shoyuu zaisan
+                - fuzoku shubutsu
 
     auth_by:
         pairs:

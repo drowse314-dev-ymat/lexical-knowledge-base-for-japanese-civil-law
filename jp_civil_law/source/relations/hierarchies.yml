@@ -16,12 +16,14 @@ relations:
                     - thirdness root
 
                 top concepts:
+                    - butsu secondness
                     - kenri thirdness
                     - gimu thirdness
                     - kitei thirdness
                     - person thirdness
                     - actionframe thirdness
                     - person_action actionframe
+                    - zaisan thirdness
 
             actionframes:
                 upper concepts:
@@ -37,6 +39,17 @@ relations:
                     - shussei person_action
                 static:
                     - ukeireyuusuru person_action
+                    - shoyuu person_action
+
+            entities:
+                top concepts:
+                    - fudousan zaisan
+                    - dousan zaisan
+                不動産:
+                    - tochi fudousan
+                    - teichakubutsu fudousan
+                動産:
+                    - mukimeisaiken dousan
 
             legislations:
                 top concepts:
@@ -53,11 +66,18 @@ relations:
             actionframes:
                 - houritsukoui person_action
 
+            entities:
+                - yuutaibutsu butsu
+                - zaisan yuutaibutsu
+                - shubutsu zaisan
+                - juubutsu zaisan
+
             personals:
                 - kojin person
                 - seinen kojin
                 - miseinensha kojin
                 - gaikokujin person
+                - shoyuusha person
 
             legislations:
                 - kinshi kitei
