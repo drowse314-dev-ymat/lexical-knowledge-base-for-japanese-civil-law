@@ -24,7 +24,7 @@ relations:
                     - person_action actionframe
 
             actionframes:
-                top concepts:
+                upper concepts:
                     - kaishaku actionframe
                     - koushi person_action
                     - rikou person_action

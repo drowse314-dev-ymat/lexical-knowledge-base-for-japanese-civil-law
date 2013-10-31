@@ -26,6 +26,7 @@ terms:
             - 法令
             - 法律
             - 条約
+            - 禁止
     人:
         top:
             - person
@@ -47,6 +48,5 @@ terms:
             - 解釈
             - 享有{ukeireyuusuru}
             - 出生{shussei}
-            - 禁止
         sub_権利行使:
             - 濫用
