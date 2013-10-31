@@ -72,12 +72,13 @@ class NameProvider(object):
         return name, valid_name
 
     def _preprocess_name(self, name):
-        name_or_mod_name = name
+        orig_name = name
         if self._romanize_on:
-            name_or_mod_name, name = try_romanize(name)
+            mod_name, name = try_romanize(name)
+            orig_name = mod_name
         name = self._handle_spacing_chars(name)
         name = name.lower()
-        return name_or_mod_name, name
+        return orig_name, name
 
     def _handle_spacing_chars(self, name):
         return u'_'.join(name.split())
