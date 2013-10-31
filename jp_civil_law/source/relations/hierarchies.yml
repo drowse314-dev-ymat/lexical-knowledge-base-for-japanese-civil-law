@@ -28,12 +28,17 @@ relations:
                     - kaishaku actionframe
                     - koushi person_action
                     - rikou person_action
+                    - ukeireyuusuru person_action
                 koushi:
                     - ranyou koushi
+                bio:
+                    - shussei person_action
 
             legislations:
                 top concepts:
-                    - houritsu kitei
+                    - hourei kitei
+                    - houritsu hourei
+                    - jouyaku hourei
 
     status_of:
         pairs:
@@ -43,3 +48,9 @@ relations:
 
             personals:
                 - kojin person
+                - seinen kojin
+                - miseinensha kojin
+                - gaikokujin person
+
+            legislations:
+                - kinshi kitei

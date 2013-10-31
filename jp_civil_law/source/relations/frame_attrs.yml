@@ -6,6 +6,12 @@ options:
 
 relations:
 
+    attr:
+        pairs:
+
+            personals:
+                - kojin nenrei
+
     sbj:
         pairs:
 
@@ -19,6 +25,9 @@ relations:
                 - koushi kenri
                 - rikou gimu
                 - kaishaku kitei
+
+            権利能力:
+                - ukeireyuusuru shiken
 
     auth_by:
         pairs:

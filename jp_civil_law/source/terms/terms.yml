@@ -23,12 +23,19 @@ terms:
         top:
             - 規定
         frames:
+            - 法令
             - 法律
+            - 条約
     人:
         top:
             - person
         status:
             - 個人
+            - 外国人
+            - 成年
+            - 未成年者
+        attrs:
+            - 年齢
 
     行為:
         top:
@@ -38,5 +45,8 @@ terms:
             - 行使
             - 履行
             - 解釈
+            - 享有{ukeireyuusuru}
+            - 出生{shussei}
+            - 禁止
         sub_権利行使:
             - 濫用
