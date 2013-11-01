@@ -33,8 +33,6 @@ relations:
                         - koushi houritsukoui
                         - rikou houritsukoui
                         - shobun houritsukoui
-                    koushi:
-                        - ranyou koushi
                 bio:
                     - shussei person_action
                 static:
@@ -65,6 +63,7 @@ relations:
 
             actionframes:
                 - houritsukoui person_action
+                - ranyou koushi
 
             entities:
                 - yuutaibutsu butsu
