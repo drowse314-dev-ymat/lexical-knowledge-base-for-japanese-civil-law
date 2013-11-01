@@ -69,7 +69,14 @@ def get_graph(terms_dir, relations_dir):
     return graph
 
 def save(nx_graph, tofile):
-    networkx.write_dot(nx_graph, tofile)
+    agraph = networkx.to_agraph(nx_graph)
+    for node in agraph.nodes():
+        node_obj = agraph.get_node(node)
+        node_obj.attr['style'] = 'filled'
+        node_obj.attr['fillcolor'] = '#edf1f2'
+        node_obj.attr['fontcolor'] = '#121718'
+    agraph.layout('twopi')
+    agraph.write(tofile)
 
 
 def run(args):
