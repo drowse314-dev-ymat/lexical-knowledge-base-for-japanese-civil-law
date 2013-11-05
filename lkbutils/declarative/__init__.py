@@ -210,9 +210,7 @@ class RelationLoader(object):
         nodeprovider = self._nodeprovider
         if not hasattr(nodeprovider, 'get_identifier_from'):
             return node
-        identifier = nodeprovider.get_identifier_from(node)
-        origin_name = getattr(nodeprovider.nameprovider.ns, identifier)
-        return origin_name
+        return nodeprovider.get_origin_name_from(node)
 
 
 class RDFLibRelationLoader(RelationLoader):

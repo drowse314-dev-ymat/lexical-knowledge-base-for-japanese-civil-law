@@ -212,6 +212,12 @@ class NodeProvider(object):
                 return identifier
         raise NodeNotRegistered(u'"{}" not found in namespace'.format(node))
 
+    def get_origin_name_from(self, node):
+        """
+        Get origin name in NameProvider.ns which was used to create the node object.
+        """
+        return getattr(self.nameprovider.ns, self.get_identifier_from(node))
+
     @property
     def classes(self):
         """class components of depending library."""

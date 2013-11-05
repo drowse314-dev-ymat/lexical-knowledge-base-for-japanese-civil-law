@@ -252,6 +252,7 @@ def add_nodes():
             assert provider.get(name) == ret
             # reverse lookup
             assert provider.get_identifier_from(ret) == formalized_name
+            assert provider.get_origin_name_from(ret) == name
 
         # avoiding name conflicts
         with raises(nodeprovider.InvalidName):
@@ -263,6 +264,8 @@ def add_nodes():
 
         with raises(nodeprovider.NodeNotRegistered):
             provider.get_identifier_from(rdflib.BNode())
+        with raises(nodeprovider.NodeNotRegistered):
+            provider.get_origin_name_from(rdflib.BNode())
 
 @nodeprovider_unit.test
 def add_nodes_as_properties():
@@ -285,6 +288,7 @@ def add_nodes_as_properties():
             )
             assert provider.get(propname) == ret
             assert provider.get_identifier_from(ret) == propname
+            assert provider.get_origin_name_from(ret) == propname
 
 @nodeprovider_unit.test
 def merge_node_providers():
@@ -336,6 +340,7 @@ def merge_node_providers():
             assert isinstance(node, merged_provider.classes['bnode'])
             assert merged_provider.get(modified_name) == node
             assert merged_provider.get_identifier_from(node) == formalized_name
+            assert merged_provider.get_origin_name_from(node) == modified_name
 
         # Check graph integratoins.
         graph = merged_provider.graph
