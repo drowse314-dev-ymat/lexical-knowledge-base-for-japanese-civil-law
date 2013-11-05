@@ -4,6 +4,7 @@ from attest import (
     Tests, assert_hook,
     contextmanager, raises,
 )
+import rdflib
 from lkbutils import relationprovider
 
 
@@ -132,8 +133,6 @@ def relationprovider_on_toplevel():
 def add_relations():
     """(.*)RelationProvider.add / with no restrictions."""
 
-    import rdflib
-
     hyper = rdflib.RDF.type
     node_root = rdflib.BNode()
     node_left = rdflib.BNode()
@@ -165,8 +164,6 @@ def add_relations():
 @relationprovider_unit.test
 def add_relations_with_rules():
     """(.*)RelationProvider.add / with some restrictions."""
-
-    import rdflib
 
     hyper = rdflib.RDF.type
     context = dict(
