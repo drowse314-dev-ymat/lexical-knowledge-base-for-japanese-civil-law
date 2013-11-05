@@ -5,7 +5,18 @@ from lkbutils import nodemodel
 
 
 class RedundantRelation(ValueError):
-    pass
+    def __init__(self, src, dest, link=None, encoding=u'utf-8'):
+        self.src = src
+        self.dest = dest
+        self.link = link
+        msg = self.mkmsg(src, dest, link)
+        super(RedundantRelation, self).__init__(msg.encode(encoding))
+
+    def mkmsg(self, src, dest, link):
+        msg = u'link exists: {} -> {}'.format(src, dest)
+        if link is not None:
+            msg += u' on {}'.format(link)
+        return msg
 
 class InterLink(ValueError):
     pass
@@ -67,9 +78,7 @@ class RelationChecker(object):
 
     def _check_dry(self, src, dest):
         if dest in self._links[src]:
-            raise RedundantRelation(
-                u'link exists: {} -> {}'.format(src, dest)
-            )
+            raise RedundantRelation(src, dest)
 
     def _check_nointerlinks(self, src, dest):
         if src in self._links[dest]:
