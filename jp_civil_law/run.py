@@ -11,6 +11,9 @@ from lkbutils import (
 from lkbutils.nodeprovider import (
     merge_nodeproviders,
 )
+from lkbutils.relationprovider import (
+    noconflict_providers,
+)
 
 
 def path_from_me(path):
@@ -57,7 +60,12 @@ def get_relation_loaders(src_dir, nodeprovider=None):
     assert (sum_len_keys == len_merged_keys), 'multiple definitions for some relation'
 
     relation_loaders = sum([list(rlmap.values()) for rlmap in relation_loader_maps], [])
+    check_relation_conflicts(relation_loaders, nodeprovider)
     return relation_loaders
+
+def check_relation_conflicts(relation_loaders, nodeprovider):
+    providers = [rl._relation_provider for rl in relation_loaders]
+    noconflict_providers(providers, nodeprovider=nodeprovider)
 
 def get_graph(terms_dir, relations_dir):
     nodeprovider = get_node_provider(terms_dir)

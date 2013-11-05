@@ -221,3 +221,36 @@ def add_relations_with_rules():
         empty, error_prepend, path = error.custom_msg.partition(error_prepend)
         traced_path = path.split(u' -> ')
         assert set(traced_path) == set(entries)
+
+@relationprovider_unit.test
+def providers_noconflict():
+    """Check given relation providers have no conflicts on pairs."""
+
+    nodes = [rdflib.BNode() for i in range(8)]
+
+    pairs_1 = [
+        (nodes[0], nodes[1]),
+        (nodes[2], nodes[3]),
+    ]
+    pairs_2 = [
+        (nodes[4], nodes[5]),
+        (nodes[6], nodes[7]),
+    ]
+
+    with empty_rdflib_relationprivider(relation=rdflib.RDF.type) as provider_r1, \
+         empty_rdflib_relationprivider(relation=rdflib.RDF.type) as provider_r2:
+
+        for p1 in pairs_1:
+            provider_r1.add(*p1)
+        for p2 in pairs_2:
+            provider_r2.add(*p2)
+
+        assert (relationprovider.noconflict_providers([provider_r1, provider_r2]) ==
+                set(pairs_1 + pairs_2))
+
+        provider_r1.add(*pairs_2[0])
+
+        with raises(relationprovider.RedundantRelation) as error:
+            relationprovider.noconflict_providers([provider_r1, provider_r2])
+        assert error.src == pairs_2[0][0]
+        assert error.dest == pairs_2[0][1]

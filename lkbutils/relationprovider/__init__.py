@@ -76,6 +76,13 @@ class RelationChecker(object):
         self._links[src].append(dest)
         return (src, dest)
 
+    def iterpairs(self):
+        """Iterate over pairs of links."""
+        links = self._links
+        for src in links:
+            for dest in links[src]:
+                yield src, dest
+
     def _check_dry(self, src, dest):
         if dest in self._links[src]:
             raise RedundantRelation(src, dest)
@@ -175,3 +182,27 @@ class RelationProvider(object):
 class RDFLibRelationProvider(RelationProvider):
     """RelationProvider subclass using rdflib models."""
     depending_library = nodemodel.RDFLib()
+
+
+def noconflict_providers(providers, nodeprovider=None):
+    """Check no conflicts exists among relation providers' pair sets."""
+    checkers = [(p._relation, p._relation_checker) for p in providers]
+
+    all_pairs = set()
+    for rel, checker in checkers:
+
+        pairs = set(checker.iterpairs())
+        redundants = all_pairs.intersection(pairs)
+
+        if redundants:
+            src, dest = redundants.pop()
+            if nodeprovider is None:
+                raise RedundantRelation(src, dest, link=rel)
+            src = nodeprovider.get_origin_name_from(src)
+            dest = nodeprovider.get_origin_name_from(dest)
+            link = nodeprovider.get_origin_name_from(rel)
+            raise RedundantRelation(src, dest, link=link)
+        else:
+            all_pairs.update(pairs)
+
+    return all_pairs
