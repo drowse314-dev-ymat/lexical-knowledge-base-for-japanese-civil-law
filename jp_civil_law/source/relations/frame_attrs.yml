@@ -9,11 +9,29 @@ relations:
     attr:
         pairs:
 
+            actionframes:
+                - houritsukoui ishihyouji
+                - social_activity person_action
+
             personals:
-                - kojin nenrei
+                - person person_social_attr
+                - kojin person_bio_attr
+                - seinensha seinen
+                - miseinensha miseinen
+                - kouinouryokusha kouinouryoku
+                - kojin seishin
+                - seinenhikoukennin shougai
+                - hihosanin shougai
+                - hihojonin shougai
 
             entities:
                 - tochi teichakubutsu
+
+            legislations:
+                - kitei youken
+
+            tangibles:
+                - eigyou houritsukoui
 
     sbj:
         pairs:
@@ -21,9 +39,16 @@ relations:
             abstract:
                 - person_action person
 
+            法律行為:
+                - ishihyouji honnin
+
             物・財産:
                 - shoyuu shoyuusha
                 - fuzoku juubutsu
+
+            personals:
+                - doui protector
+                - benshiki seishin
 
     obj:
         pairs:
@@ -32,19 +57,50 @@ relations:
                 - koushi kenri
                 - rikou gimu
                 - kaishaku kitei
+                - tekiyou kitei
                 - shobun zaisan
                 - shobun kenri
+                - saikoku ishihyouji
+
+            tangible:
+                - tsuuchi person
+                - gubi youken
 
             権利能力:
                 - ukeireyuusuru shiken
 
+            法律行為:
+                - ishihyouji aitegata
+
             物・財産:
                 - shoyuu zaisan
                 - fuzoku shubutsu
+
+            personals:
+                - doui seigenkouinouryokusha
 
     auth_by:
         pairs:
 
             abstract:
                 - kenri kitei
+                - kengen kenri
                 - gimu kitei
+
+            rights:
+                - saikoku saikokuken
+
+            personals:
+                - seigenkouinouryokusha protector
+                - miseinensha houteidairinin
+                - seinenhikoukennin seinenkoukennin
+                - hihosanin hosanin
+                - hihojonin hojonin
+
+            systematic:
+                - protector start_protection
+                - start_protection shinpan
+                - seinenkoukennin koukenkaishi
+                - hosanin hosakaishi
+                - hojonin hojokaishi
+                - shinpan kateisaibansho

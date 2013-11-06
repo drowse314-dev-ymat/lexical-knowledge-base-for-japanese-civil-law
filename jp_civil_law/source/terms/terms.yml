@@ -29,8 +29,12 @@ terms:
     権利:
         top:
             - 権利
+            - 債権
+            - 権限
         status:
             - 私権
+        classes:
+            - 催告権
     義務:
         top:
             - 義務
@@ -42,30 +46,94 @@ terms:
             - 法律
             - 条約
             - 禁止
+            - 許可
+            - 制限
+        classes:
+            - 要件
+            - 方式
+
+    システム:
+        top:
+            - system
+        classes:
+            - 裁判所
+            - 家庭裁判所
+            - 簡易裁判所
+
     人:
         top:
             - person
         status:
-            - 個人
-            - 外国人
-            - 成年
-            - 未成年者
-            - 所有者
+            top:
+                - 個人
+                - 外国人
+            bio etc.:
+                - 成年者
+                - 未成年者
+            property:
+                - 所有者
+            claim:
+                行為能力:
+                    - 代理人
+                    - protector
+                    - 後見人
+                    - 法定代理人
+                    - 行為能力者{kouinouryokusha}
+                    - 制限行為能力者{seigenkouinouryokusha}
+                    - 成年被後見人
+                    - 成年後見人
+                    - 被保佐人
+                    - 保佐人
+                    - 被補助人
+                    - 補助人
+                法律行為:
+                    - 相手方{aitegata}
+                    - 本人
         attrs:
+            - person social attr
+            - person bio attr
             - 年齢
+            - 成年
+            - 未成年
+            - 行為能力
+            - 精神
+            - 障害
 
     行為:
         top:
             - actionframe
+            - 行為
             - person action
+            - social activity
             - 法律行為
+            - 意思表示
         frames:
-            - 行使
-            - 履行
-            - 解釈
-            - 享有{ukeireyuusuru}
-            - 出生{shussei}
-            - 所有
-            - 附属
-            - 処分
-            - 濫用
+            superiors:
+                - 解釈
+                - 準用
+                - 適用
+                - 出生{shussei}
+            personals + others:
+                - 行使
+                - 履行
+                - 享有{ukeireyuusuru}
+                - 所有
+                - 附属
+                - 処分
+                - 濫用
+                - 同意
+                - 営業
+                - 請求
+                - 取消し{torikeshi}
+                - 弁識
+                - 催告
+                - 通知
+                - 追認
+                - 具備
+                - 詐術
+            events:
+                - 審判
+                - start protection
+                - 後見開始
+                - 保佐開始
+                - 補助開始

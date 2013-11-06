@@ -9,6 +9,7 @@ terms:
     frame transition:
         - hyper
         - status of
+        - results
     in frame:
         - sbj
         - obj

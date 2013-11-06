@@ -18,21 +18,49 @@ relations:
                 top concepts:
                     - butsu secondness
                     - kenri thirdness
+                    - kengen thirdness
                     - gimu thirdness
                     - kitei thirdness
+                    - youken thirdness
                     - person thirdness
                     - actionframe thirdness
-                    - person_action actionframe
+                    - koui actionframe
+                    - person_action koui
+                    - social_activity actionframe
                     - zaisan thirdness
+                    - system thirdness
+
+            rights:
+                top:
+                    - saiken kenri
+                classes:
+                    - saikokuken saiken
 
             actionframes:
                 upper concepts:
                     - kaishaku actionframe
+                    - tekiyou actionframe
+                    - shinpan actionframe
+                tangibles:
+                    - start_protection actionframe
+                    - benshiki actionframe
+                    - fuzoku actionframe
+                    - koukenkaishi start_protection
+                    - hosakaishi start_protection
+                    - hojokaishi start_protection
+                    - eigyou social_activity
                 法律行為:
                     top concepts:
-                        - koushi houritsukoui
-                        - rikou houritsukoui
-                        - shobun houritsukoui
+                        - seikyuu koushi
+                        - doui houritsukoui
+                        - seigen person_action
+                        - kinshi seigen
+                        - kyoka person_action
+                        - torikeshi houritsukoui
+                        - tsuuchi person_action
+                        - saikoku tsuuchi
+                        - tsuinin houritsukoui
+                        - gubi person_action
                 bio:
                     - shussei person_action
                 static:
@@ -49,11 +77,35 @@ relations:
                 動産:
                     - mukimeisaiken dousan
 
+            personals:
+                - person_social_attr thirdness
+                - person_bio_attr thirdness
+                - kouinouryoku person_social_attr
+                - seishin person_social_attr
+                - miseinensha seigenkouinouryokusha
+                - seinenhikoukennin seigenkouinouryokusha
+                - hihosanin seigenkouinouryokusha
+                - hihojonin seigenkouinouryokusha
+                - houteidairinin dairinin
+                - koukennin protector
+                - houteidairinin koukennin
+                - seinenkoukennin koukennin
+                - hosanin protector
+                - hojonin protector
+                - nenrei person_bio_attr
+
             legislations:
                 top concepts:
                     - hourei kitei
                     - houritsu hourei
                     - jouyaku hourei
+                classes:
+                    - houshiki youken
+
+            system:
+                - saibansho system
+                - kannisaibansho saibansho
+                - kateisaibansho saibansho
 
     status_of:
         pairs:
@@ -62,8 +114,15 @@ relations:
                 - shiken kenri
 
             actionframes:
+                - junyou tekiyou
+                - koushi houritsukoui
+                - rikou houritsukoui
+                - shobun houritsukoui
                 - houritsukoui person_action
+                - ishihyouji person_action
                 - ranyou koushi
+                - sajutsu person_action
+                - tsuinin doui
 
             entities:
                 - yuutaibutsu butsu
@@ -72,11 +131,33 @@ relations:
                 - juubutsu zaisan
 
             personals:
-                - kojin person
-                - seinen kojin
-                - miseinensha kojin
-                - gaikokujin person
-                - shoyuusha person
+                top:
+                    - kojin person
+                    - gaikokujin person
+                bio:
+                    - seinensha kojin
+                    - miseinensha kojin
+                    - seinen nenrei
+                    - miseinen nenrei
+                    - shougai seishin
+                property:
+                    - shoyuusha person
+                claim:
+                    - seigenkouinouryokusha kojin
+                    - kouinouryokusha kojin
+                    - protector person
+                    - dairinin person
+                roles:
+                    - aitegata person
+                    - honnin person
 
             legislations:
-                - kinshi kitei
+                - seigen kitei
+                - kyoka kitei
+
+    results:
+        pairs:
+
+            actionframes:
+                - shussei ukeireyuusuru
+                - saikoku houritsukoui
