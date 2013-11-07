@@ -28,8 +28,10 @@ relations:
                 - hihojonin shougai
 
             entities:
+                - butsu youhou
                 - tochi teichakubutsu
                 - shubutsu juubutsu
+                - ganbutsu kajitsu
 
             legislations:
                 - kitei youken
@@ -49,6 +51,8 @@ relations:
             物・財産:
                 - shoyuu shoyuusha
                 - fuzoku juubutsu
+                - kizoku zaisan
+                - kizoku kenri
 
             personals:
                 - doui protector
@@ -78,7 +82,12 @@ relations:
 
             物・財産:
                 - shoyuu zaisan
+                - shoyuu kenri
                 - fuzoku shubutsu
+                - shiyou butsu
+                - kizoku person
+                - shutoku zaisan
+                - shutoku kenri
 
             personals:
                 - doui seigenkouinouryokusha

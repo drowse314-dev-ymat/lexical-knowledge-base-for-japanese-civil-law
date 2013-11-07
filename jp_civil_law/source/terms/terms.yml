@@ -15,17 +15,25 @@ terms:
     物:
         top:
             - 物{butsu}
+            - 用法
         statuses:
             - 有体物{yuutaibutsu}
             - 財産
             - 主物{shubutsu}
             - 従物{juubutsu}
+            - 果実
+            - 元物{ganbutsu}
+            - 対価
+            - 産出物{sanshutsubutsu}
         classes:
             - 不動産
             - 動産
             - 土地
             - 定着物{teichakubutsu}
             - 無記名債権
+            - 天然果実
+            - 法定果実
+            - 金銭
 
     権利:
         top:
@@ -109,6 +117,7 @@ terms:
             - social activity
             - 法律行為
             - 単独行為
+            - 契約
             - 意思表示
         frames:
             superiors:
@@ -134,6 +143,9 @@ terms:
                 - 追認
                 - 具備
                 - 詐術
+                - 帰属
+                - 取得
+                - 使用
             events:
                 - 審判
                 - start protection

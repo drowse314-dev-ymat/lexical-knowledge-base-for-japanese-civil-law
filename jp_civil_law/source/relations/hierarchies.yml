@@ -18,6 +18,7 @@ relations:
                 top concepts:
                     - butsu secondness
                     - sonzokukikan secondness
+                    - youhou thirdness
                     - continuous_consensus thirdness
                     - kenri continuous_consensus
                     - kengen continuous_consensus
@@ -47,6 +48,7 @@ relations:
                     - start_protection actionframe
                     - benshiki actionframe
                     - fuzoku actionframe
+                    - kizoku actionframe
                     - koukenkaishi start_protection
                     - hosakaishi start_protection
                     - hojokaishi start_protection
@@ -54,6 +56,8 @@ relations:
                 法律行為:
                     top concepts:
                         - tandokukoui houritsukoui
+                        - keiyaku houritsukoui
+                        - keiyaku continuous_consensus
                         - seikyuu koushi
                         - doui tandokukoui
                         - seigen person_action
@@ -63,6 +67,8 @@ relations:
                         - tsuuchi person_action
                         - saikoku tsuuchi
                         - gubi person_action
+                        - shiyou person_action
+                        - shutoku person_action
                 bio:
                     - shussei person_action
                 static:
@@ -73,11 +79,14 @@ relations:
                 top concepts:
                     - fudousan zaisan
                     - dousan zaisan
+                    - tennenkajitsu kajitsu
+                    - houteikajitsu kajitsu
                 不動産:
                     - tochi fudousan
                     - teichakubutsu fudousan
                 動産:
                     - mukimeisaiken dousan
+                    - kinsen dousan
 
             personals:
                 - person_social_attr thirdness
@@ -131,6 +140,12 @@ relations:
                 - zaisan yuutaibutsu
                 - shubutsu zaisan
                 - juubutsu zaisan
+                - kajitsu zaisan
+                - ganbutsu zaisan
+                - taika zaisan
+                - houteikajitsu taika
+                - sanshutsubutsu butsu
+                - tennenkajitsu sanshutsubutsu
 
             personals:
                 top:
@@ -163,3 +178,5 @@ relations:
             actionframes:
                 - shussei ukeireyuusuru
                 - saikoku houritsukoui
+                - shutoku shoyuu
+                - kizoku shoyuu
