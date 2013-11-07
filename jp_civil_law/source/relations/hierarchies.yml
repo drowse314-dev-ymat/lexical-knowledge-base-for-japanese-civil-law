@@ -17,9 +17,11 @@ relations:
 
                 top concepts:
                     - butsu secondness
-                    - kenri thirdness
-                    - kengen thirdness
-                    - gimu thirdness
+                    - sonzokukikan secondness
+                    - continuous_consensus thirdness
+                    - kenri continuous_consensus
+                    - kengen continuous_consensus
+                    - gimu continuous_consensus
                     - kitei thirdness
                     - youken thirdness
                     - person thirdness
@@ -51,15 +53,15 @@ relations:
                     - eigyou social_activity
                 法律行為:
                     top concepts:
+                        - tandokukoui houritsukoui
                         - seikyuu koushi
-                        - doui houritsukoui
+                        - doui tandokukoui
                         - seigen person_action
                         - kinshi seigen
                         - kyoka person_action
-                        - torikeshi houritsukoui
+                        - torikeshi tandokukoui
                         - tsuuchi person_action
                         - saikoku tsuuchi
-                        - tsuinin houritsukoui
                         - gubi person_action
                 bio:
                     - shussei person_action
@@ -115,10 +117,10 @@ relations:
 
             actionframes:
                 - junyou tekiyou
-                - koushi houritsukoui
-                - rikou houritsukoui
-                - shobun houritsukoui
                 - houritsukoui person_action
+                - koushi tandokukoui
+                - rikou tandokukoui
+                - shobun tandokukoui
                 - ishihyouji person_action
                 - ranyou koushi
                 - sajutsu person_action

@@ -10,6 +10,7 @@ terms:
         - firstness
         - secondness
         - thirdness
+        - continuous consensus
 
     物:
         top:
@@ -59,6 +60,7 @@ terms:
             - 裁判所
             - 家庭裁判所
             - 簡易裁判所
+            - 存続期間
 
     人:
         top:
@@ -106,6 +108,7 @@ terms:
             - person action
             - social activity
             - 法律行為
+            - 単独行為
             - 意思表示
         frames:
             superiors:

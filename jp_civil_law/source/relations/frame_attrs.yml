@@ -9,6 +9,9 @@ relations:
     attr:
         pairs:
 
+            abstract:
+                - continuous_consensus sonzokukikan
+
             actionframes:
                 - houritsukoui ishihyouji
                 - social_activity person_action
