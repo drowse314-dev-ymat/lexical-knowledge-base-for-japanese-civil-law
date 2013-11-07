@@ -26,6 +26,7 @@ relations:
 
             entities:
                 - tochi teichakubutsu
+                - shubutsu juubutsu
 
             legislations:
                 - kitei youken
