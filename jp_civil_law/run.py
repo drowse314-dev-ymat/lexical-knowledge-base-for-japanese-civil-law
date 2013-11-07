@@ -78,6 +78,7 @@ def get_graph(terms_dir, relations_dir):
 
 def save(nx_graph, tofile):
     agraph = networkx.to_agraph(nx_graph)
+    agraph.graph_attr['remincross'] = 'true'
     for node in agraph.nodes():
         node_obj = agraph.get_node(node)
         node_obj.attr['style'] = 'filled'

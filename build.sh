@@ -10,7 +10,7 @@ echo ""
 
 # Generate graph as PNG.
 echo "==> Generate ${BUILD_PATH}/graph.png..."
-dot -Tpng "${BUILD_PATH}/graph.dot" > "${BUILD_PATH}/graph.png"
+dot -Tpdf "${BUILD_PATH}/graph.dot" > "${BUILD_PATH}/graph.pdf"
 echo "==> Done."
 
 # Post process. For re-rendering graph, etc.
