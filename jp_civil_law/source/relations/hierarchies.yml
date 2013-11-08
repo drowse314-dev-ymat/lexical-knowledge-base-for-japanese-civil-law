@@ -91,6 +91,7 @@ relations:
             personals:
                 - person_social_attr thirdness
                 - person_bio_attr thirdness
+                - shingi person_social_attr
                 - kouinouryoku person_social_attr
                 - seishin person_social_attr
                 - miseinensha seigenkouinouryokusha

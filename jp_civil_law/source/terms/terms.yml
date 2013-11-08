@@ -102,6 +102,7 @@ terms:
         attrs:
             - person social attr
             - person bio attr
+            - 信義{shingi}
             - 年齢
             - 成年
             - 未成年
