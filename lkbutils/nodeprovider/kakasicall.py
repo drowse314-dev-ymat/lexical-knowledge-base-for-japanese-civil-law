@@ -26,6 +26,19 @@ CharSet = collections.namedtuple(
     ]
 )
 
+# Valid sets for romanization destination.
+roman_sets = [
+    CharSet.ascii, CharSet.jisroman,
+]
+# Valid conversion order for romanization.
+conversion_order = [
+    CharSet.katakana, CharSet.kanji,
+]
+# Needed bridging set for complete romanization.
+conversion_bridge = [
+    CharSet.hiragana, CharSet.katakana,  # "ー" cannot be romanized by hiragana conversion.
+]
+
 
 def echo(text):
     p = subprocess.Popen(
@@ -55,27 +68,38 @@ def kakasi(from_set, to_set, stdin=None):
     )
     return p
 
-def kakasi_series(targets, to_set=CharSet.ascii, stdin=None):
+def kakasi_romanize_series(targets, to_set=CharSet.ascii, stdin=None):
+    if to_set not in roman_sets:
+        raise ValueError('invalid destination: "{}"'.format(to_set))
     targets = list(targets)
     procs = []
-    procs.append(kakasi(targets.pop(), to_set, stdin=stdin))
-    for target in targets:
-        proc = kakasi(target, to_set, stdin=procs[-1].stdout)
+    prev_stdin = stdin
+
+    for from_set in conversion_order:
+        if from_set in targets:
+            proc = kakasi(from_set, CharSet.hiragana, stdin=prev_stdin)
+            procs.append(proc)
+            prev_stdin = proc.stdout
+
+    for from_set in conversion_bridge:
+        proc = kakasi(from_set, to_set, stdin=prev_stdin)
         procs.append(proc)
+        prev_stdin = proc.stdout
+
     return procs
 
 def romanize(text,
-             targets=(CharSet.kanji, CharSet.katakana, CharSet.hiragana),
+             targets=(CharSet.kanji, CharSet.katakana),
              encoding='utf-8'):
     """Romanize text."""
     echo_text = echo(text)
     init_iconv = iconv(encoding, 'euc-jp', stdin=echo_text.stdout)
-    kakasi_procs = kakasi_series(targets, stdin=init_iconv.stdout)
-    fin_iconv = iconv('euc-jp', encoding, kakasi_procs[-1].stdout)
+    kakasi_romanize_procs = kakasi_romanize_series(targets, stdin=init_iconv.stdout)
+    fin_iconv = iconv('euc-jp', encoding, kakasi_romanize_procs[-1].stdout)
 
     echo_text.stdout.close()
     init_iconv.stdout.close()
-    for kakasi in kakasi_procs:
+    for kakasi in kakasi_romanize_procs:
         kakasi.stdout.close()
     output = fin_iconv.communicate()[0]
     return _prettify(output)

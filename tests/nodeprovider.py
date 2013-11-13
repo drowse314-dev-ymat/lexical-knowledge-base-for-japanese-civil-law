@@ -84,6 +84,9 @@ class Fixtures:
             u'国民の休日': u'kokuminnokyuujitsu',
             u'公共のベランダ': u'koukyounoberanda',
             u'範囲': u'hanni',
+            u'引渡し': u'hikiwatashi',  # kanji-kana mixed
+            u'引渡シ': u'hikiwatashi',  # kanji-katakana mixed
+            u'とらばーゆ': u'torabaayu',
         }
 
     class term_mixtures:
