@@ -1,16 +1,8 @@
 # encoding: utf-8
 
-import yaml
-from lkbutils import RDFLibNodeProvider, RDFLibRelationProvider
+from lkbutils import yamllib, RDFLibNodeProvider, RDFLibRelationProvider
 from lkbutils.relationprovider import Cyclic
 
-
-def parse_yaml(yaml_data):
-    """Parse YAML stiring by PyYAML."""
-    data = yaml.load(yaml_data)
-    if data is None:
-        return {}
-    return data
 
 def leaves_from_struct(data):
     """
@@ -97,7 +89,7 @@ class TermLoader(object):
             +++++++++++++++++++++
         See RDFLibTermLoader.load for options.
         """
-        data = parse_yaml(yaml_data)
+        data = yamllib.parse_yaml(yaml_data)
         data_terms = data.get(u'terms', [])
         data_options = data.get(u'options', {})
         self.load(data_terms, **data_options)
@@ -135,7 +127,7 @@ class YamlTermConfigLoader(object):
                 ...
             +++++++++++++++++++++
         """
-        data = parse_yaml(yaml_data)
+        data = yamllib.parse_yaml(yaml_data)
         data_options = data.get(u'options', {})
         term_loader = klass._create_termloader(**data_options)
 
@@ -248,7 +240,7 @@ class YamlRelationConfigLoader(object):
                     ...
             +++++++++++++++++++++
         """
-        data = parse_yaml(yaml_data)
+        data = yamllib.parse_yaml(yaml_data)
         base_options = data.get(u'options', {})
         relations = data.get(u'relations', {})
         configs = {}
