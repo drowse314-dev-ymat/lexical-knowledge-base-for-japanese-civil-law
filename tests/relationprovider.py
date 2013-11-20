@@ -41,6 +41,39 @@ class Fixtures:
             (u'Yamanashi', u'Kanagawa'),
         ]
 
+    class serialization:
+        names = [
+            u'Ueno', u'Akihabara',
+            u'Harajuku', u'Yoyogi',
+            u'Komagome', u'Tabata',
+            u'Shinagawa', u'Osaki',
+            u'Mejiro', u'Takadanobaba',
+        ]
+        dummy_nodes = {name: rdflib.BNode() for name in names}
+        pairs = [
+            (u'Ueno', u'Akihabara'),
+            (u'Harajuku', u'Yoyogi'),
+            (u'Komagome', u'Tabata'),
+            (u'Shinagawa', u'Osaki'),
+            (u'Mejiro', u'Takadanobaba'),
+        ]
+        opts = dict(
+            dry=True,
+            acyclic=True,
+        )
+        serialized = (
+            u"options:\n"
+            u"    acyclic: true\n"
+            u"    dry: true\n"
+            u"    nointerlinks: false\n"
+            u"pairs:\n"
+            u"- Harajuku Yoyogi\n"
+            u"- Komagome Tabata\n"
+            u"- Mejiro Takadanobaba\n"
+            u"- Shinagawa Osaki\n"
+            u"- Ueno Akihabara\n"
+        )
+
 
 # relation rules checker 
 
@@ -261,3 +294,22 @@ def providers_noconflict():
             relationprovider.noconflict_providers([provider_r1, provider_r2])
         assert error.src == pairs_2[0][0]
         assert error.dest == pairs_2[0][1]
+
+@relationprovider_unit.test
+def serialization():
+    """Serialize registered relations into a YAML."""
+    relation = rdflib.BNode()
+    nodes = Fixtures.serialization.dummy_nodes
+
+    with empty_rdflib_relationprivider(relation=relation,
+                                       **Fixtures.serialization.opts) as rp:
+
+        for pair in Fixtures.serialization.pairs:
+            src, dest = pair
+            nodepair = (nodes[src], nodes[dest])
+            rp.add(
+                nodepair[0], nodepair[1],
+                src_id=src, dest_id=dest,
+            )
+
+        assert rp.serialize() == Fixtures.serialization.serialized

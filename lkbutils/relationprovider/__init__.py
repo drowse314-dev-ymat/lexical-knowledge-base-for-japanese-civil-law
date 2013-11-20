@@ -1,7 +1,8 @@
 # encoding: utf-8
 
+import copy
 import collections
-from lkbutils import nodemodel
+from lkbutils import nodemodel, yamllib
 
 
 class RedundantRelation(ValueError):
@@ -94,7 +95,7 @@ class RelationChecker(object):
             )
 
     def _check_acyclic(self, src, dest):
-        links = self._links.copy()
+        links = copy.deepcopy(self._links)
         links[src].append(dest)
 
         def visit(node):
@@ -143,6 +144,9 @@ class RelationProvider(object):
             relation=relation,
             dry=dry, nointerlinks=nointerlinks, acyclic=acyclic,
         )
+        self._options = dict(
+            dry=dry, nointerlinks=nointerlinks, acyclic=acyclic,
+        )
 
     @property
     def graph(self):
@@ -182,6 +186,29 @@ class RelationProvider(object):
     def link(self, src, dest):
         """Create a link with RelationProvider.relation."""
         self.depending_library.link(self.graph, src, self._relation, dest)
+
+    def serialize(self, nodeprovider=None):
+        """Serialize relations information as YAML."""
+        rel_map = {}
+        rel_map[u'options'] = self._options
+        identifier_getter = self._node_identifier_getter(nodeprovider)
+        rel_map[u'pairs'] = sorted(
+            [
+                u'{} {}'.format(
+                    identifier_getter(src), identifier_getter(dest)
+                )
+                for src, dest in self.relatoinchecker.iterpairs()
+            ]
+        )
+        return yamllib.fancydump(rel_map)
+
+    def _node_identifier_getter(self, nodeprovider):
+        if nodeprovider is None:
+            return lambda node: node
+        else:
+            def getter(node):
+                return nodeprovider.get_identifier_from(node)
+            return getter
 
 
 class RDFLibRelationProvider(RelationProvider):
