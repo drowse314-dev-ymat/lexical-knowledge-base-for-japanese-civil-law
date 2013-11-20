@@ -166,6 +166,11 @@ class RelationLoader(object):
         """Proxy to self._relation_provider.graph."""
         return self._relation_provider.graph
 
+    @property
+    def relationprovider(self):
+        """Proxy to self._relation_provider."""
+        return self._relation_provider
+
     def create_relation_provider(self, **options):
         """Delegate RelationProvider creation to subclasses."""
         return self.relationprovider_class(**options)
