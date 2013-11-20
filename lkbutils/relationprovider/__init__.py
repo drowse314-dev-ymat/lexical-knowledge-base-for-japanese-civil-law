@@ -154,7 +154,7 @@ class RelationProvider(object):
         return self._graph
 
     @property
-    def relatoinchecker(self):
+    def relationchecker(self):
         """Proxy to self._relation_checker."""
         return self._relation_checker
 
@@ -197,7 +197,7 @@ class RelationProvider(object):
                 u'{} {}'.format(
                     identifier_getter(src), identifier_getter(dest)
                 )
-                for src, dest in self.relatoinchecker.iterpairs()
+                for src, dest in self.relationchecker.iterpairs()
             ]
         )
         return yamllib.fancydump(rel_map)
