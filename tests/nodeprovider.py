@@ -118,6 +118,41 @@ class Fixtures:
             }
         not_added = u'rectum'
 
+    class serialization:
+
+        class terms:
+            names = [
+                u'人{hito}', u'権利能力',
+                u'continuous consensus',
+                u'行為能力', u'順位',
+                u'競売{keibai}',
+            ]
+            serialized = (
+                u"load_options:\n"
+                u"    as_property: false\n"
+                u"options:\n"
+                u"    romanize: true\n"
+                u"terms:\n"
+                u"- continuous consensus{continuous_consensus}\n"
+                u"- 人{hito}\n"
+                u"- 順位{junni}\n"
+                u"- 競売{keibai}\n"
+                u"- 権利能力{kenrinouryoku}\n"
+                u"- 行為能力{kouinouryoku}\n"
+            )
+
+        class props:
+            names = [u'hyper', u'status of']
+            serialized = (
+                u"load_options:\n"
+                u"    as_property: true\n"
+                u"options:\n"
+                u"    romanize: false\n"
+                u"terms:\n"
+                u"- hyper{hyper}\n"
+                u"- status of{status_of}\n"
+            )
+
 
 # Adding names.
 
@@ -368,3 +403,17 @@ def merge_node_providers():
         # reference error
         with raises(nodeprovider.NameNotRegistered):
             merged_provider.get(Fixtures.term_mixtures.not_added)
+
+@nodeprovider_unit.test
+def serialization():
+    """Serialize registered names of NodeProvider."""
+
+    with empty_rdflib_nodeprovider(romanize=True) as np:
+        for name in Fixtures.serialization.terms.names:
+            np.add(name)
+        assert np.serialize() == Fixtures.serialization.terms.serialized
+
+    with empty_rdflib_nodeprovider(romanize=False) as np:
+        for name in Fixtures.serialization.props.names:
+            np.add(name, as_property=True)
+        assert np.serialize(as_property=True) == Fixtures.serialization.props.serialized

@@ -2,7 +2,7 @@
 
 import re
 from . import kakasicall
-from lkbutils import nodemodel
+from lkbutils import nodemodel, yamllib
 
 
 class NameRegistrationError(ValueError):
@@ -249,6 +249,22 @@ class NodeProvider(object):
         self._nodestore.update(provider._nodestore)
     def _merge_graph(self, provider):
         self._graph += provider.graph
+
+    def serialize(self, as_property=False):
+        """Serialize terms information as YAML."""
+        name_map = {}
+        name_map[u'options'] = dict(
+            romanize=self.nameprovider._romanize_on
+        )
+        name_map[u'load_options'] = dict(
+            as_property=as_property
+        )
+        ns = self.nameprovider._namestore
+        name_map[u'terms'] = [
+            u'{}{{{}}}'.format(ns[key], key)
+            for key in sorted(ns)
+        ]
+        return yamllib.fancydump(name_map)
 
 
 class RDFLibNodeProvider(NodeProvider):
