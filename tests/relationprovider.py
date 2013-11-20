@@ -27,6 +27,21 @@ def empty_rdflib_relationprivider(**options):
         pass
 
 
+class Fixtures:
+
+    class acyclic:
+        pairs = [
+            (u'Kanagawa', u'Tokyo'),
+            (u'Tokyo', u'Saitama'),
+            (u'Saitama', u'Gumma'),
+            (u'Gumma', u'Nagano'),
+            (u'Nagano', u'Yamanashi'),
+            (u'Nagano', u'Toyama'),
+            (u'Nagano', u'Gifu'),
+            (u'Yamanashi', u'Kanagawa'),
+        ]
+
+
 # relation rules checker 
 
 @relationchecker_unit.test
@@ -70,16 +85,8 @@ def no_interlinks():
 @relationchecker_unit.test
 def acyclic_graph():
     """Do not create cycles under the same relation."""
-    pairs = [
-        (u'Kanagawa', u'Tokyo'),
-        (u'Tokyo', u'Saitama'),
-        (u'Saitama', u'Gumma'),
-        (u'Gumma', u'Nagano'),
-        (u'Nagano', u'Yamanashi'),
-        (u'Nagano', u'Toyama'),
-        (u'Nagano', u'Gifu'),
-        (u'Yamanashi', u'Kanagawa'),
-    ]
+
+    pairs = Fixtures.acyclic.pairs
 
     with empty_relationchecker(relation=u'next_to') as relchkr:
         for pair in pairs:
