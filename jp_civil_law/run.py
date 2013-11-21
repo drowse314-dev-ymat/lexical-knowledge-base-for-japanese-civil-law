@@ -106,6 +106,7 @@ def showdiff(logfile, nodeprovider, relationproviders, logencoding='utf8'):
 
 def save(nx_graph, tofile):
     agraph = networkx.to_agraph(nx_graph)
+    agraph.graph_attr['rankdir'] = 'BT'
     agraph.graph_attr['remincross'] = 'true'
     for node in agraph.nodes():
         node_obj = agraph.get_node(node)
