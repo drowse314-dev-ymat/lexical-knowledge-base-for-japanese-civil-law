@@ -13,5 +13,7 @@ terms:
     in frame:
         - sbj
         - obj
+        - auth
         - auth by
         - attr
+        - within

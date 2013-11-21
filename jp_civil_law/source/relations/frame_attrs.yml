@@ -10,11 +10,32 @@ relations:
         pairs:
 
             abstract:
-                - continuous_consensus sonzokukikan
+                - sonzoku sonzokukikan
+                - rights_and_duties mokuteki
+                - debts_and_credits ganpon
+                - debts_and_credits risoku
+                - risoku riritsu
 
             actionframes:
                 - houritsukoui ishihyouji
+                - joukentsukihouritsukoui jouken
+                - teishijoukentsukihouritsukoui teishijouken
+                - kaijojoukentsukihouritsukoui kaijojouken
+                - ishihyouji ishi
+                - goui shoudaku
                 - social_activity person_action
+                - taikou taikouyouken
+                - keiyaku mokuteki
+                - shuruisaiken shurui
+                - teitoukenshoumetsuseikyuu teitouken
+                - kisai shomen
+                - daikabensai daika
+                - kyouyuu wariai
+                - nehoshoukeiyaku ganponkakuteikijitsu
+                - jouto yuzuriukenin
+
+            contracts:
+                - chijouken chidai
 
             personals:
                 - person person_social_attr
@@ -22,41 +43,120 @@ relations:
                 - seinensha seinen
                 - miseinensha miseinen
                 - kouinouryokusha kouinouryoku
-                - kojin seishin
                 - seinenhikoukennin shougai
                 - hihosanin shougai
                 - hihojonin shougai
+                - kaisha jigyou
 
             entities:
                 - butsu youhou
+                - butsu shurui
+                - butsu hinshitsu
                 - tochi teichakubutsu
                 - shubutsu juubutsu
                 - ganbutsu kajitsu
+                - kinsen ryuutsuukahei
+                - kinsen kingaku
+                - teikikin manki
+                - zaisan kagaku
+                - kanrisha chuuigimu
 
             legislations:
                 - kitei youken
+                - kitei kouka
+                - moushitate saibansho
 
             tangibles:
                 - eigyou houritsukoui
 
+            rights:
+                - teitouken teitoufudousan
+                - touki junni
+                - teitouken junni
+                - teitouken teitoukensetteisha
+                - neteitouken neteitoukensetteisha
+                - neteitouken kyokudogaku
+                - teitoukensetteisha teitoufudousan
+                - tanpoken yuusenken
+                - saiken saikengaku
+                - ganponkakuteikijitsu ganpon
+
+    within:
+        pairs:
+
+            person:
+                - nihonjin nihon
+                - gaikokujin gaikoku
+                - seikatsu kyosho
+                - juusho juushochi
+
+            actionframe:
+                - rikou rikouchi
+
+            entities:
+                - ryuutsuukahei kawasesouba
+                - ryuutsuukahei kuni
+
+            system:
+                - keibaitetsuduki keibai
+                - tanpofudousanshuuekishikkoutetsuduki tanpofudousanshuuekishikkou
+
     sbj:
         pairs:
 
+            物権:
+                総則:
+                    - hendou rights_and_duties
+
             abstract:
                 - person_action person
+                - shoumetsu continuous_consensus
+                - sonzoku continuous_consensus
+                - hoshou hoshounin
+                - shoukei shoukeinin
+                - souzoku souzokunin
+                - rieki juekisha
+                - keizoku kikan
+                - kakutei hanni
 
             法律行為:
                 - ishihyouji honnin
+                - seihi jouken
 
             物・財産:
                 - shoyuu shoyuusha
+                - kyouyuu kyouyuusha
                 - fuzoku juubutsu
                 - kizoku zaisan
                 - kizoku kenri
+                - kanri kanrisha
+                - kyouseitsuuyou ryuutsuukahei
+                - teitou teitoukensetteisha
+                - neteitou neteitoukensetteisha
+                - fuka butsu
+                - jouto joutonin
+                - hikiuke hikiukenin
+                - shutoku shutokusha
+                - kaiuke kaiukenin
 
             personals:
                 - doui protector
                 - benshiki seishin
+                - gappei houjin
+                - kaishabunkatsu kaisha
+
+            rights:
+                - kenri kenrisha
+                - saiken saikensha
+                - saimu saimusha
+                - hoshousaimu hoshounin
+                - kondou rights_and_duties
+                - tanpoken tanpokenja
+                - hitanposaiken tanpokenja
+                - teitouken teitoukenja
+                - neteitouken neteitoukenja
+                - kakuteiseikyuu neteitoukensetteisha
+                - gengakuseikyuu neteitoukensetteisha
 
     obj:
         pairs:
@@ -69,6 +169,13 @@ relations:
                 - shobun zaisan
                 - shobun kenri
                 - saikoku ishihyouji
+                - houki kenri
+                - shoukei person
+                - souzoku hisouzokunin
+                - rieki zaisan
+                - daii kenrisha
+                - shoukan rieki
+                - shoukan hiyou
 
             tangible:
                 - tsuuchi person
@@ -78,30 +185,80 @@ relations:
                 - ukeireyuusuru shiken
 
             法律行為:
+                - settei continuous_consensus
                 - ishihyouji aitegata
 
             物・財産:
-                - shoyuu zaisan
+                - shoyuu shoyuubutsu
+                - senyuu senyuubutsu
+                - kyouyuu kyouyuubutsu
+                - kyouyuu neteitouken
                 - shoyuu kenri
                 - fuzoku shubutsu
                 - shiyou butsu
+                - shuueki butsu
                 - kizoku person
+                - tokusou kenri
                 - shutoku zaisan
-                - shutoku kenri
+                - hikiwatashi zaisan
+                - kanri zaisan
+                - chikuzou tatemono
+                - haitou taika
+                - shiharai kinsen
+                - kyoutaku kyoutakubutsu
+                - gengaku kingaku
+
+            債権:
+                - bensai saimu
+                - tanpo hitanposaiken
+                - baishou songai
+                - entai shiharai
+                - shoukanseikyuu hiyou
+                - nehoshou keizokutekitorihikikeiyaku
+
+            物権:
+                - teitou teitoufudousan
+                - ichibujouto neteitouken
+                - kakuteiseikyuu ganpon
+
+            契約:
+                - chintaishaku zaisan
+                - chinshaku chinshakubutsu
+                - chintai chintaibutsu
+                - koukai saiken
+                - hoshoukeiyaku hoshou
+                - nehoshoukeiyaku nehoshou
+                - goui ishihyouji
 
             personals:
                 - doui seigenkouinouryokusha
+                - setsuritsu houjin
+
+            systematic:
+                - touki bukken
+                - touki chinshakuken
+                - sashiosae zaisan
+                - sashiosae saiken
+                - keibai zaisan
+                - kyouseikanri fudousan
+                - kyouseikanri kajitsu
+                - tanpofudousanshuuekishikkou fudousan
+                - tanpofudousanshuuekishikkou kajitsu
+                - kyakka moushitate
+                - shoumetsujikou kenri
+                - shutokujikou zaisan
+                - soufu shomen
 
     auth_by:
         pairs:
 
             abstract:
-                - kenri kitei
                 - kengen kenri
-                - gimu kitei
 
             rights:
                 - saikoku saikokuken
+                - shoyuu shoyuuken
+                - senyuu senyuuken
 
             personals:
                 - seigenkouinouryokusha protector
@@ -109,6 +266,9 @@ relations:
                 - seinenhikoukennin seinenkoukennin
                 - hihosanin hosanin
                 - hihojonin hojonin
+                - rieki kenri
+                - juusho juushochihou
+                - juushochihou kuni
 
             systematic:
                 - protector start_protection
@@ -117,3 +277,26 @@ relations:
                 - hosanin hosakaishi
                 - hojonin hojokaishi
                 - shinpan kateisaibansho
+                - touki fudousantoukihou
+
+            contracts:
+                - chintaishaku chinshakuken
+                - torihiki keiyaku
+
+    auth:
+        pairs:
+
+            abstract:
+                - kouryoku continuous_consensus
+                - kitei rights_and_duties
+                - tanpoken tanpo
+
+            actionframes:
+                - kouryoku ishihyouji
+                - taikou kenri
+                - taikou houritsukoui
+                - taikouryoku taikou
+                - seikyuuken seikyuu
+
+            legislations:
+                - yuukashouken zaisanken

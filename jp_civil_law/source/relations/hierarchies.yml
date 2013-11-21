@@ -17,14 +17,29 @@ relations:
 
                 top concepts:
                     - butsu secondness
-                    - sonzokukikan secondness
+                    - hanni secondness
+                    - kikan hanni
+                    - sonzokukikan kikan
+                    - jiki secondness
+                    - kijitsu jiki
+                    - ganponkakuteikijitsu kijitsu
+                    - basho secondness
+                    - suuryou secondness
                     - youhou thirdness
+                    - shurui thirdness
+                    - hinshitsu thirdness
+                    - kouryoku thirdness
+                    - mokuteki thirdness
+                    - junni thirdness
+                    - jouken thirdness
+                    - teishijouken jouken
+                    - kaijojouken jouken
                     - continuous_consensus thirdness
-                    - kenri continuous_consensus
-                    - kengen continuous_consensus
-                    - gimu continuous_consensus
-                    - kitei thirdness
-                    - youken thirdness
+                    - rights_and_duties continuous_consensus
+                    - debts_and_credits rights_and_duties
+                    - kenri rights_and_duties
+                    - kengen rights_and_duties
+                    - gimu rights_and_duties
                     - person thirdness
                     - actionframe thirdness
                     - koui actionframe
@@ -32,27 +47,97 @@ relations:
                     - social_activity actionframe
                     - zaisan thirdness
                     - system thirdness
+                    - kiroku thirdness
+                    - touki kiroku
+                    - touki system
+                    - sonzoku actionframe
+                    - souzokukaishi actionframe
 
             rights:
-                top:
-                    - saiken kenri
+
+                物権:
+                    総則:
+                        classes:
+                            - bukken kenri
+                        actionframes:
+                            - hendou actionframe
+                            - iten hendou
+                            - settei houritsukoui
+                            - hikiuke iten
+                            - hikiuke settei
+                            - jouto iten
+                            - jouto settei
+                            - tokusou person_action
+                            - shutoku tokusou
+                        personals:
+                            - joutonin person
+                            - yuzuriukenin shutokusha
+                            - hikiukenin shutokusha
+
                 classes:
+                    - saiken kenri
+                    - tanpoken kenri
                     - saikokuken saiken
+                    - chinshakuken saiken
+                    - honken bukken
+                    - shoyuuken honken
+                    - seigenbukken honken
+                    - youekibukken seigenbukken
+                    - chijouken youekibukken
+                    - eikosakuken youekibukken
+                    - tanpobukken seigenbukken
+                    - tanpobukken tanpoken
+                    - teitouken tanpobukken
+                    - neteitouken teitouken
+                    - kyoudouneteitou kyoudouteitou
+                    - ryuuchiken tanpobukken
+                    - senyuuken bukken
+
+            duties:
+                top:
+                    - saimu gimu
+                    - chuuigimu gimu
 
             actionframes:
                 upper concepts:
                     - kaishaku actionframe
                     - tekiyou actionframe
                     - shinpan actionframe
+                    - hoshou actionframe
+                    - tanpo hoshou
+                    - sashiosae actionframe
+                    - sashiosae system
+                    - keibai actionframe
+                    - kyouseikanri actionframe
+                    - tainoushobun actionframe
+                    - tanpofudousanshuuekishikkou actionframe
+                    - keibai system
+                    - kyouseikanri system
+                    - tainoushobun system
+                    - tanpofudousanshuuekishikkou system
+                    - kyakka actionframe
+                    - teishijoukentsukihouritsukoui joukentsukihouritsukoui
+                    - kaijojoukentsukihouritsukoui joukentsukihouritsukoui
+                    - keizoku actionframe
                 tangibles:
                     - start_protection actionframe
+                    - start_protection tetsuduki
                     - benshiki actionframe
                     - fuzoku actionframe
+                    - fuka actionframe
+                    - fugou fuka
                     - kizoku actionframe
                     - koukenkaishi start_protection
                     - hosakaishi start_protection
                     - hojokaishi start_protection
                     - eigyou social_activity
+                    - kondou actionframe
+                    - shoumetsu actionframe
+                    - kyouseitsuuyou actionframe
+                    - teitoukenshoumetsuseikyuu shoumetsuseikyuu
+                    - seihi actionframe
+                    - kyuufu actionframe
+                    - kakutei actionframe
                 法律行為:
                     top concepts:
                         - tandokukoui houritsukoui
@@ -67,13 +152,41 @@ relations:
                         - tsuuchi person_action
                         - saikoku tsuuchi
                         - gubi person_action
+                        - taikou person_action
                         - shiyou person_action
-                        - shutoku person_action
+                        - ichibujouto jouto
+                        - hikiwatashi tandokukoui
+                        - kanri person_action
+                        - teitou person_action
+                        - houki tandokukoui
+                        - shoukei person_action
+                        - rieki person_action
+                        - soufu person_action
+                        - kisai person_action
+                        - moushitate person_action
+                        - uttae moushitate
+                        - chikuzou person_action
+                        - kaiuke shutoku
+                        - kyoutaku tandokukoui
+                        - shuueki tandokukoui
+                        - shiharai tandokukoui
+                        - entai person_action
+                        - torihiki person_action
+                        - koutai person_action
+                        - gappei person_action
+                        - setsuritsu person_action
+                        - bunkatsu person_action
+                        - kaishabunkatsu bunkatsu
+                        - gengaku person_action
                 bio:
                     - shussei person_action
                 static:
                     - ukeireyuusuru person_action
-                    - shoyuu person_action
+                    - senyuu person_action
+
+            契約:
+                - chintaishaku keiyaku
+                - koukai keiyaku
 
             entities:
                 top concepts:
@@ -84,57 +197,167 @@ relations:
                 不動産:
                     - tochi fudousan
                     - teichakubutsu fudousan
+                    - tatemono teichakubutsu
+                    - teitouchi teitoufudousan
                 動産:
                     - mukimeisaiken dousan
                     - kinsen dousan
+                    - ryuutsuukahei shurui
+                    - ryuutsuukahei continuous_consensus
+                    - kawasesouba thirdness
+                    - kawasesouba wariai
+                    - kingaku suuryou
+                    - saikengaku kingaku
+                契約:
+                    - mokutekibutsu mokuteki
+                    - ganpon thirdness
+                    - risoku teikikin
+                    - chidai teikikin
+                    - riritsu thirdness
+                    - riritsu wariai
+                    - houteiriritsu riritsu
 
             personals:
-                - person_social_attr thirdness
-                - person_bio_attr thirdness
-                - shingi person_social_attr
-                - kouinouryoku person_social_attr
-                - seishin person_social_attr
-                - miseinensha seigenkouinouryokusha
-                - seinenhikoukennin seigenkouinouryokusha
-                - hihosanin seigenkouinouryokusha
-                - hihojonin seigenkouinouryokusha
-                - houteidairinin dairinin
-                - koukennin protector
-                - houteidairinin koukennin
-                - seinenkoukennin koukennin
-                - hosanin protector
-                - hojonin protector
-                - nenrei person_bio_attr
+                top:
+                    - houjin continuous_consensus
+                    - kaisha houjin
+                    - person_social_attr thirdness
+                    - person_bio_attr thirdness
+                    - shingi person_social_attr
+                    - ishi person_social_attr
+                行為能力:
+                    - kouinouryoku person_social_attr
+                    - seishin person_social_attr
+                    - miseinensha seigenkouinouryokusha
+                    - seinenhikoukennin seigenkouinouryokusha
+                    - hihosanin seigenkouinouryokusha
+                    - hihojonin seigenkouinouryokusha
+                    - houteidairinin dairinin
+                    - koukennin protector
+                    - houteidairinin koukennin
+                    - seinenkoukennin koukennin
+                    - hosanin protector
+                    - hojonin protector
+                bio:
+                    - nenrei person_bio_attr
+                    - seikatsu person_bio_attr
+                    - kyosho person_bio_attr
+                social:
+                    - namae person_social_attr
+                債権:
+                    - aitegata toujisha
+                    - honnin toujisha
+                    - hoshounin saimusha
+                    - juekisha person
+                    - daikabensai bensai
+                    - saimufurikou furikou
+                rights:
+                    - tanpokenja kenrisha
+                    - teitoukenja tanpokenja
+                    - neteitoukenja teitoukenja
+                    - neteitoukensetteisha teitoukensetteisha
 
             legislations:
                 top concepts:
+                    - kitei system
+                    - youken system
+                    - kouka system
                     - hourei kitei
                     - houritsu hourei
                     - jouyaku hourei
                 classes:
                     - houshiki youken
+                    - tetsuduki houshiki
+                    - keibaitetsuduki tetsuduki
+                    - tanpofudousanshuuekishikkoutetsuduki tetsuduki
+                    - soufu tetsuduki
+                    - shomen houshiki
+                    - fudousantoukihou houritsu
+                    - shoukoshouken shouken
+                    - yuukashouken shouken
+                    - tegata yuukashouken
+                    - kogitte yuukashouken
+                    - start_bankruptcy actionframe
+                    - start_bankruptcy tetsuduki
+                    - hasantetsudukikaishi start_bankruptcy
+                    - saiseitetsudukikaishi start_bankruptcy
+                    - kouseitetsudukikaishi start_bankruptcy
+                    - tokubetsuseisankaishi start_bankruptcy
 
             system:
                 - saibansho system
                 - kannisaibansho saibansho
                 - kateisaibansho saibansho
+                - kuni system
 
     status_of:
         pairs:
 
+            権利:
+
+                総則:
+                    - zaisanken kenri
+                    - shiken kenri
+
+            物権:
+                総則:
+                    legislations:
+                        - sousetsu kitei
+
             rights:
-                - shiken kenri
+                - saiken debts_and_credits
+                - shuruisaiken saiken
+                - kinsensaiken saiken
+                - seikyuuken saiken
+                - hitanposaiken saiken
+                - yuusenken saiken
+                - houteichijouken chijouken
+                - chijouken teitoufudousan
+                - eikosakuken teitoufudousan
+                - kyoudouteitou teitouken
+                - kyoudouneteitou neteitouken
+                - ruisekineteitou neteitouken
+                - juushochihou houritsu
+
+            duties:
+                - saimu debts_and_credits
+                - hoshousaimu saimu
 
             actionframes:
                 - junyou tekiyou
                 - houritsukoui person_action
+                - joukentsukihouritsukoui houritsukoui
                 - koushi tandokukoui
                 - rikou tandokukoui
+                - bensai rikou
+                - baishou bensai
+                - songaibaishou baishou
                 - shobun tandokukoui
                 - ishihyouji person_action
+                - goui person_action
+                - shoudaku ishihyouji
                 - ranyou koushi
                 - sajutsu person_action
                 - tsuinin doui
+                - shoyuu senyuu
+                - kyouyuu shoyuu
+                - hozon kanri
+                - rigaikankei continuous_consensus
+                - shoumetsuseikyuu seikyuu
+                - kakuteiseikyuu seikyuu
+                - gengakuseikyuu seikyuu
+                - shoukanseikyuu seikyuu
+                - jouju seihi
+                - haitou kyuufu
+                - kyoutaku kyuufu
+                - daii person_action
+                - neteitou teitou
+                - furikou rikou
+                - nehoshou hoshou
+                - jigyou eigyou
+                - shoukan shiharai
+                - anbun haitou
+                - jikoushutoku shutoku
 
             entities:
                 - yuutaibutsu butsu
@@ -145,33 +368,106 @@ relations:
                 - ganbutsu zaisan
                 - taika zaisan
                 - houteikajitsu taika
+                - daika taika
+                - daika kagaku
+                - hiyou taika
                 - sanshutsubutsu butsu
                 - tennenkajitsu sanshutsubutsu
+                - tokuteibutsu zaisan
+                - mokutekibutsu zaisan
+                - chuutou hinshitsu
+                - rikouchi basho
+                - juushochi basho
+                - teitoufudousan fudousan
+                - teitouchi tochi
+                - douitsujunni junni
+                - doujunni junni
+                - senjunni junni
+                - jijunni junni
+                - koujunni junni
+                - teikikin kinsen
+                - chintaibutsu zaisan
+                - chinshakubutsu zaisan
+                - furieki rieki
+                - songai furieki
+                - fuki kiroku
+                - kagaku kingaku
+                - kyokudogaku kingaku
+                - manki jiki
+                - wariai hanni
+                - kyoutakubutsu butsu
+                - senyuubutsu zaisan
+                - shoyuubutsu senyuubutsu
+                - kyouyuubutsu shoyuubutsu
+                - hitsuyouhi hiyou
+                - yuuekihi hiyou
 
             personals:
                 top:
                     - kojin person
+                    - houjin person
                     - gaikokujin person
+                    - nihonjin person
                 bio:
                     - seinensha kojin
                     - miseinensha kojin
                     - seinen nenrei
                     - miseinen nenrei
                     - shougai seishin
+                    - juusho kyosho
+                    - karijuusho juusho
                 property:
-                    - shoyuusha person
+                    - senyuusha person
+                    - shoyuusha senyuusha
+                    - kyouyuusha shoyuusha
+                    - kanrisha person
+                    - shutokusha person
+                    - kaiukenin shutokusha
                 claim:
                     - seigenkouinouryokusha kojin
                     - kouinouryokusha kojin
                     - protector person
                     - dairinin person
                 roles:
-                    - aitegata person
-                    - honnin person
+                    - toujisha person
+                    - daisansha person
+                    - shoukeinin person
+                rights:
+                    - kenrisha person
+                    - teitoukensetteisha person
+                    - saikensha kenrisha
+                    - saimusha person
 
             legislations:
                 - seigen kitei
                 - kyoka kitei
+                - jikou kitei
+                - jikou continuous_consensus
+                - shutokujikou jikou
+                - shoumetsujikou jikou
+                - taikouyouken youken
+                - shomen ishihyouji
+                - shomen kiroku
+                - shouken shomen
+                - taikouryoku thirdness
+
+            system:
+                - gaikoku kuni
+                - nihon kuni
+
+            contracts:
+                - chinshaku chintaishaku
+                - chintai chintaishaku
+                - keizokutekitorihikikeiyaku keiyaku
+                - hoshoukeiyaku keiyaku
+                - nehoshoukeiyaku hoshoukeiyaku
+
+            相続:
+                actionframe:
+                    - souzoku shoukei
+                personal:
+                    - souzokunin shoukeinin
+                    - hisouzokunin person
 
     results:
         pairs:
@@ -181,3 +477,31 @@ relations:
                 - saikoku houritsukoui
                 - shutoku shoyuu
                 - kizoku shoyuu
+                - kondou shoumetsu
+                - rieki rigaikankei
+                - shoumetsuseikyuu shoumetsu
+                - shoukanseikyuu shoukan
+                - kakuteiseikyuu kakutei
+                - gengakuseikyuu gengaku
+                - sashiosae keibai
+                - keibai kaiuke
+                - sashiosae kyouseikanri
+                - youken kouka
+                - kyoutaku bensai
+                - shuueki kajitsu
+
+            物権:
+                総則:
+                    actionframes:
+                        - settei hendou
+
+            rights:
+                - teitou teitouken
+                - neteitou neteitouken
+                - tanpoken keibai
+                - tanpoken tanpofudousanshuuekishikkou
+                - shoumetsujikou shoumetsu
+                - shutokujikou jikoushutoku
+
+            相続:
+                - souzokukaishi souzoku
