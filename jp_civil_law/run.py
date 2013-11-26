@@ -58,10 +58,6 @@ def get_relation_loaders(src_dir, nodeprovider=None):
         for yml in yaml_texts_in(src_dir)
     ]
 
-    sum_len_keys = sum([len(rlmap) for rlmap in relation_loader_maps])
-    len_merged_keys = len(set(sum([list(rlmap.keys()) for rlmap in relation_loader_maps], [])))
-    assert (sum_len_keys == len_merged_keys), 'multiple definitions for some relation'
-
     relation_loaders = sum(
         [
             list(rlmap[r] for r in sorted(rlmap))
