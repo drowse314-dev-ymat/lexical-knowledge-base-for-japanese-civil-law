@@ -104,7 +104,9 @@ def showdiff(logfile, nodeprovider, relationproviders, logencoding='utf8'):
     with open(logfile, 'wb') as log:
         log.write(serialized.encode(logencoding))
 
-def save(nx_graph, tofile):
+def save(nx_graph, tofile, cut_solos=False):
+    if cut_solos:
+        remove_solos(nx_graph)
     agraph = networkx.to_agraph(nx_graph)
     agraph.graph_attr['rankdir'] = 'BT'
     agraph.graph_attr['remincross'] = 'true'
@@ -116,12 +118,18 @@ def save(nx_graph, tofile):
     agraph.layout('twopi')
     agraph.write(tofile)
 
+def remove_solos(nx_graph):
+    degs = nx_graph.degree()
+    for node in degs:
+        if degs[node] == 0:
+            nx_graph.remove_node(node)
+
 
 def run(args):
     print('start build from {{"{}", "{}"}}'.format(args.terms_dir, args.relations_dir))
     rdflib_graph = get_graph(args.terms_dir, args.relations_dir, log=args.tracking_log)
     nx_graph = rdflib_to_networkx(rdflib_graph)
-    save(nx_graph, args.build_destination)
+    save(nx_graph, args.build_destination, cut_solos=args.cut_solos)
     print('done. saved to "{}"'.format(args.build_destination))
 
 
@@ -131,5 +139,6 @@ if __name__ == '__main__':
     argparser.add_argument('-r', '--relations_dir', default=RELATIONS_DIR)
     argparser.add_argument('-o', '--build_destination', default=BUILD_DESTINATION)
     argparser.add_argument('-l', '--tracking_log', default=TRACKING_LOG)
+    argparser.add_argument('--cut_solos', action='store_true', default=False)
     args = argparser.parse_args()
     run(args)

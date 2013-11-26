@@ -2,9 +2,17 @@ set -e
 
 BUILD_PATH='./jp_civil_law/build'
 
+# Prune solo nodes in view?
+CUT_SOLOS=""
+while getopts "c" flag; do
+  case $flag in
+    c) CUT_SOLOS=" --cut_solos";;
+  esac
+done
+
 # Load rdflib graph.
 echo "==> Run 'python -m jp_civil_law.run'..."
-python -m jp_civil_law.run
+python -m jp_civil_law.run $CUT_SOLOS
 echo "==> Finished."
 echo ""
 
