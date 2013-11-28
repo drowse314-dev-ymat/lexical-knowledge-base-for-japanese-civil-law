@@ -114,6 +114,14 @@ def save(nx_graph, tofile, cut_solos=False):
     agraph.layout('twopi')
     agraph.write(tofile)
 
+def filter_target(nx_graph, target_nodes=None, target_rels=None):
+    if target_nodes is not None:
+        to_remove = set(nx_graph.nodes()).difference(target_nodes)
+        nx_graph.remove_nodes_from(to_remove)
+    if target_rels is not None:
+        to_remove = set(nx_graph.edges()).difference(target_rels)
+        nx_graph.remove_edges_from(to_remove)
+
 def remove_solos(nx_graph):
     degs = nx_graph.degree()
     for node in degs:
