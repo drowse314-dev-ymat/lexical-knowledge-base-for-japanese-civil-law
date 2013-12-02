@@ -100,7 +100,7 @@ def showdiff(logfile, nodeprovider, relationproviders, logencoding='utf8'):
     with open(logfile, 'wb') as log:
         log.write(serialized.encode(logencoding))
 
-def save(nx_graph, tofile, cut_solos=False):
+def save_graph(nx_graph, tofile, cut_solos=False):
     if cut_solos:
         remove_solos(nx_graph)
     agraph = networkx.to_agraph(nx_graph)
@@ -133,7 +133,7 @@ def run(args):
     print('start build from {{"{}", "{}"}}'.format(args.terms_dir, args.relations_dir))
     rdflib_graph = get_graph(args.terms_dir, args.relations_dir, log=args.tracking_log)
     nx_graph = rdflib_to_networkx(rdflib_graph)
-    save(nx_graph, args.build_destination, cut_solos=args.cut_solos)
+    save_graph(nx_graph, args.build_destination, cut_solos=args.cut_solos)
     print('done. saved to "{}"'.format(args.build_destination))
 
 
