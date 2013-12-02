@@ -8,6 +8,7 @@ from lkbutils import (
     rdflib_load_terms,
     rdflib_load_relations,
     rdflib_to_networkx,
+    yamllib,
 )
 from lkbutils.nodeprovider import (
     merge_nodeproviders,
@@ -15,6 +16,7 @@ from lkbutils.nodeprovider import (
 from lkbutils.relationprovider import (
     noconflict_providers,
 )
+from lkbutils.declarative import leaves_from_struct
 
 
 def path_from_me(path):
@@ -27,36 +29,53 @@ TERMS_DIR = path_from_me('./source/terms')
 RELATIONS_DIR = path_from_me('./source/relations')
 
 TRACKING_LOG = path_from_me('./build/definitions.log')
+WHITELIST = path_from_me('./build/files_to_load.yml')
 
 
 def read_unicode(path, encoding='utf-8'):
     bytetext = open(path, 'rb').read()
     return bytetext.decode(encoding)
 
-def yaml_files_in(directly):
+def yaml_files_in(directly, whitelist=None):
     for root, dirs, files in os.walk(directly):
         for f in files:
             if f.endswith('.yml'):
                 path = os.path.sep.join([root, f])
                 print('    + .yml found: "{}"'.format(path))
-                yield path
+                if whitelist is not None and f not in whitelist:
+                    yield path, False
+                else:
+                    yield path, True
 
-def yaml_texts_in(directly):
-    for path in yaml_files_in(directly):
-        yield read_unicode(path)
+def yaml_texts_in(directly, whitelist=None):
+    for path, white in yaml_files_in(directly, whitelist=whitelist):
+        yield read_unicode(path), white
 
-def get_node_provider(src_dir):
-    node_providers = [
-        rdflib_load_terms(yml).nodeprovider
-        for yml in yaml_texts_in(src_dir)
-    ]
-    return merge_nodeproviders(*node_providers)
+def get_node_provider(src_dir, whitelist=None):
+    node_providers = []
+    white_nodes = []
+    for yml, white in yaml_texts_in(src_dir, whitelist=whitelist):
+        provider = rdflib_load_terms(yml).nodeprovider
+        node_providers.append(provider)
+        if white:
+            white_nodes.extend(provider.nameprovider.origin_names)
+    return merge_nodeproviders(*node_providers), white_nodes
 
-def get_relation_loaders(src_dir, nodeprovider=None):
-    relation_loader_maps = [
-        rdflib_load_relations(yml, nodeprovider=nodeprovider)
-        for yml in yaml_texts_in(src_dir)
-    ]
+def get_relation_loaders(src_dir, nodeprovider=None, whitelist=None):
+    relation_loader_maps = []
+    white_rels = []
+    for yml, white in yaml_texts_in(src_dir, whitelist=whitelist):
+        loader_map = rdflib_load_relations(yml, nodeprovider=nodeprovider)
+        relation_loader_maps.append(loader_map)
+        if white:
+            pairs = []
+            for loader in loader_map.values():
+                pairs.extend(list(loader.relationprovider.relationchecker.iterpairs()))
+            for src, dest in pairs:
+                white_rels.append(
+                    (nodeprovider.get_origin_name_from(src),
+                     nodeprovider.get_origin_name_from(dest))
+                )
 
     relation_loaders = sum(
         [
@@ -66,21 +85,36 @@ def get_relation_loaders(src_dir, nodeprovider=None):
         [],
     )
     check_relation_conflicts(relation_loaders, nodeprovider)
-    return relation_loaders
+    return relation_loaders, white_rels
 
 def check_relation_conflicts(relation_loaders, nodeprovider):
     providers = [rl._relation_provider for rl in relation_loaders]
     noconflict_providers(providers, nodeprovider=nodeprovider)
 
-def get_graph(terms_dir, relations_dir, log=TRACKING_LOG):
-    nodeprovider = get_node_provider(terms_dir)
-    relation_loaders = get_relation_loaders(relations_dir, nodeprovider=nodeprovider)
+def get_graph(terms_dir, relations_dir, log=TRACKING_LOG, use_whitelist=False):
+    if use_whitelist:
+        whitelist = load_whitelist()
+    else:
+        whitelist = None
+    nodeprovider, white_nodes = get_node_provider(terms_dir, whitelist=whitelist)
+    relation_loaders, white_rels = get_relation_loaders(relations_dir, nodeprovider=nodeprovider, whitelist=whitelist)
     showdiff(log, nodeprovider, [rl.relationprovider for rl in relation_loaders])
     graph = sum(
         [rl.graph for rl in relation_loaders],
         nodeprovider.graph
     )
-    return graph
+    return graph, white_nodes, white_rels
+
+def load_whitelist(src=WHITELIST):
+    try:
+        yaml = read_unicode(src)
+    except IOError:
+        return None
+    data = yamllib.parse_yaml(yaml)
+    whitelist = list(leaves_from_struct(data))
+    if not whitelist:
+        return None
+    return whitelist
 
 def showdiff(logfile, nodeprovider, relationproviders, logencoding='utf8'):
     serialized = u"---\n"
@@ -131,8 +165,11 @@ def remove_solos(nx_graph):
 
 def run(args):
     print('start build from {{"{}", "{}"}}'.format(args.terms_dir, args.relations_dir))
-    rdflib_graph = get_graph(args.terms_dir, args.relations_dir, log=args.tracking_log)
+    rdflib_graph, white_nodes, white_rels = get_graph(
+        args.terms_dir, args.relations_dir, log=args.tracking_log, use_whitelist=args.use_whitelist,
+    )
     nx_graph = rdflib_to_networkx(rdflib_graph)
+    filter_target(nx_graph, white_nodes, white_rels)
     save_graph(nx_graph, args.build_destination, cut_solos=args.cut_solos)
     print('done. saved to "{}"'.format(args.build_destination))
 
@@ -143,6 +180,7 @@ if __name__ == '__main__':
     argparser.add_argument('-r', '--relations_dir', default=RELATIONS_DIR)
     argparser.add_argument('-o', '--build_destination', default=BUILD_DESTINATION)
     argparser.add_argument('-l', '--tracking_log', default=TRACKING_LOG)
+    argparser.add_argument('-w', '--use_whitelist', action='store_true', default=False)
     argparser.add_argument('--cut_solos', action='store_true', default=False)
     args = argparser.parse_args()
     run(args)
