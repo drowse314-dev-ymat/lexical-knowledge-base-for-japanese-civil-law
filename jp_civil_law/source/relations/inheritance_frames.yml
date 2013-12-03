@@ -1,0 +1,18 @@
+options:
+
+    dry: yes
+    acyclic: yes
+
+relations:
+
+    sbj:
+        pairs:
+
+            相続一般:
+            - souzoku souzokunin
+
+    obj:
+        pairs:
+
+            相続一般:
+            - souzoku hisouzokunin

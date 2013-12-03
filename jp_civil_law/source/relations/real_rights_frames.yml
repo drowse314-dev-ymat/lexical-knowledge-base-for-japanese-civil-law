@@ -1,0 +1,116 @@
+options:
+    dry: yes
+
+relations:
+
+    attr:
+        pairs:
+
+            物権一般(総則等):
+                system:
+                - touki junni
+
+            担保:
+            - tanpoken yuusenken
+
+            共有:
+            - kyouyuu kyouyuumochibun
+
+            地上権:
+            - chijouken chidai
+
+            抵当権:
+            - teitouken teitoufudousan
+            - teitouken junni
+            - teitouken teitoukensetteisha
+            - teitoukensetteisha teitoufudousan
+            - teitoukenshoumetsuseikyuu teitouken
+
+
+            根抵当(権):
+            - neteitouken neteitoukensetteisha
+
+            強制執行関連:
+            - keibai keibaitetsuduki
+            - tanpofudousanshuuekishikkou tanpofudousanshuuekishikkoutetsuduki
+
+    sbj:
+        pairs:
+
+            担保:
+            - tanpoken tanpokenja
+            - hitanposaiken tanpokenja
+
+            占有(権):
+            - senyuu senyuusha
+
+            所有(権):
+            - shoyuu shoyuusha
+
+            共有:
+            - kyouyuu kyouyuusha
+
+            抵当権:
+            - teitou teitoukensetteisha
+            - teitouken teitoukenja
+
+            根抵当(権):
+            - neteitou neteitoukensetteisha
+            - neteitouken neteitoukenja
+
+            強制執行関連:
+            - kaiuke kaiukenin
+    obj:
+        pairs:
+
+            物権一般(総則等):
+                system:
+                - touki bukken
+                - touki chinshakuken
+
+            担保:
+            - tanpo hitanposaiken
+
+            占有(権):
+            - senyuu senyuubutsu
+
+            所有(権):
+            - shoyuu shoyuubutsu
+
+            共有:
+            - kyouyuu kyouyuubutsu
+
+            抵当権:
+            - teitou teitoufudousan
+
+            根抵当(権):
+            - kyouyuu neteitouken
+            - ichibujouto neteitouken
+
+            強制執行関連:
+            - sashiosae zaisan
+            - sashiosae saiken
+            - keibai zaisan
+            - kyouseikanri fudousan
+            - kyouseikanri kajitsu
+            - tanpofudousanshuuekishikkou fudousan
+            - tanpofudousanshuuekishikkou kajitsu
+
+    auth:
+        pairs:
+
+            担保:
+            - tanpoken tanpo
+
+    auth_by:
+        pairs:
+
+            物権一般(総則等):
+                system:
+                - touki fudousantoukihou
+
+            占有(権):
+            - senyuu senyuuken
+
+            所有(権):
+            - shoyuu shoyuuken

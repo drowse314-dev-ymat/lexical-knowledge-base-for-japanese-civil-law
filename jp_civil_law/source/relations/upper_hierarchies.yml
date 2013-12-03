@@ -1,0 +1,226 @@
+options:
+    acyclic: yes
+    dry: yes
+
+relations:
+
+    hyper:
+        pairs:
+
+            roots:
+            - firstness root
+            - secondness root
+            - thirdness root
+            system:
+            - system thirdness
+            action frames:
+            - continuous_consensus thirdness
+            - rights_and_duties continuous_consensus
+            - actionframe thirdness
+            - koui actionframe
+            - person_action koui
+            - social_activity actionframe
+            person:
+            - person thirdness
+
+            抽象動詞:
+            - shoumetsu actionframe
+            - sonzoku actionframe
+            - kizoku actionframe
+            - bunkatsu person_action
+            - kakutei actionframe
+            - keizoku actionframe
+            - hendou actionframe
+            - iten hendou
+
+            抽象属性:
+            - kouryoku thirdness
+            - hanni secondness
+            - suuryou secondness
+            - sonzokukikan kikan
+            - kiroku thirdness
+            - junni thirdness
+
+            実体など:
+            - butsu secondness
+            - basho secondness
+
+            時間:
+            - kikan hanni
+            - jiki secondness
+            - kijitsu jiki
+
+            常識概念:
+            - eigyou social_activity
+            - soufu person_action
+            - kisai person_action
+            - chikuzou person_action
+            - koutai person_action
+            - soufu tetsuduki
+
+            補助概念:
+                person:
+                - person_social_attr thirdness
+                - person_bio_attr thirdness
+                rights:
+                - mokuteki thirdness
+
+            権利・義務:
+                entities:
+                - kenri rights_and_duties
+                - kengen rights_and_duties
+                - gimu rights_and_duties
+                actions:
+                - kondou actionframe
+                - tokusou person_action
+                - shutoku tokusou
+                - jouto iten
+                - jouto settei
+                - hikiuke iten
+                - hikiuke settei
+                - shoukei person_action
+                - houki tandokukoui
+                - shoyuu person_action
+                person roles:
+                - shutokusha person
+                - yuzuriukenin shutokusha
+                - hikiukenin shutokusha
+                - shoyuusha person
+
+            メタ概念:
+                entities:
+                    concepts:
+                    - kitei system
+                    - youken system
+                    - houshiki youken
+                    - tetsuduki houshiki
+                    - kouka system
+                    - hourei kitei
+                    - houritsu hourei
+                    - jouyaku hourei
+                    - taikouryoku thirdness
+                    real:
+                    - shomen houshiki
+                    - saibansho system
+                    - kannisaibansho saibansho
+                    - kateisaibansho saibansho
+                actions:
+                - gubi person_action
+                - kaishaku actionframe
+                - tekiyou actionframe
+                - shinpan actionframe
+                - moushitate person_action
+                - uttae moushitate
+                - kyakka actionframe
+                - taikou person_action
+
+            証券:
+                classes:
+                - shoukoshouken shouken
+                - yuukashouken shouken
+                - tegata yuukashouken
+                - kogitte yuukashouken
+
+            法律行為・意思表示:
+                actions:
+                - tandokukoui houritsukoui
+                - joukentsukihouritsukoui houritsukoui
+                - teishijoukentsukihouritsukoui joukentsukihouritsukoui
+                - kaijojoukentsukihouritsukoui joukentsukihouritsukoui
+                - keiyaku houritsukoui
+                - keiyaku continuous_consensus
+                - doui tandokukoui
+                - torikeshi tandokukoui
+                - tsuuchi person_action
+                supporting classes:
+                - aitegata toujisha
+                - honnin toujisha
+                attrs:
+                - jouken thirdness
+                - teishijouken jouken
+                - kaijojouken jouken
+                attr actions:
+                - seihi actionframe
+
+    status_of:
+        pairs:
+
+            抽象属性:
+            - wariai hanni
+            - fuki kiroku
+            - douitsujunni junni
+            - doujunni junni
+            - senjunni junni
+            - jijunni junni
+            - koujunni junni
+
+            常識概念:
+            - jigyou eigyou
+
+            権利・義務:
+                entities:
+                - shiken kenri
+                - zaisanken kenri
+                actions:
+                - koushi tandokukoui
+                - rikou tandokukoui
+                - ranyou koushi
+                - furikou rikou
+                - tsuinin doui
+                - daii person_action
+                person roles:
+                - kenrisha person
+                - joutonin person
+                - shoukeinin person
+                attrs:
+                - rikouchi basho
+
+            メタ概念:
+                entities:
+                - taikouyouken youken
+                - shomen ishihyouji
+                - shomen kiroku
+                - shouken shomen
+                actions:
+                - kyoka kitei
+                - kyoka person_action
+                - seigen kitei
+                - seigen person_action
+                - kinshi seigen
+                - sousetsu kitei
+                - junyou tekiyou
+
+            法律行為・意思表示:
+                actions:
+                - houritsukoui person_action
+                - ishihyouji person_action
+                - shoudaku ishihyouji
+                - goui person_action
+                - sajutsu person_action
+                supporting classes:
+                - toujisha person
+                - daisansha person
+                attr actions:
+                - jouju seihi
+
+            法律行為-動詞:
+                actions:
+                - shobun tandokukoui
+                - settei shobun
+
+    results:
+        pairs:
+
+            抽象動詞:
+            - kizoku shoyuu
+
+            権利・義務:
+            - kondou shoumetsu
+            - shutoku shoyuu
+
+            メタ概念:
+            - youken kouka
+
+            法律行為-動詞:
+                actions:
+                - settei hendou

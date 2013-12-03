@@ -1,0 +1,29 @@
+options:
+
+    dry: yes
+    acyclic: yes
+
+relations:
+
+    hyper:
+        pairs:
+
+            相続一般:
+                actions:
+                - souzokukaishi actionframe
+
+    status_of:
+        pairs:
+
+            相続一般:
+                actions:
+                - souzoku shoukei
+                person roles:
+                - souzokunin shoukeinin
+                - hisouzokunin person
+
+    results:
+        pairs:
+
+            相続一般:
+            - souzokukaishi souzoku

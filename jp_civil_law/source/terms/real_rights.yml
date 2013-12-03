@@ -1,0 +1,120 @@
+options:
+    romanize: yes
+
+terms:
+
+    物権一般(総則等):
+
+        classes:
+        - 物権{bukken}
+        - 本権
+        - 制限物権{seigenbukken}  # not included in law
+        - 用益物権{youekibukken}  # not included in law
+        - 担保物権{tanpobukken}   # not included in law
+        - 担保権
+        system:
+        - 登記
+        - 不動産登記法
+        actions:
+        - 時効取得
+
+    担保:
+        actions:
+        - 担保
+        person roles:
+        - 担保権者{tanpokenja}  # not included in law
+        attrs:
+        - 被担保債権
+
+    占有(権):
+
+        classes:
+        - 占有権
+        actions:
+        - 占有
+        person roles:
+        - 占有者{senyuusha}
+        attrs:
+        - 占有物{senyuubutsu}
+
+    所有(権):
+
+        classes:
+        - 所有権
+        attrs:
+        - 所有物
+
+    共有:
+
+        actions:
+        - 共有
+        person roles:
+        - 共有者{kyouyuusha}
+        attrs:
+        - 共有物
+        - 共有持分
+
+    地上権:
+
+        classes:
+        - 地上権
+        attrs:
+        - 地代
+
+    永小作権:
+        classes:
+        - 永小作権{eikosakuken}
+
+    留置権:
+        classes:
+        - 留置権
+
+    質権:
+        classes:
+        - 質権
+
+    抵当権:
+        classes:
+        - 抵当権
+        - 共同抵当
+        actions:
+        - 抵当  # not included in law
+        - 抵当権消滅請求
+        person roles:
+        - 抵当権者{teitoukenja}
+        - 抵当権設定者{teitoukensetteisha}
+        attrs:
+        - 抵当不動産
+        - 抵当地
+        - 法定地上権
+
+    根抵当(権):
+        classes:
+        - 根抵当権
+        - 共同根抵当
+        - 累積根抵当
+        actions:
+        - 根抵当  # not included in law
+        - 一部譲渡  # not included in law
+        person roles:
+        - 根抵当権者{neteitoukenja}
+        - 根抵当権設定者{neteitoukensetteisha}
+
+    強制執行関連:
+        actions:
+        - 差押え{sashiosae}
+        - 競売{keibai}
+        - 滞納処分
+        - 強制管理
+        - 担保不動産収益執行
+        - start bankruptcy
+        - 破産手続開始
+        - 再生手続開始
+        - 更生手続開始
+        - 特別清算開始
+        - 買受け{kaiuke}  # not included in law
+        system:
+        - 競売手続{keibaitetsuduki}
+        - 担保不動産収益執行手続
+        person roles:
+        - 買受人{kaiukenin}

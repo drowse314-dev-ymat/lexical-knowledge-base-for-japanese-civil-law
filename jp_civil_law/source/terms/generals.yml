@@ -1,0 +1,179 @@
+options:
+    romanize: yes
+
+terms:
+
+    常識概念:
+
+        system:
+        - 国
+        - 外国
+        - 日本{nihon}
+
+    人:
+
+        status:
+            bio:
+            - 成年者
+            - 未成年者
+            soc:
+            - 個人
+            - 外国人
+            - 日本人
+            - 法人
+            - 会社
+        actions:
+            indiv.:
+            - 出生{shussei}
+            - 享有{ukeireyuusuru}
+            corp:
+            - 合併
+            - 設立
+            - 会社分割
+        attrs:
+            bio:
+            - 生活
+            - 年齢
+            - 成年
+            - 未成年
+            - 障害
+            - 居所{kyosho}
+            soc:
+            - 信義{shingi}
+            - 行為能力
+            - 精神
+            - 意思
+            - 氏名{namae}
+
+    行為能力・後見:
+
+        classes:
+            guardian:
+            - 行為能力者{kouinouryokusha}
+            - protector
+            - 法定代理人
+            - 後見人
+            - 成年後見人
+            - 保佐人
+            - 補助人
+            guarded:
+            - 制限行為能力者{seigenkouinouryokusha}
+            - 成年被後見人
+            - 被保佐人
+            - 被補助人
+        actions:
+        - 保佐
+        - 補助
+        - start protection
+        - 後見開始
+        - 保佐開始
+        - 補助開始
+        - 弁識
+
+    住所:
+
+        classes:
+        - 住所
+        - 仮住所
+        - 住所地
+        system:
+        - 住所地法
+
+    代理:
+
+        classes:
+        - 代理人
+
+    物:
+
+        classes:
+        - 有体物{yuutaibutsu}
+        statuses:
+        - 産出物{sanshutsubutsu}
+        actions:
+        - 付加
+        - 付合{fugou}
+        attrs:
+        - 用法
+        - 種類
+        - 品質
+        attr statuses:
+        - 中等
+
+    財産:
+
+        classes:
+        - 財産
+        - 不動産
+        - 土地
+        - 定着物{teichakubutsu}
+        - 建物
+        - 動産
+        - 金銭
+        - 無記名債権
+        statuses:
+        - 主物{shubutsu}
+        - 従物{juubutsu}
+        - 果実
+        - 天然果実
+        - 法定果実
+        - 元物{ganbutsu}
+        - 特定物{tokuteibutsu}
+        - 目的物
+        actions:
+        - 附属
+        - 管理
+        - 保存
+        - 使用
+        - 収益
+        - 引渡し
+        person roles:
+        - 管理者
+        attrs:
+        - 注意義務
+
+    (金銭)価値概念:
+
+        classes:
+        - 利害関係
+        abstract:
+        - 対価
+        - 代価
+        actions:
+        - 利益
+        - 不利益
+        - 給付
+        - 配当
+        - 按分
+        person roles:
+        - 受益者
+        attrs:
+        - 価額
+
+    金銭:
+
+        classes:
+        - 定期金
+        roles:
+        - 費用
+        - 必要費
+        - 有益費
+        attrs:
+        - 金額
+        - 通貨{ryuutsuukahei}
+        - 為替相場
+        - 満期
+        actions:
+        - 強制通用
+        - 償還
+        - 償還請求
+        - 支払
+        - 延滞
+        - 減額
+        - 減額請求
+
+    時効:
+        classes:
+        - 時効
+        - 取得時効
+        - 消滅時効

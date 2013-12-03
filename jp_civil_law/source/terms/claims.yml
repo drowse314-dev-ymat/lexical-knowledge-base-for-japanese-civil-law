@@ -1,0 +1,82 @@
+options:
+    romanize: yes
+
+terms:
+
+    債権・債務一般:
+        classes:
+        - debts and credits
+        - 債権
+        - 種類債権
+        - 金銭債権
+        - 債務
+        actions:
+        - 弁済
+        - 代価弁済
+        - 債務不履行
+        person roles:
+        - 債権者
+        - 債務者
+        attrs:
+        - 債権額{saikengaku}
+        - 元本
+        - 利息
+        - 利率
+        - 法定利率
+
+    請求(権):
+        classes:
+        - 請求権
+        - 催告権
+        - 優先権
+        actions:
+        - 請求
+        - 消滅請求
+        - 催告
+
+    保証・根保証(契約):
+        classes:
+        - 保証契約
+        - 根保証契約
+        - 保証債務
+        actions:
+        - 保証  # not included in law
+        - 根保証  # not included in law
+        - 元本確定  # not included in law
+        - 確定請求
+        person roles:
+        - 保証人
+        attrs:
+        - 極度額{kyokudogaku}
+        - 元本確定期日
+
+    弁済:
+        actions:
+        - 供託
+        attrs:
+        - 供託物{kyoutakubutsu}
+
+    損害賠償:
+        actions:
+        - 損害
+        - 賠償
+        - 損害賠償
+
+    契約一般:
+        classes:
+        - 継続的取引契約
+        actions:
+        - 取引
+        - 更改
+
+    賃貸借(契約):
+        classes:
+        - 賃貸借契約  # not included in law
+        actions:
+        - 賃貸借
+        - 賃借
+        - 賃貸
+        attrs:
+        - 賃借権
+        - 賃貸物{chintaibutsu}
+        - 賃借物{chinshakubutsu}

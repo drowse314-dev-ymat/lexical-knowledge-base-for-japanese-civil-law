@@ -1,0 +1,232 @@
+options:
+    acyclic: yes
+    dry: yes
+
+relations:
+
+    hyper:
+        pairs:
+
+            常識概念:
+                system:
+                - kuni system
+
+            人:
+                classes:
+                - houjin continuous_consensus
+                - kaisha houjin
+                actions:
+                    indiv:
+                    - shussei person_action
+                    - ukeireyuusuru person_action
+                    corp:
+                    - gappei person_action
+                    - setsuritsu person_action
+                    - kaishabunkatsu bunkatsu
+                attrs:
+                    soc:
+                    - shingi person_social_attr
+                    - ishi person_social_attr
+                    - kouinouryoku person_social_attr
+                    - seishin person_social_attr
+                    - namae person_social_attr
+                    bio:
+                    - kyosho person_bio_attr
+                    - seikatsu person_bio_attr
+                    - nenrei person_bio_attr
+
+            行為能力・後見:
+                classes:
+                    guardian:
+                    - koukennin protector
+                    - houteidairinin dairinin
+                    - houteidairinin koukennin
+                    - seinenkoukennin koukennin
+                    - hosanin protector
+                    - hojonin protector
+                    guarded:
+                    - miseinensha seigenkouinouryokusha
+                    - seinenhikoukennin seigenkouinouryokusha
+                    - hihosanin seigenkouinouryokusha
+                    - hihojonin seigenkouinouryokusha
+                actions:
+                - hosa person_action
+                - hojo person_action
+                - start_protection actionframe
+                - start_protection tetsuduki
+                - koukenkaishi start_protection
+                - hosakaishi start_protection
+                - hojokaishi start_protection
+
+            物:
+                actions:
+                - fuka actionframe
+                - fugou fuka
+                attrs:
+                - youhou thirdness
+                - shurui thirdness
+                - hinshitsu thirdness
+
+            財産:
+                classes:
+                - fudousan zaisan
+                - tochi fudousan
+                - teichakubutsu fudousan
+                - tatemono teichakubutsu
+                - dousan zaisan
+                - mukimeisaiken dousan
+                - kinsen dousan
+                - chuuigimu gimu
+                statuses:
+                - tennenkajitsu kajitsu
+                - houteikajitsu kajitsu
+                - mokutekibutsu mokuteki
+                actions:
+                - fuzoku actionframe
+                - kanri person_action
+                - shiyou person_action
+                - shuueki tandokukoui
+                - hikiwatashi tandokukoui
+
+            (金銭)価値概念:
+                actions:
+                - kyuufu actionframe
+                - rieki person_action
+
+            金銭:
+                attrs:
+                - kingaku suuryou
+                - ryuutsuukahei shurui
+                - ryuutsuukahei continuous_consensus
+                - kawasesouba thirdness
+                - kawasesouba wariai
+                actions:
+                - kyouseitsuuyou actionframe
+                - shiharai tandokukoui
+                - entai person_action
+                - gengaku person_action
+
+    status_of:
+        pairs:
+
+            常識概念:
+                system:
+                - gaikoku kuni
+                - nihon kuni
+
+            人:
+                classes:
+                - kojin person
+                - seinensha kojin
+                - miseinensha kojin
+                - houjin person
+                - gaikokujin person
+                - nihonjin person
+                attrs:
+                    bio:
+                    - kyosho basho
+                attr status:
+                - seinen nenrei
+                - miseinen nenrei
+                - shougai seishin
+
+            行為能力・後見:
+                classes:
+                    guardian:
+                    - kouinouryokusha kojin
+                    - protector person
+                    guarded:
+                    - seigenkouinouryokusha kojin
+                actions:
+                - benshiki actionframe
+
+            住所:
+                classes:
+                - juusho kyosho
+                - karijuusho juusho
+                - juushochi basho
+                system:
+                - juushochihou houritsu
+
+            代理:
+                classes:
+                - dairinin person
+
+            物:
+                classes:
+                - yuutaibutsu butsu
+                - sanshutsubutsu butsu
+                - mokutekibutsu zaisan
+                attrs:
+                - chuutou hinshitsu
+
+            財産:
+                classes:
+                - zaisan thirdness
+                - zaisan yuutaibutsu
+                - shubutsu zaisan
+                - juubutsu zaisan
+                - kajitsu zaisan
+                - houteikajitsu taika
+                - tennenkajitsu sanshutsubutsu
+                - ganbutsu zaisan
+                - tokuteibutsu zaisan
+                actions:
+                - hozon kanri
+                person roles:
+                - kanrisha person
+
+            (金銭)価値概念:
+                abstract:
+                - rigaikankei continuous_consensus
+                - taika zaisan
+                - daika taika
+                actions:
+                - furieki rieki
+                - haitou kyuufu
+                - anbun haitou
+                person roles:
+                - juekisha person
+                attrs:
+                - kagaku kingaku
+                - daika kagaku
+
+            金銭:
+                classes:
+                - teikikin kinsen
+                roles:
+                - hiyou taika
+                - hitsuyouhi hiyou
+                - yuuekihi hiyou
+                actions:
+                - shoukan shiharai
+                - shoukanseikyuu seikyuu
+                - gengakuseikyuu seikyuu
+                attrs:
+                - manki jiki
+
+            時効:
+            - jikou kitei
+            - jikou continuous_consensus
+            - shutokujikou jikou
+            - shoumetsujikou jikou
+
+    results:
+        pairs:
+
+            人:
+            - shussei ukeireyuusuru
+
+            時効:
+            - shoumetsujikou shoumetsu
+            - shutokujikou jikoushutoku
+
+            財産:
+            - shuueki kajitsu
+
+            (金銭)価値概念:
+            - rieki rigaikankei
+
+            金銭:
+            - shoukanseikyuu shoukan
+            - gengakuseikyuu gengaku

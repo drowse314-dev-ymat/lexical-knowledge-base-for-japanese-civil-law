@@ -1,0 +1,193 @@
+options:
+    romanize: yes
+
+terms:
+
+    抽象概念:
+
+        root nodes:
+        - root
+        - firstness
+        - secondness
+        - thirdness
+
+        abstract frames:
+            system:
+            - system
+            action frames:
+            - continuous consensus
+            - rights and duties
+            - actionframe
+            - 行為
+            - person action
+            - social activity
+            person:
+            - person
+
+    抽象動詞:
+        人主体:
+        - 分割
+        それ以外or曖昧:
+        - 変動
+        - 消滅
+        - 存続
+        - 帰属
+        - 継続
+        - 移転
+        - 確定
+
+    抽象属性:
+    - 効力
+    - 範囲
+    - 割合
+    - 数量
+    - 存続期間
+    - 記録
+    - 付記
+
+    実体など:
+    - 物{butsu}
+    - 場所
+
+    時間:
+    - 期間
+    - 時期
+    - 期日
+
+    権利・義務:
+
+        classes:
+        - 権利
+        - 権限
+        - 義務
+        statuses:
+        - 私権
+        - 財産権
+        actions:
+        - 行使
+        - 履行
+        - 不履行
+        - 濫用
+        - 混同
+        - 得喪{tokusou}
+        - 取得
+        - 譲渡
+        - 引受け
+        - 放棄
+        - 承継
+        - 代位
+        - 所有
+        attrs:
+        - 履行地
+        person roles:
+        - 権利者
+        - 取得者
+        - 譲渡人{joutonin}
+        - 譲受人
+        - 引受人
+        - 承継人
+        - 所有者
+
+    常識概念:
+        classes:
+        - 営業
+        - 事業
+        actions:
+        - 記載
+        - 築造
+        - 送付
+        - 交替
+
+    補助概念:
+
+        person:
+        - person social attr
+        - person bio attr
+        rights:
+        - 目的
+
+    メタ概念:
+
+        classes:
+            concepts:
+            - 規定
+            - 法令
+            - 法律
+            - 条約
+            real::
+            - 裁判所
+            - 家庭裁判所
+            - 簡易裁判所
+        attrs:
+        - 要件
+        - 対抗要件
+        - 対抗力{taikouryoku}
+        - 方式
+        - 書面
+        - 効果
+        - 順位
+        - 同一順位
+        - 次順位{jijunni}
+        - 後順位{koujunni}
+        - 同順位
+        - 先順位
+        actions:
+        - 禁止
+        - 許可
+        - 制限
+        - 創設
+        - 具備
+        - 解釈
+        - 準用
+        - 適用
+        - 審判
+        - 申立て
+        - 訴え
+        - 却下
+        - 手続
+        - 対抗
+
+
+    証券:
+
+        classes:
+        - 証券  # not included in law
+        - 証拠証券  # not included in law
+        - 有価証券  # not included in law
+        - 手形
+        - 小切手
+
+    法律行為・意思表示:
+
+        actions:
+        - 法律行為
+        - 条件付法律行為
+        - 停止条件付法律行為
+        - 解除条件付法律行為
+        - 単独行為
+        - 契約
+        - 意思表示
+        - 承諾
+        - 合意
+        - 同意
+        - 通知
+        - 追認
+        - 取消し{torikeshi}
+        - 詐術
+        supporting classes:
+        - 当事者
+        - 相手方{aitegata}
+        - 本人
+        - 第三者
+        attrs:
+        - 条件
+        - 停止条件
+        - 解除条件
+        attr actions:
+        - 成否
+        - 成就
+
+    法律行為-動詞:
+        actions:
+        - 処分
+        - 設定

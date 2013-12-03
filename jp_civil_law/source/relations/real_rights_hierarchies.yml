@@ -1,0 +1,180 @@
+options:
+    dry: yes
+    acyclic: yes
+
+relations:
+
+    hyper:
+        pairs:
+
+            物権一般(総則等):
+                classes:
+                - bukken kenri
+                - honken bukken
+                - seigenbukken honken
+                - youekibukken seigenbukken
+                - tanpoken seigenbukken
+                - tanpobukken tanpoken
+                system:
+                - touki kiroku
+                - touki system
+                - fudousantoukihou houritsu
+
+            担保:
+                actions:
+                - tanpo hoshou
+                person roles:
+                - tanpokenja kenrisha
+
+            占有(権):
+                classes:
+                - senyuuken bukken
+                actions:
+                - senyuu person_action
+
+            所有(権):
+                classes:
+                - shoyuuken honken
+
+            共有:
+                attrs:
+                - kyouyuumochibun wariai
+
+            地上権:
+                classes:
+                - chijouken youekibukken
+                attrs:
+                - chidai teikikin
+
+            永小作権:
+                classes:
+                - eikosakuken youekibukken
+
+            留置権:
+                classes:
+                - ryuuchiken tanpobukken
+
+            質権:
+                classes:
+                - shichiken tanpobukken
+
+            抵当権:
+                classes:
+                - teitouken tanpobukken
+                actions:
+                - teitou person_action
+                - teitoukenshoumetsuseikyuu shoumetsuseikyuu
+                person roles:
+                - teitoukenja tanpokenja
+                attrs:
+                - teitouchi teitoufudousan
+
+            根抵当(権):
+                classes:
+                - neteitouken teitouken
+                - kyoudouneteitou kyoudouteitou
+                person roles:
+                - neteitoukenja teitoukenja
+                - neteitoukensetteisha teitoukensetteisha
+                actions:
+                - ichibujouto jouto
+
+            強制執行関連:
+                actions:
+                - sashiosae actionframe
+                - sashiosae system
+                - keibai actionframe
+                - keibai system
+                - tainoushobun actionframe
+                - tainoushobun system
+                - kyouseikanri actionframe
+                - kyouseikanri system
+                - tanpofudousanshuuekishikkou actionframe
+                - tanpofudousanshuuekishikkou system
+                - start_bankruptcy actionframe
+                - start_bankruptcy tetsuduki
+                - hasantetsudukikaishi start_bankruptcy
+                - saiseitetsudukikaishi start_bankruptcy
+                - kouseitetsudukikaishi start_bankruptcy
+                - tokubetsuseisankaishi start_bankruptcy
+                system:
+                - keibaitetsuduki tetsuduki
+                - tanpofudousanshuuekishikkoutetsuduki tetsuduki
+
+    status_of:
+        pairs:
+
+            物権一般(総則等):
+                actions:
+                - jikoushutoku shutoku
+
+            担保:
+                attrs:
+                - hitanposaiken saiken
+
+            占有(権):
+                person roles:
+                - senyuusha person
+                attrs:
+                - senyuubutsu zaisan
+
+            所有(権):
+                actions:
+                - shoyuu senyuu
+                person roles:
+                - shoyuusha senyuusha
+                attrs:
+                - shoyuubutsu senyuubutsu
+
+            共有:
+                actions:
+                - kyouyuu shoyuu
+                person roles:
+                - kyouyuusha shoyuusha
+                attrs:
+                - kyouyuubutsu shoyuubutsu
+                - kyouyuumochibun zaisan
+
+            抵当権:
+                classes:
+                - kyoudouteitou teitouken
+                person roles:
+                - teitoukensetteisha person
+                attrs:
+                - teitoufudousan fudousan
+                - teitouchi tochi
+                - chijouken teitoufudousan
+                - eikosakuken teitoufudousan
+                - houteichijouken chijouken
+
+            根抵当(権):
+                classes:
+                - kyoudouneteitou neteitouken
+                - ruisekineteitou neteitouken
+                actions:
+                - neteitou teitou
+                - neteitou nehoshou
+
+            強制執行関連:
+                actions:
+                - kaiuke shutoku
+                person roles:
+                - kaiukenin shutokusha
+
+    results:
+        pairs:
+
+            担保:
+            - tanpoken keibai
+            - tanpoken tanpofudousanshuuekishikkou
+
+            抵当権:
+            - teitou teitouken
+
+            根抵当(権):
+            - neteitou neteitouken
+
+            強制執行関連:
+            - sashiosae keibai
+            - sashiosae kyouseikanri
+            - keibai kaiuke

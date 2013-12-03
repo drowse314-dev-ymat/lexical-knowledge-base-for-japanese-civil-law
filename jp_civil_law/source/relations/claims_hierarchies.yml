@@ -1,0 +1,127 @@
+options:
+    dry: yes
+    acyclic: yes
+
+relations:
+
+    hyper:
+        pairs:
+
+            債権・債務一般:
+                classes:
+                - debts_and_credits rights_and_duties
+                - saiken kenri
+                - saimu gimu
+                actions:
+                - daikabensai bensai
+                - saimufurikou furikou
+                attrs:
+                - saikengaku kingaku
+                - risoku teikikin
+                - riritsu thirdness
+                - riritsu wariai
+                - houteiriritsu riritsu
+
+            請求(権):
+                classes:
+                - saikokuken saiken
+                attrs:
+                - saikoku tsuuchi
+
+            保証・根保証(契約):
+                actions:
+                - hoshou actionframe
+
+            弁済:
+                actions:
+                - kyoutaku tandokukoui
+
+            契約一般:
+                actions:
+                - koukai keiyaku
+
+            賃貸借(契約):
+                classes:
+                - chintaishaku keiyaku
+                attrs:
+                - chinshakuken saiken
+
+    status_of:
+        pairs:
+
+            債権・債務一般:
+                classes:
+                - saiken debts_and_credits
+                - shuruisaiken saiken
+                - kinsensaiken saiken
+                - saimu debts_and_credits
+                actions:
+                - bensai rikou
+                person roles:
+                - saikensha kenrisha
+                - saimusha person
+                attrs:
+                - ganpon zaisan
+
+            請求(権):
+                classes:
+                - seikyuuken saiken
+                - yuusenken saiken
+                actions:
+                - seikyuu koushi
+                - shoumetsuseikyuu seikyuu
+
+            損害賠償:
+                actions:
+                - songai furieki
+                - baishou bensai
+                - songaibaishou baishou
+
+            保証・根保証(契約):
+                classes:
+                - hoshoukeiyaku keiyaku
+                - nehoshoukeiyaku hoshoukeiyaku
+                - hoshousaimu saimu
+                actions:
+                - nehoshou hoshou
+                - ganponkakutei kakutei
+                - kakuteiseikyuu seikyuu
+                person roles:
+                - hoshounin saimusha
+                attrs:
+                - kyokudogaku kingaku
+                - ganponkakuteikijitsu kijitsu
+
+            弁済:
+                actions:
+                - kyoutaku kyuufu
+                attrs:
+                - kyoutakubutsu butsu
+
+            契約一般:
+                classes:
+                - keizokutekitorihikikeiyaku keiyaku
+                actions:
+                - torihiki social_activity
+
+            賃貸借(契約):
+                classes:
+                - chintaishakukeiyaku chintaishaku
+                - chinshaku chintaishaku
+                - chintai chintaishaku
+                attrs:
+                - chintaibutsu zaisan
+                - chinshakubutsu zaisan
+
+    results:
+        pairs:
+
+            保証・根保証(契約):
+            - kakuteiseikyuu ganponkakutei
+
+            請求(権):
+            - shoumetsuseikyuu shoumetsu
+            - saikoku houritsukoui
+
+            弁済:
+            - kyoutaku bensai

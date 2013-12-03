@@ -1,0 +1,156 @@
+options:
+    dry: yes
+
+relations:
+
+    attr:
+        pairs:
+
+            人:
+                soc:
+                - person person_social_attr
+                - kaisha jigyou
+                bio:
+                - kojin person_bio_attr
+                - seinensha seinen
+                - miseinensha miseinen
+
+            法律行為・意思表示:
+            - ishihyouji ishi
+
+            行為能力・後見:
+            - kouinouryokusha kouinouryoku
+            - seinenhikoukennin shougai
+            - hihosanin shougai
+            - hihojonin shougai
+
+            常識概念:
+            - eigyou houritsukoui
+
+            物:
+            - butsu youhou
+            - butsu shurui
+            - butsu hinshitsu
+
+            財産:
+            - shubutsu juubutsu
+            - ganbutsu kajitsu
+            - zaisan kagaku
+            - tochi teichakubutsu
+            - kanrisha chuuigimu
+
+            金銭:
+            - teikikin manki
+            - kinsen kingaku
+            - kinsen ryuutsuukahei
+
+    within:
+        pairs:
+
+            人:
+                soc:
+                - nihonjin nihon
+                - gaikokujin gaikoku
+                bio:
+                - seikatsu kyosho
+
+            住所:
+            - juusho juushochi
+
+            金銭:
+                attrs:
+                - ryuutsuukahei kawasesouba
+                - ryuutsuukahei kuni
+
+    sbj:
+        pairs:
+
+            人:
+                soc:
+                - gappei houjin
+                - kaishabunkatsu kaisha
+
+            行為能力・後見:
+            - hosa hosanin
+            - hojo hojonin
+            - benshiki seishin
+
+            物:
+            - fuka butsu
+
+            財産:
+            - fuzoku juubutsu
+            - kanri kanrisha
+            物権-ショートカット:
+            - kizoku zaisan
+
+            (金銭)価値概念:
+            - rieki juekisha
+
+            金銭:
+            - kyouseitsuuyou ryuutsuukahei
+
+    obj:
+        pairs:
+
+            人:
+                soc:
+                - setsuritsu houjin
+                - ukeireyuusuru shiken
+
+            行為能力・後見:
+            - hosa hihosanin
+            - hojo hihojonin
+
+            財産:
+            - fuzoku shubutsu
+            - kanri zaisan
+            - shiyou butsu
+            - shuueki butsu
+            - hikiwatashi zaisan
+            - chikuzou tatemono
+            物権-ショートカット:
+            - shobun zaisan
+            - shutoku zaisan
+
+            (金銭)価値概念:
+            - rieki zaisan
+            - haitou taika
+
+            金銭:
+            - shoukan rieki
+            - shoukan hiyou
+            - shoukanseikyuu hiyou
+            - shiharai kinsen
+            - entai shiharai
+            - gengaku kingaku
+
+            時効:
+            - shoumetsujikou kenri
+            - shutokujikou zaisan
+
+    auth_by:
+        pairs:
+
+            行為能力・後見:
+                base:
+                - seigenkouinouryokusha protector
+                - protector start_protection
+                - start_protection shinpan
+                case:
+                    personal:
+                    - miseinensha houteidairinin
+                    - seinenhikoukennin seinenkoukennin
+                    - hihosanin hosanin
+                    - hihojonin hojonin
+                    systematic:
+                    - seinenkoukennin koukenkaishi
+                    - hosanin hosakaishi
+                    - hojonin hojokaishi
+
+            住所:
+            - juusho juushochihou
+            - juushochihou kuni
+
+            (金銭)価値概念:
+            - rieki kenri

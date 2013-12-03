@@ -1,0 +1,130 @@
+options:
+    dry: yes
+
+relations:
+
+    attr:
+        pairs:
+
+            roots:
+            - social_activity person_action
+
+            抽象動詞:
+            - sonzoku sonzokukikan
+
+            権利・義務:
+            - rights_and_duties mokuteki
+            - jouto yuzuriukenin
+
+            メタ概念:
+            - kitei youken
+            - kitei kouka
+            - taikou taikouyouken
+            - moushitate saibansho
+            - kisai shomen
+
+            法律行為・意思表示:
+            - houritsukoui ishihyouji
+            - joukentsukihouritsukoui jouken
+            - teishijoukentsukihouritsukoui teishijouken
+            - kaijojoukentsukihouritsukoui kaijojouken
+            - keiyaku mokuteki
+            - goui shoudaku
+
+    sbj:
+        pairs:
+
+            roots:
+                action frames:
+                - shoumetsu continuous_consensus
+                - sonzoku continuous_consensus
+                - person_action person
+
+            抽象属性:
+            - kakutei hanni
+
+            時間:
+            - keizoku kikan
+
+            権利・義務:
+            - hendou rights_and_duties
+            - kondou rights_and_duties
+            - kenri kenrisha
+            - kizoku kenri
+            - shutoku shutokusha
+            - jouto joutonin
+            - hikiuke hikiukenin
+            - shoukei shoukeinin
+
+            法律行為・意思表示:
+            - ishihyouji honnin
+            - seihi jouken
+
+    obj:
+        pairs:
+
+            roots:
+                action frames:
+                - settei continuous_consensus
+
+            権利・義務:
+            - koushi kenri
+            - rikou gimu
+            - kizoku person
+            - tokusou kenri
+            - shutoku kenri
+            - shoukei person
+            - houki kenri
+            - daii kenrisha
+            - shoyuu kenri
+
+            メタ概念:
+            - kaishaku kitei
+            - tekiyou kitei
+            - gubi youken
+            - kyakka moushitate
+            - soufu shomen
+
+            法律行為・意思表示:
+            - ishihyouji aitegata
+            - goui ishihyouji
+            - tsuuchi person
+
+            法律行為-動詞:
+                actions:
+                - shobun kenri
+
+    within:
+        pairs:
+
+            権利・義務:
+            - rikou rikouchi
+
+    auth:
+        pairs:
+
+            roots:
+                action frames:
+                - kouryoku continuous_consensus
+
+            メタ概念:
+            - kitei rights_and_duties
+            - taikou kenri
+            - taikouryoku taikou
+
+            証券:
+            - yuukashouken zaisanken
+
+            法律行為・意思表示:
+                actions:
+                - taikou houritsukoui
+                - kouryoku ishihyouji
+
+    auth_by:
+        pairs:
+
+            権利・義務:
+            - kengen kenri
+
+            メタ概念:
+            - shinpan saibansho

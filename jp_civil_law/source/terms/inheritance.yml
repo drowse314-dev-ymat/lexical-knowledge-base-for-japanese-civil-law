@@ -1,0 +1,13 @@
+options:
+    romanize: yes
+
+terms:
+
+    相続一般:
+
+        actions:
+        - 相続
+        - 相続開始
+        person roles:
+        - 相続人
+        - 被相続人

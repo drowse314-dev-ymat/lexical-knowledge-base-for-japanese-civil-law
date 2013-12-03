@@ -1,0 +1,81 @@
+options:
+    dry: yes
+
+relations:
+
+    attr:
+        pairs:
+
+            債権・債務一般:
+            - debts_and_credits ganpon
+            - debts_and_credits risoku
+            - risoku riritsu
+            - saiken saikengaku
+            - shuruisaiken shurui
+
+            保証・根保証(契約):
+            - nehoshou ganponkakutei
+            - nehoshou kyokudogaku
+            - ganponkakutei ganponkakuteikijitsu
+            - ganponkakuteikijitsu ganpon
+
+    sbj:
+        pairs:
+
+            債権・債務一般:
+            - saiken saikensha
+            - saimu saimusha
+
+            保証・根保証(契約):
+            - hoshousaimu hoshounin
+            - hoshou hoshounin
+            - ganponkakutei ganpon
+
+    obj:
+        pairs:
+
+            債権・債務一般:
+            - bensai saimu
+            - daikabensai daika
+
+            請求(権):
+            - saikoku ishihyouji
+
+            損害賠償:
+            - baishou songai
+
+            保証・根保証(契約):
+            - hoshoukeiyaku hoshou
+            - nehoshoukeiyaku nehoshou
+            - nehoshou keizokutekitorihikikeiyaku
+            - kakuteiseikyuu ganpon
+
+            弁済:
+            - kyoutaku kyoutakubutsu
+
+            契約一般:
+            - koukai saiken
+
+            賃貸借(契約):
+            - chintaishaku zaisan
+            - chinshaku chinshakubutsu
+            - chintai chintaibutsu
+
+    auth_by:
+        pairs:
+
+            契約一般:
+            - torihiki keiyaku
+
+            請求(権):
+            - saikoku saikokuken
+
+            賃貸借(契約):
+            - chintaishaku chinshakuken
+
+
+    auth:
+        pairs:
+
+            請求(権):
+            - seikyuuken seikyuu
