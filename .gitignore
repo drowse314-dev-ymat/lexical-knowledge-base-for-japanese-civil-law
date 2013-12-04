@@ -1,7 +1,7 @@
 *.pyc
 /venv
 
-/jp_civil_law/build
+/jp_civil_law/build/*
 !/jp_civil_law/build/description.txt
 
 postbuild.sh
