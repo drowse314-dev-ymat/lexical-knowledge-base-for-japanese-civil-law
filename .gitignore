@@ -3,5 +3,6 @@
 
 /jp_civil_law/build/*
 !/jp_civil_law/build/description.txt
+!/jp_civil_law/build/__init__.py
 
 postbuild.sh
