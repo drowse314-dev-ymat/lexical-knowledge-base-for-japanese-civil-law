@@ -64,6 +64,8 @@ relations:
         pairs:
 
             物権一般(総則等):
+                abstract:
+                - bukken mokutekibutsu
                 system:
                 - touki bukken
                 - touki chinshakuken
