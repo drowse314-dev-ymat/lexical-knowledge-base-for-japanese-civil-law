@@ -101,7 +101,7 @@ relations:
                 - keibaitetsuduki tetsuduki
                 - tanpofudousanshuuekishikkoutetsuduki tetsuduki
 
-    status_of:
+    role_of:
         pairs:
 
             物権一般(総則等):
@@ -161,7 +161,7 @@ relations:
                 person roles:
                 - kaiukenin shutokusha
 
-    results:
+    antecedent_to:
         pairs:
 
             担保:

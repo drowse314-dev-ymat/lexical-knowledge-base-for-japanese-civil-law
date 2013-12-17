@@ -142,7 +142,7 @@ relations:
                 attr actions:
                 - seihi actionframe
 
-    status_of:
+    role_of:
         pairs:
 
             抽象属性:
@@ -208,7 +208,7 @@ relations:
                 - shobun tandokukoui
                 - settei shobun
 
-    results:
+    antecedent_to:
         pairs:
 
             抽象動詞:

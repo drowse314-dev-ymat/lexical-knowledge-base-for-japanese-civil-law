@@ -3,7 +3,7 @@ options:
 
 relations:
 
-    attr:
+    attr_slot:
         pairs:
 
             roots:

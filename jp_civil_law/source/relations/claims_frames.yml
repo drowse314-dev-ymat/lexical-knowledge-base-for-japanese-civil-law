@@ -3,7 +3,7 @@ options:
 
 relations:
 
-    attr:
+    attr_slot:
         pairs:
 
             債権・債務一般:

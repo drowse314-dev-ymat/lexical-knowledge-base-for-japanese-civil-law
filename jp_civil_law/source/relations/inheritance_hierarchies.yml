@@ -12,7 +12,7 @@ relations:
                 actions:
                 - souzokukaishi actionframe
 
-    status_of:
+    role_of:
         pairs:
 
             相続一般:
@@ -22,7 +22,7 @@ relations:
                 - souzokunin shoukeinin
                 - hisouzokunin person
 
-    results:
+    antecedent_to:
         pairs:
 
             相続一般:

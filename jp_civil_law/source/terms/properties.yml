@@ -8,12 +8,12 @@ load_options:
 terms:
     frame transition:
         - hyper
-        - status of
-        - results
+        - role_of
+        - antecedent_to
     in frame:
         - sbj
         - obj
         - auth
-        - auth by
-        - attr
+        - auth_by
+        - attr_slot
         - within

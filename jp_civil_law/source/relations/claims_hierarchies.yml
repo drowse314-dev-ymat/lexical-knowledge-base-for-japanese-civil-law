@@ -46,7 +46,7 @@ relations:
                 attrs:
                 - chinshakuken saiken
 
-    status_of:
+    role_of:
         pairs:
 
             債権・債務一般:
@@ -113,7 +113,7 @@ relations:
                 - chintaibutsu zaisan
                 - chinshakubutsu zaisan
 
-    results:
+    antecedent_to:
         pairs:
 
             保証・根保証(契約):

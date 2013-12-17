@@ -106,7 +106,7 @@ relations:
                 - entai person_action
                 - gengaku person_action
 
-    status_of:
+    role_of:
         pairs:
 
             常識概念:
@@ -211,7 +211,7 @@ relations:
             - shutokujikou jikou
             - shoumetsujikou jikou
 
-    results:
+    antecedent_to:
         pairs:
 
             人:
