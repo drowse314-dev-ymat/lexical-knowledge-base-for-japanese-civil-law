@@ -41,11 +41,16 @@ def yaml_files_in(directly, whitelist=None):
         for f in files:
             if f.endswith('.yml'):
                 path = os.path.sep.join([root, f])
-                print('    + .yml found: "{}"'.format(path))
                 if whitelist is not None and f not in whitelist:
-                    yield path, False
+                    white = False
                 else:
-                    yield path, True
+                    white = True
+                yield path, white
+                if white:
+                    whitemark = 'w'
+                else:
+                    whitemark = 'b'
+                print('    + .yml found: "{}" ({})'.format(path, whitemark))
 
 def yaml_texts_in(directly, whitelist=None):
     for path, white in yaml_files_in(directly, whitelist=whitelist):
@@ -134,10 +139,15 @@ def showdiff(logfile, nodeprovider, relationproviders, logencoding='utf8'):
     with open(logfile, 'wb') as log:
         log.write(serialized.encode(logencoding))
 
-def save_graph(nx_graph, tofile, cut_solos=False):
+def save_graph(nx_graph, tofile, cut_solos=False, rankcolor=False,
+               white_nodes=None, white_rels=None):
+
+    filter_target(nx_graph, white_nodes, white_rels)
     if cut_solos:
         remove_solos(nx_graph)
+
     agraph = networkx.to_agraph(nx_graph)
+
     agraph.graph_attr['rankdir'] = 'BT'
     agraph.graph_attr['remincross'] = 'true'
     for node in agraph.nodes():
@@ -146,6 +156,7 @@ def save_graph(nx_graph, tofile, cut_solos=False):
         node_obj.attr['fillcolor'] = '#edf1f2'
         node_obj.attr['fontcolor'] = '#121718'
     agraph.layout('twopi')
+
     agraph.write(tofile)
 
 def filter_target(nx_graph, target_nodes=None, target_rels=None):
@@ -169,8 +180,10 @@ def run(args):
         args.terms_dir, args.relations_dir, log=args.tracking_log, use_whitelist=args.use_whitelist,
     )
     nx_graph = rdflib_to_networkx(rdflib_graph)
-    filter_target(nx_graph, white_nodes, white_rels)
-    save_graph(nx_graph, args.build_destination, cut_solos=args.cut_solos)
+    save_graph(
+        nx_graph, args.build_destination, cut_solos=args.cut_solos,
+        white_nodes=white_nodes, white_rels=white_rels,
+    )
     print('done. saved to "{}"'.format(args.build_destination))
 
 
