@@ -1,6 +1,7 @@
 Attest==0.5.3
 Pygments==1.6
 argh==0.23.3
+colors.py==0.2.0
 pathtools==0.1.2
 progressbar==2.3
 watchdog==0.6.0
