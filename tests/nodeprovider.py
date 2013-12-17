@@ -67,6 +67,16 @@ class Fixtures:
             u'大地{gaia}': u'大地',
         }
 
+    class kana_kanji_properties_specified:
+        formalized_map = {
+            u'part_of{attribute}': u'attribute',
+            u'hyper{_type}': u'_type',
+        }
+        modification_map = {
+            u'part_of{attribute}': u'part_of',
+            u'hyper{_type}': u'hyper',
+        }
+
     class simple_nodenames:
         formalized_map = {
             u'John': u'john',
@@ -76,7 +86,14 @@ class Fixtures:
         not_added = u'詐害行為取消権'
 
     class simple_properties:
-        names = [u'part_of', u'hyper']
+        formalized_map = {
+            u'part_of{attribute}': u'attribute',
+            u'hyper{_type}': u'_type',
+        }
+        modification_map = {
+            u'part_of{attribute}': u'part_of',
+            u'hyper{_type}': u'hyper',
+        }
 
     class kakasi_conversion:
         desired_conversion = {
@@ -253,6 +270,20 @@ def handle_specified_reading_addition():
             assert getattr(namespace, formalized_name) == modified_name
             assert provider.get_ns_identifier(modified_name) == formalized_name
 
+        # additions & returned values
+        for name in Fixtures.kana_kanji_properties_specified.formalized_map:
+            ret = provider.add(name)
+            expected_formalized = Fixtures.kana_kanji_properties_specified.formalized_map[name]
+            assert ret == expected_formalized
+
+        # namespace & reverse lookup
+        namespace = provider.ns
+        for name in Fixtures.kana_kanji_properties_specified.formalized_map:
+            formalized_name = Fixtures.kana_kanji_properties_specified.formalized_map[name]
+            modified_name = Fixtures.kana_kanji_properties_specified.modification_map[name]
+            assert getattr(namespace, formalized_name) == modified_name
+            assert provider.get_ns_identifier(modified_name) == formalized_name
+
 
 # simple kakasi caller.
 @kakasi_unit.test
@@ -311,22 +342,24 @@ def add_nodes_as_properties():
 
     with empty_rdflib_nodeprovider() as provider:
 
-        for propname in Fixtures.simple_properties.names:
+        for propname in Fixtures.simple_properties.formalized_map:
             ret = provider.add(propname, as_property=True)
+            propid = Fixtures.simple_properties.formalized_map[propname]
+            mod_propname = Fixtures.simple_properties.modification_map[propname]
             assert isinstance(ret, provider.classes['bnode'])
-            assert getattr(provider.ns, propname) == ret
-            assert propname in provider.ns
+            assert getattr(provider.ns, propid) == ret
+            assert propid in provider.ns
             assert (
-                (ret, rdflib.RDFS.label, rdflib.Literal(propname))
+                (ret, rdflib.RDFS.label, rdflib.Literal(mod_propname))
                 in list(provider.graph.triples((None, None, None)))
             )
             assert (
                 (ret, rdflib.RDF.type, rdflib.RDF.Property)
                 in list(provider.graph.triples((None, None, None)))
             )
-            assert provider.get(propname) == ret
-            assert provider.get_identifier_from(ret) == propname
-            assert provider.get_origin_name_from(ret) == propname
+            assert provider.get(mod_propname) == ret
+            assert provider.get_identifier_from(ret) == propid
+            assert provider.get_origin_name_from(ret) == mod_propname
 
 @nodeprovider_unit.test
 def merge_node_providers():

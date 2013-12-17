@@ -54,7 +54,15 @@ class Fixtures(object):
     }
 
     # general properties
-    basic_properties = [u'hyper', u'part_of', u'contrary']
+    basic_properties = NS()
+    basic_properties.flat = [
+        u'hyper', u'part_of{attribute}', u'contrary',
+    ]
+    basic_properties.identifiers = {
+        u'hyper': u'hyper',
+        u'attribute': u'part_of',
+        u'contrary': u'contrary',
+    }
 
     # japanese prefectures
     jp_prefectures = NS()
@@ -93,13 +101,15 @@ class Fixtures(object):
         u"options:\n"
         u"    as_property: yes\n"
         u"terms:\n"
-        u"    - isinstance\n"
+        u"    - isinstance{_type}\n"
         u"    - issubclass\n"
-        u"    - hasattr\n"
+        u"    - hasattr{_has}\n"
     )
-    python_predicates.identifiers = [
-        u'isinstance', u'issubclass', u'hasattr',
-    ]
+    python_predicates.identifiers = {
+        u'_type': u'isinstance',
+        u'issubclass': u'issubclass',
+        u'_has': u'hasattr',
+    }
 
     # world & japanese rivers
     world_rivers = NS()
@@ -138,8 +148,9 @@ class Fixtures(object):
     # 出世魚
     shusse_uo = NS()
     shusse_uo.core_relation = u'shusse_uo'
+    shusse_uo.core_relation_identifier = u'shusse'
     shusse_uo.terms = [
-        u'shusse_uo',
+        u'shusse',
         u'wakashi', u'inada', u'warasa', u'buri',
     ]
     shusse_uo.relation_pairs = [
@@ -272,13 +283,16 @@ def load_terms_from_data():
 
     # properties
     with new_rdflib_termloader(romanize=True) as termloader:
-        termloader.load(Fixtures.basic_properties, as_property=True)
+        termloader.load(Fixtures.basic_properties.flat, as_property=True)
         ns = termloader.ns
+        graph = termloader.graph
         triples = list(termloader.graph.triples((None, None, None)))
-        for id_label in Fixtures.basic_properties:
+        for id_label in Fixtures.basic_properties.identifiers:
             node = getattr(ns, id_label)
             assert id_label in ns
             assert isinstance(node, rdflib.BNode)
+            assert (rdflib_getlabel(graph, node) ==
+                    Fixtures.basic_properties.identifiers[id_label])
             assert (node, rdflib.RDF.type, rdflib.RDF.Property) in triples
 
 @termloader_unit.test
@@ -313,11 +327,14 @@ def load_terms_from_yaml():
     with new_rdflib_termloader(romanize=True) as termloader:
         termloader.load_yaml(Fixtures.python_predicates.yaml)
         ns = termloader.ns
+        graph = termloader.graph
         triples = list(termloader.graph.triples((None, None, None)))
         for id_label in Fixtures.python_predicates.identifiers:
             node = getattr(ns, id_label)
             assert id_label in ns
             assert isinstance(node, rdflib.BNode)
+            assert (rdflib_getlabel(graph, node) ==
+                    Fixtures.python_predicates.identifiers[id_label])
             assert (node, rdflib.RDF.type, rdflib.RDF.Property) in triples
 
 @termloader_unit.test
@@ -379,13 +396,13 @@ def load_relations_from_data():
     nodeprovider = MockRDFLibNamespace(Fixtures.shusse_uo.terms)
 
     with new_rdflib_relationloader(nodeprovider=nodeprovider,
-                                   relation=Fixtures.shusse_uo.core_relation,
+                                   relation=Fixtures.shusse_uo.core_relation_identifier,
                                    dry=True, acyclic=True) as relloader:
         relloader.load(Fixtures.shusse_uo.relation_pairs)
         triples = list(relloader.graph.triples((None, None, None)))
         for relsrc, reldest in Fixtures.shusse_uo.relation_pairs:
             noderel = (getattr(nodeprovider.ns, relsrc),
-                       nodeprovider.ns.shusse_uo,
+                       nodeprovider.ns.shusse,
                        getattr(nodeprovider.ns, reldest))
             assert noderel in triples
 
