@@ -208,7 +208,8 @@ def copy_agraph_attrs(srcg, destg):
 def run(args):
     print('start build from {{"{}", "{}"}}'.format(args.terms_dir, args.relations_dir))
     rdflib_graph, white_nodes, white_rels = get_graph(
-        args.terms_dir, args.relations_dir, log=args.tracking_log, use_whitelist=args.use_whitelist,
+        args.terms_dir, args.relations_dir, log=args.tracking_log,
+        use_whitelist=args.use_whitelist,
     )
     nx_graph = rdflib_to_networkx(rdflib_graph)
     save_graph(

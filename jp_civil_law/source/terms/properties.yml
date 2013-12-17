@@ -8,7 +8,7 @@ load_options:
 terms:
     frame transition:
         - hyper
-        - role_of
+        - hyperx{role_of}
         - antecedent_to
     in frame:
         - sbj
