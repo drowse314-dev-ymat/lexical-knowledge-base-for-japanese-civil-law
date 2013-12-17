@@ -1,4 +1,4 @@
-set -e
+set -eu
 
 BUILD_PATH='./jp_civil_law/build'
 
