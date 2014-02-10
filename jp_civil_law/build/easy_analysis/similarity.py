@@ -6,7 +6,7 @@ import itertools
 
 def combination_sims(term_sets, dimensions, distribution=None):
     sims = {}
-    for key1, key2 in itertools.combinations(sorted(term_sets, reverse=True), 2):
+    for key1, key2 in itertools.permutations(sorted(term_sets, reverse=True), 2):
         rankmap_1, mod_terms1 = distribution(term_sets[key1])
         rankmap_2, mod_terms2 = distribution(term_sets[key2])
         vect_1 = rankmap2vect(rankmap_1, dimensions)
@@ -16,7 +16,10 @@ def combination_sims(term_sets, dimensions, distribution=None):
     return sims
 
 def cosine_similarity(vect_a, vect_b):
+    assert len(vect_a) == len(vect_b)
     norm = normalize(vect_a) * normalize(vect_b)
+    if norm == 0.0:
+        return 0.0
     prod = product(vect_a, vect_b)
     return prod / norm
 
