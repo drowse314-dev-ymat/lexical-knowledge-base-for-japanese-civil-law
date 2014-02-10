@@ -2,6 +2,27 @@
 
 import math
 import itertools
+from . import casedata as data
+
+
+answermap = data.answermap
+def selective_print(key1, map_1, key2, map_2):
+    if key1 in answermap.get(key2, []):
+        q, qmap, a, amap = key2, map_2, key1, map_1
+    if key2 in answermap.get(key1, []):
+        q, qmap, a, amap = key1, map_1, key2, map_2
+    else:
+        q, a = None, None
+    def _mapped(somemap):
+        return [u'{}/{}'.format(k, round(v, 2)) for k, v in somemap.iteritems() if v != 0.0]
+    if None not in (q, a):
+        print(u'q({})--a({})'.format(q, a))
+        print(u'===========')
+        qmapped = _mapped(qmap)
+        print(u'#[{}]: {}'.format(q, u','.join(qmapped)))
+        amapped = _mapped(amap)
+        print(u'#[{}]: {}'.format(a, u','.join(amapped)))
+        print(u'===========\n')
 
 
 def combination_sims(term_sets, dimensions, distribution=None):
@@ -18,6 +39,27 @@ def combination_sims(term_sets, dimensions, distribution=None):
     for key1, key2 in itertools.permutations(sorted(term_sets, reverse=True), 2):
         rankmap_1, mod_terms1 = calculate_distribution(key1)
         rankmap_2, mod_terms2 = calculate_distribution(key2)
+        vect_1 = rankmap2vect(rankmap_1, dimensions)
+        vect_2 = rankmap2vect(rankmap_2, dimensions)
+        sim = cosine_similarity(vect_1, vect_2)
+        sims[(key1, key2)] = sim
+    return sims
+
+def joint_combination_sims(term_sets, dimensions, jdistribution_fn=None):
+    sims = {}
+    def calculate_distribution(key_a, key_b, distcache={}):
+        assert set(term_sets[key_a]).issubset(set(dimensions)), \
+               (u'{}: '.format(key_a) + u','.join(set(term_sets[key_a]).difference(set(dimensions)))).encode('utf-8')
+        assert set(term_sets[key_b]).issubset(set(dimensions)), \
+               (u'{}: '.format(key_b) + u','.join(set(term_sets[key_b]).difference(set(dimensions)))).encode('utf-8')
+        if (key_a, key_b) not in distcache:
+            rankmap_a, mod_terms_a, rankmap_b, mod_terms_b = jdistribution_fn(key_a, term_sets[key_a], key_b, term_sets[key_b])
+            distcache[(key_a), (key_b)] = rankmap_a, mod_terms_a, rankmap_b, mod_terms_b
+        return distcache[(key_a, key_b)]
+
+    for key1, key2 in itertools.permutations(sorted(term_sets, reverse=True), 2):
+        rankmap_1, mod_terms1, rankmap_2, mod_terms_b = calculate_distribution(key1, key2)
+        selective_print(key1, rankmap_1, key2, rankmap_2)
         vect_1 = rankmap2vect(rankmap_1, dimensions)
         vect_2 = rankmap2vect(rankmap_2, dimensions)
         sim = cosine_similarity(vect_1, vect_2)
@@ -45,6 +87,11 @@ def rankmap2vect(rankmap, dimensions):
 def dist_similarities(dimensions, term_sets, distribution_fn=None):
     return combination_sims(
         term_sets, dimensions, distribution=distribution_fn,
+    )
+
+def joint_dist_similarities(dimensions, term_sets, distribution_fn=None):
+    return joint_combination_sims(
+        term_sets, dimensions, jdistribution_fn=distribution_fn,
     )
 
 def print_dist_similarities(dimensions, term_sets,
