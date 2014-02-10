@@ -35,6 +35,9 @@ relations:
             所有(権):
                 classes:
                 - shoyuuken honken
+                system:
+                - ishitsubutsuhou houritsu
+
 
             共有:
                 attrs:
@@ -54,9 +57,17 @@ relations:
                 classes:
                 - ryuuchiken tanpobukken
 
+            先取特権:
+                classes:
+                - sakidoritokken tanpobukken
+                person roles:
+                - sakidoritokkensha tanpokenja
+
             質権:
                 classes:
                 - shichiken tanpobukken
+                person roles:
+                - shichikenja tanpokenja
 
             抵当権:
                 classes:
@@ -68,6 +79,7 @@ relations:
                 - teitoukenja tanpokenja
                 attrs:
                 - teitouchi teitoufudousan
+                - teitoutatemono teitoufudousan
 
             根抵当(権):
                 classes:
@@ -83,7 +95,7 @@ relations:
                 actions:
                 - sashiosae actionframe
                 - sashiosae system
-                - keibai actionframe
+                - keibai baibai
                 - keibai system
                 - tainoushobun actionframe
                 - tainoushobun system
@@ -134,6 +146,21 @@ relations:
                 attrs:
                 - kyouyuubutsu shoyuubutsu
                 - kyouyuumochibun zaisan
+                - mochibun kyouyuumochibun
+
+            地上権:
+                person roles:
+                - chijoukenja person
+
+            永小作権:
+                person roles:
+                - eikosakunin person
+
+            質権:
+                classes:
+                - fudousanshichiken shichiken
+                person roles:
+                - fudousanshichikenja shichikenja
 
             抵当権:
                 classes:
@@ -143,6 +170,7 @@ relations:
                 attrs:
                 - teitoufudousan fudousan
                 - teitouchi tochi
+                - teitoutatemono tatemono
                 - chijouken teitoufudousan
                 - eikosakuken teitoufudousan
                 - houteichijouken chijouken
@@ -167,6 +195,9 @@ relations:
             担保:
             - tanpoken keibai
             - tanpoken tanpofudousanshuuekishikkou
+
+            占有(権):
+            - shoji senyuu
 
             抵当権:
             - teitou teitouken

@@ -6,6 +6,9 @@ relations:
     attr_slot:
         pairs:
 
+            常識概念:
+            - kuni kokko
+
             人:
                 soc:
                 - person person_social_attr
@@ -31,6 +34,8 @@ relations:
             - butsu youhou
             - butsu shurui
             - butsu hinshitsu
+            - butsu joutai
+            - butsu kashi
 
             財産:
             - shubutsu juubutsu
@@ -38,6 +43,7 @@ relations:
             - zaisan kagaku
             - tochi teichakubutsu
             - kanrisha chuuigimu
+            - sanrin jumoku
 
             金銭:
             - teikikin manki
@@ -81,6 +87,7 @@ relations:
             財産:
             - fuzoku juubutsu
             - kanri kanrisha
+            - shiyou shiyousha
             物権-ショートカット:
             - kizoku zaisan
 
@@ -92,6 +99,10 @@ relations:
 
     obj:
         pairs:
+
+            常識概念:
+            - saishoku jumoku
+            - bassai jumoku
 
             人:
                 soc:
@@ -108,7 +119,10 @@ relations:
             - shiyou butsu
             - shuueki butsu
             - hikiwatashi zaisan
+            - torimodoshi zaisan
             - chikuzou tatemono
+            - kouji fudousan
+            - shuushu kajitsu
             物権-ショートカット:
             - shobun zaisan
             - shutoku zaisan
@@ -124,6 +138,8 @@ relations:
             - shiharai kinsen
             - entai shiharai
             - gengaku kingaku
+            - kumiire risoku
+            - futan hiyou
 
             時効:
             - shoumetsujikou kenri

@@ -10,6 +10,11 @@ relations:
             常識概念:
                 system:
                 - kuni system
+                actions:
+                - saishoku person_action
+                - bassai person_action
+                attrs:
+                - kokko system
 
             人:
                 classes:
@@ -71,11 +76,14 @@ relations:
                 classes:
                 - fudousan zaisan
                 - tochi fudousan
+                - sanrin tochi
                 - teichakubutsu fudousan
                 - tatemono teichakubutsu
+                - jumoku teichakubutsu
                 - dousan zaisan
                 - mukimeisaiken dousan
                 - kinsen dousan
+                - kagu dousan
                 - chuuigimu gimu
                 statuses:
                 - tennenkajitsu kajitsu
@@ -87,6 +95,8 @@ relations:
                 - shiyou person_action
                 - shuueki tandokukoui
                 - hikiwatashi tandokukoui
+                - torimodoshi person_action
+                - kouji person_action
 
             (金銭)価値概念:
                 actions:
@@ -105,6 +115,8 @@ relations:
                 - shiharai tandokukoui
                 - entai person_action
                 - gengaku person_action
+                - kumiire person_action
+                - futan person_action
 
     role_of:
         pairs:
@@ -157,8 +169,12 @@ relations:
                 - yuutaibutsu butsu
                 - sanshutsubutsu butsu
                 - mokutekibutsu zaisan
+                - maizoubutsu butsu
+                - ishitsubutsu butsu
                 attrs:
                 - chuutou hinshitsu
+                - genjou joutai
+                - genshijoutai joutai
 
             財産:
                 classes:
@@ -171,10 +187,17 @@ relations:
                 - tennenkajitsu sanshutsubutsu
                 - ganbutsu zaisan
                 - tokuteibutsu zaisan
+                - chikuboku jumoku
+                - mushubutsu zaisan
                 actions:
                 - hozon kanri
+                - shuushu system
+                - shuushu shutoku
+                - shuuju shuushu
                 person roles:
                 - kanrisha person
+                - kanrinin kanrisha
+                - shiyousha person
 
             (金銭)価値概念:
                 abstract:
@@ -202,8 +225,11 @@ relations:
                 - shoukan shiharai
                 - shoukanseikyuu seikyuu
                 - gengakuseikyuu seikyuu
+                - shishutsu shiharai
+                - shishutsu furieki
                 attrs:
                 - manki jiki
+                - gaku kingaku
 
             時効:
             - jikou kitei
@@ -230,3 +256,4 @@ relations:
             金銭:
             - shoukanseikyuu shoukan
             - gengakuseikyuu gengaku
+            - futan shiharai

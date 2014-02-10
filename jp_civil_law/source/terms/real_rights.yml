@@ -43,6 +43,8 @@ terms:
         - 所有権
         attrs:
         - 所有物
+        system:
+        - 遺失物法
 
     共有:
 
@@ -53,25 +55,40 @@ terms:
         attrs:
         - 共有物
         - 共有持分
+        - 持分
 
     地上権:
 
         classes:
         - 地上権
+        person roles:
+        - 地上権者{chijoukenja}
         attrs:
         - 地代
 
     永小作権:
         classes:
         - 永小作権{eikosakuken}
+        person roles:
+        - 永小作人{eikosakunin}
 
     留置権:
         classes:
         - 留置権
 
+    先取特権:
+        classes:
+        - 先取特権{sakidoritokken}
+        person roles:
+        - 先取特権者{sakidoritokkensha}
+
     質権:
         classes:
         - 質権
+        - 不動産質権
+        person roles:
+        - 質権者{shichikenja}
+        - 不動産質権者{fudousanshichikenja}
 
     抵当権:
         classes:
@@ -86,6 +103,7 @@ terms:
         attrs:
         - 抵当不動産
         - 抵当地
+        - 抵当建物
         - 法定地上権
 
     根抵当(権):

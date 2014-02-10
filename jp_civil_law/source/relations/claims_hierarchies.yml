@@ -21,6 +21,7 @@ relations:
                 - riritsu thirdness
                 - riritsu wariai
                 - houteiriritsu riritsu
+                - rikouki kigen
 
             請求(権):
                 classes:
@@ -35,16 +36,34 @@ relations:
             弁済:
                 actions:
                 - kyoutaku tandokukoui
+                - juutou person_action
 
             契約一般:
                 actions:
                 - koukai keiyaku
 
+            売買(契約):
+                classes:
+                - baibai keiyaku
+
+            貸借一般:
+                classes:
+                - taishakukeiyaku keiyaku
+
+            使用貸借:
+                classes:
+                - shiyoutaishaku taishakukeiyaku
+
             賃貸借(契約):
                 classes:
-                - chintaishaku keiyaku
+                - chintaishaku taishakukeiyaku
                 attrs:
                 - chinshakuken saiken
+                - chinryou teikikin
+
+            請負(契約):
+                classes:
+                - ukeoi keiyaku
 
     role_of:
         pairs:
@@ -55,6 +74,8 @@ relations:
                 - shuruisaiken saiken
                 - kinsensaiken saiken
                 - saimu debts_and_credits
+                - tanposekinin sekinin
+                - kashitanposekinin tanposekinin
                 actions:
                 - bensai rikou
                 person roles:
@@ -62,11 +83,13 @@ relations:
                 - saimusha person
                 attrs:
                 - ganpon zaisan
+                - bensaiki rikouki
 
             請求(権):
                 classes:
                 - seikyuuken saiken
                 - yuusenken saiken
+                - kyuushouken seikyuuken
                 actions:
                 - seikyuu koushi
                 - shoumetsuseikyuu seikyuu
@@ -95,6 +118,7 @@ relations:
             弁済:
                 actions:
                 - kyoutaku kyuufu
+                - houteijuutou juutou
                 attrs:
                 - kyoutakubutsu butsu
 
@@ -103,18 +127,48 @@ relations:
                 - keizokutekitorihikikeiyaku keiyaku
                 actions:
                 - torihiki social_activity
+                attrs:
+                - tokuyaku goui
+
+            売買(契約):
+                classes:
+                - baibaikeiyaku baibai
+                actions:
+                - baikyaku jouto
+                person roles:
+                - urinushi joutonin
+                - kainushi yuzuriukenin
+                attrs:
+                - daikin taika
+                - daikin hiyou
 
             賃貸借(契約):
                 classes:
                 - chintaishakukeiyaku chintaishaku
                 - chinshaku chintaishaku
                 - chintai chintaishaku
+                - tankichintaishaku chintaishaku
                 attrs:
                 - chintaibutsu zaisan
                 - chinshakubutsu zaisan
+                - chinryou taika
+                - chinryou houteikajitsu
+
+            請負(契約):
+                classes:
+                - ukeoikeiyaku ukeoi
+                person roles:
+                - ukeoinin person
+
+            不当利得:
+                actions:
+                - futouritoku rieki
 
     antecedent_to:
         pairs:
+
+            債権・債務一般:
+            - kashi tanposekinin
 
             保証・根保証(契約):
             - kakuteiseikyuu ganponkakutei
@@ -124,4 +178,5 @@ relations:
             - saikoku houritsukoui
 
             弁済:
+            - juutou bensai
             - kyoutaku bensai

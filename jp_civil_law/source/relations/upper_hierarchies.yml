@@ -29,9 +29,13 @@ relations:
             - kizoku actionframe
             - bunkatsu person_action
             - kakutei actionframe
+            - gentei person_action
             - keizoku actionframe
             - hendou actionframe
             - iten hendou
+            - yuusen actionframe
+            - yuuyo actionframe
+            - koushin person_action
 
             抽象属性:
             - kouryoku thirdness
@@ -40,15 +44,20 @@ relations:
             - sonzokukikan kikan
             - kiroku thirdness
             - junni thirdness
+            - joutai thirdness
 
             実体など:
             - butsu secondness
             - basho secondness
 
             時間:
-            - kikan hanni
-            - jiki secondness
-            - kijitsu jiki
+                entities:
+                - kikan hanni
+                - jiki secondness
+                - kijitsu kigen
+                actions:
+                - tourai actionframe
+                - keika actionframe
 
             常識概念:
             - eigyou social_activity
@@ -57,6 +66,11 @@ relations:
             - chikuzou person_action
             - koutai person_action
             - soufu tetsuduki
+            - juryou person_action
+            - shoji person_action
+            - hakken person_action
+            - shuutoku person_action
+            - hanmei actionframe
 
             補助概念:
                 person:
@@ -83,6 +97,8 @@ relations:
                 - shoyuu person_action
                 person roles:
                 - shutokusha person
+                - daisanshutokusha shutokusha
+                - daisanshutokusha daisansha
                 - yuzuriukenin shutokusha
                 - hikiukenin shutokusha
                 - shoyuusha person
@@ -113,6 +129,7 @@ relations:
                 - uttae moushitate
                 - kyakka actionframe
                 - taikou person_action
+                - hogo actionframe
 
             証券:
                 classes:
@@ -139,6 +156,8 @@ relations:
                 - jouken thirdness
                 - teishijouken jouken
                 - kaijojouken jouken
+                - kigen jiki
+                - kigen thirdness
                 attr actions:
                 - seihi actionframe
 
@@ -147,12 +166,16 @@ relations:
 
             抽象属性:
             - wariai hanni
+            - bubun hanni
+            - ichibu bubun
+            - zenbu bubun
             - fuki kiroku
             - douitsujunni junni
-            - doujunni junni
+            - doujunni douitsujunni
             - senjunni junni
             - jijunni junni
             - koujunni junni
+            - kashi joutai
 
             常識概念:
             - jigyou eigyou
@@ -161,6 +184,7 @@ relations:
                 entities:
                 - shiken kenri
                 - zaisanken kenri
+                - sekinin gimu
                 actions:
                 - koushi tandokukoui
                 - rikou tandokukoui
@@ -168,6 +192,7 @@ relations:
                 - furikou rikou
                 - tsuinin doui
                 - daii person_action
+                - houteidaii daii
                 person roles:
                 - kenrisha person
                 - joutonin person
@@ -197,9 +222,13 @@ relations:
                 - shoudaku ishihyouji
                 - goui person_action
                 - sajutsu person_action
+                - koukoku tsuuchi
                 supporting classes:
                 - toujisha person
                 - daisansha person
+                - tanin person
+                - jiko person
+                - douitsunin person
                 attr actions:
                 - jouju seihi
 
@@ -213,6 +242,9 @@ relations:
 
             抽象動詞:
             - kizoku shoyuu
+
+            常識概念:
+            - shuutoku shoji
 
             権利・義務:
             - kondou shoumetsu

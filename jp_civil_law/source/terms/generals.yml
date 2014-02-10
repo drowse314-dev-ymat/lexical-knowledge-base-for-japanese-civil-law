@@ -9,6 +9,11 @@ terms:
         - 国
         - 外国
         - 日本{nihon}
+        actions:
+        - 栽植
+        - 伐採
+        attrs:
+        - 国庫
 
     人:
 
@@ -90,6 +95,8 @@ terms:
         - 有体物{yuutaibutsu}
         statuses:
         - 産出物{sanshutsubutsu}
+        - 埋蔵物
+        - 遺失物
         actions:
         - 付加
         - 付合{fugou}
@@ -97,6 +104,8 @@ terms:
         - 用法
         - 種類
         - 品質
+        - 現状
+        - 原状{genshijoutai}
         attr statuses:
         - 中等
 
@@ -108,9 +117,11 @@ terms:
         - 土地
         - 定着物{teichakubutsu}
         - 建物
+        - 山林
         - 動産
         - 金銭
         - 無記名債権
+        - 家具
         statuses:
         - 主物{shubutsu}
         - 従物{juubutsu}
@@ -120,6 +131,7 @@ terms:
         - 元物{ganbutsu}
         - 特定物{tokuteibutsu}
         - 目的物
+        - 無主物{mushubutsu}
         actions:
         - 附属
         - 管理
@@ -127,10 +139,18 @@ terms:
         - 使用
         - 収益
         - 引渡し
+        - 取戻し{torimodoshi}
+        - 工事
+        - 収取
+        - 収受
         person roles:
         - 管理者
+        - 管理人
+        - 使用者
         attrs:
         - 注意義務
+        - 樹木
+        - 竹木{chikuboku}
 
     (金銭)価値概念:
 
@@ -160,6 +180,7 @@ terms:
         - 有益費
         attrs:
         - 金額
+        - 額{gaku}
         - 通貨{ryuutsuukahei}
         - 為替相場
         - 満期
@@ -168,9 +189,12 @@ terms:
         - 償還
         - 償還請求
         - 支払
+        - 支出
         - 延滞
         - 減額
         - 減額請求
+        - 組入れ
+        - 負担
 
     時効:
         classes:

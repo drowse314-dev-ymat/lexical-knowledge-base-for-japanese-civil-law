@@ -12,6 +12,11 @@ relations:
             抽象動詞:
             - sonzoku sonzokukikan
 
+            抽象属性:
+            - rights_and_duties joutai
+            - kenri kashi
+            - koui kashi
+
             権利・義務:
             - rights_and_duties mokuteki
             - jouto yuzuriukenin
@@ -45,6 +50,8 @@ relations:
 
             時間:
             - keizoku kikan
+            - keika kikan
+            - tourai jiki
 
             権利・義務:
             - hendou rights_and_duties
@@ -67,6 +74,18 @@ relations:
                 action frames:
                 - settei continuous_consensus
 
+            抽象動詞:
+            - yuuyo rikou
+            - koushin sonzokukikan
+
+            抽象属性:
+            - gentei hanni
+
+            常識概念:
+            - juryou ishihyouji
+            - shoji butsu
+            - shuutoku butsu
+
             権利・義務:
             - koushi kenri
             - rikou gimu
@@ -84,6 +103,7 @@ relations:
             - gubi youken
             - kyakka moushitate
             - soufu shomen
+            - hogo person
 
             法律行為・意思表示:
             - ishihyouji aitegata

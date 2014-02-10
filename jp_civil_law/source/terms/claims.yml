@@ -10,6 +10,8 @@ terms:
         - 種類債権
         - 金銭債権
         - 債務
+        - 担保責任
+        - 瑕疵担保責任{kashitanposekinin}
         actions:
         - 弁済
         - 代価弁済
@@ -23,12 +25,15 @@ terms:
         - 利息
         - 利率
         - 法定利率
+        - 履行期
+        - 弁済期
 
     請求(権):
         classes:
         - 請求権
         - 催告権
         - 優先権
+        - 求償権
         actions:
         - 請求
         - 消滅請求
@@ -52,6 +57,8 @@ terms:
 
     弁済:
         actions:
+        - 充当
+        - 法定充当
         - 供託
         attrs:
         - 供託物{kyoutakubutsu}
@@ -68,6 +75,28 @@ terms:
         actions:
         - 取引
         - 更改
+        attrs:
+        - 特約
+
+    売買(契約):
+        classes:
+        - 売買契約
+        actions:
+        - 売買
+        - 売却
+        person roles:
+        - 売主{urinushi}
+        - 買主{kainushi}
+        attrs:
+        - 代金
+
+    貸借一般:
+        classes:
+        - 貸借契約  # not included in law
+
+    使用貸借(契約):
+        classes:
+        - 使用貸借
 
     賃貸借(契約):
         classes:
@@ -76,7 +105,21 @@ terms:
         - 賃貸借
         - 賃借
         - 賃貸
+        - 短期賃貸借
         attrs:
         - 賃借権
         - 賃貸物{chintaibutsu}
         - 賃借物{chinshakubutsu}
+        - 賃料
+
+    請負(契約):
+        classes:
+        - 請負契約  # not included in law
+        actions:
+        - 請負
+        person roles:
+        - 請負人
+
+    不当利得:
+        actions:
+        - 不当利得
