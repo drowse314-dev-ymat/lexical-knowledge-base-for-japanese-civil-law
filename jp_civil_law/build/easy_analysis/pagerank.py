@@ -15,14 +15,14 @@ def personalization_map(targets, whole, amplify=100.0):
 def pr_distribution_fn(nx_graph, pagerank=nx.pagerank, preproc=lambda x: x, amplify=100.0):
     graph_copy = nx_graph.copy()
     graph_copy = preproc(graph_copy)
-    def _distribution(featured_nodes):
+    def _distribution(featured_nodes, label=None):
         return pagerank(
             graph_copy,
             personalization=personalization_map(
                 featured_nodes, graph_copy.nodes(),
                 amplify=amplify
             ),
-        )
+        ), featured_nodes
     return _distribution
 
 
