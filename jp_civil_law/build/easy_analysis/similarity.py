@@ -52,12 +52,15 @@ def print_dist_similarities(dimensions, term_sets,
                             sumrange=None):
     sims = dist_similarities(dimensions, term_sets, distribution_fn)
     sim_pairs = [
-        (u'{}: {}'.format(key1, key2), sims[(key1, key2)])
+        (u'{},{}'.format(key1, key2), sims[(key1, key2)])
         for key1, key2 in sorted(sims)
         if (grep is not None and grep in (key1 + key2))
     ]
     sim_pairs.sort(key=lambda desc_sim: desc_sim[1], reverse=True)
     sum_sims = sum([sim for desc, sim in sim_pairs])
     for desc, sim_value in sim_pairs:
-        sim_value_normalized = sim_value / sum_sims * 10.0
-        print(u'{} --> {}'.format(desc, sim_value_normalized))
+        if sumrange is not None:
+            sim_value_normalized = sim_value / sum_sims * sumrange
+        else:
+            sim_value_normalized = sim_value
+        print(u'{},{}'.format(desc, round(sim_value_normalized, 3)))
