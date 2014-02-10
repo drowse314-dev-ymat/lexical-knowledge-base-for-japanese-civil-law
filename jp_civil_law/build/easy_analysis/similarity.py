@@ -42,12 +42,15 @@ def rankmap2vect(rankmap, dimensions):
     powervect = [rankmap[d] for d in dimensions]
     return powervect
 
-def print_dist_similarities(nx_graph, term_sets,
-                            distribution_fn=None, grep=None):
-    sims = combination_sims(
-        term_sets, nx_graph.nodes(),
-        distribution=distribution_fn,
+def dist_similarities(dimensions, term_sets, distribution_fn=None):
+    return combination_sims(
+        term_sets, dimensions, distribution=distribution_fn,
     )
+
+def print_dist_similarities(dimensions, term_sets,
+                            distribution_fn=None, grep=None,
+                            sumrange=None):
+    sims = dist_similarities(dimensions, term_sets, distribution_fn)
     sim_pairs = [
         (u'{}: {}'.format(key1, key2), sims[(key1, key2)])
         for key1, key2 in sorted(sims)
