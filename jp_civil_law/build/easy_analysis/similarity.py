@@ -6,9 +6,18 @@ import itertools
 
 def combination_sims(term_sets, dimensions, distribution=None):
     sims = {}
+
+    def calculate_distribution(key, distcache={}):
+        assert set(term_sets[key]).issubset(set(dimensions)), \
+               (u'{}: '.format(key) + u','.join(set(term_sets[key]).difference(set(dimensions)))).encode('utf-8')
+        if key not in distcache:
+            rankmap, mod_terms = distribution(term_sets[key], label=key)
+            distcache[key] = rankmap, mod_terms
+        return distcache[key]
+
     for key1, key2 in itertools.permutations(sorted(term_sets, reverse=True), 2):
-        rankmap_1, mod_terms1 = distribution(term_sets[key1])
-        rankmap_2, mod_terms2 = distribution(term_sets[key2])
+        rankmap_1, mod_terms1 = calculate_distribution(key1)
+        rankmap_2, mod_terms2 = calculate_distribution(key2)
         vect_1 = rankmap2vect(rankmap_1, dimensions)
         vect_2 = rankmap2vect(rankmap_2, dimensions)
         sim = cosine_similarity(vect_1, vect_2)
