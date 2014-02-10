@@ -34,7 +34,7 @@ def save_graph(nx_graph, tofile, cut_solos=False, rankcolor=False,
     hook_calc(nx_orig_graph)
 
     # filter
-    filter_target(nx_graph, white_nodes, white_rels)
+    filter_target(nx_graph, (white_nodes + featured), white_rels)
     if cut_solos:
         remove_solos(nx_graph, without=featured)
     reduced_agraph = networkx.to_agraph(nx_graph)
