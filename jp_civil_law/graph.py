@@ -106,8 +106,13 @@ def check_relation_conflicts(relation_loaders, nodeprovider):
     noconflict_providers(providers, nodeprovider=nodeprovider)
 
 
+universal_cache = {}
 def get_graph(terms_dir=TERMS_DIR, relations_dir=RELATIONS_DIR,
               log=TRACKING_LOG, use_whitelist=False, as_nx=False):
+    key = (terms_dir, relations_dir, log, use_whitelist, as_nx)
+    if key in universal_cache:
+        return universal_cache[key]
+
     if use_whitelist:
         whitelist = load_whitelist()
     else:
@@ -121,7 +126,9 @@ def get_graph(terms_dir=TERMS_DIR, relations_dir=RELATIONS_DIR,
     )
     if as_nx:
         graph = rdflib_to_networkx(graph)
-    return graph, white_nodes, white_rels
+
+    universal_cache[key] = graph, white_nodes, white_rels
+    return universal_cache[key]
 
 def load_whitelist(src=WHITELIST):
     try:
