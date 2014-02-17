@@ -2,8 +2,10 @@ PyYAML==3.10
 SPARQLWrapper==1.5.2
 html5lib==1.0b3
 isodate==0.4.9
+lxml==3.3.0beta3
 networkx==1.8.1
 pygraphviz==1.2
 pyparsing==1.5.7
 rdflib==4.0.1
 six==1.4.1
+xmlpumpkin==0.1
