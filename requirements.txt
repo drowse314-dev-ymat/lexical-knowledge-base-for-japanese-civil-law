@@ -1,5 +1,7 @@
+Logbook==0.6.0
 PyYAML==3.10
 SPARQLWrapper==1.5.2
+colors.py==0.2.0
 html5lib==1.0b3
 isodate==0.4.9
 lxml==3.3.0beta3
