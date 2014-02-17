@@ -4,9 +4,6 @@
 /jp_civil_law/build/*.*
 !/jp_civil_law/build/description.txt
 !/jp_civil_law/build/__init__.py
-
-/jp_civil_law/build/easy_analysis/user_calc.py
-/jp_civil_law/build/easy_analysis/user_color.py
-/jp_civil_law/build/easy_analysis/casedata.py
+!/jp_civil_law/build/graph.pdf
 
 postbuild.sh
