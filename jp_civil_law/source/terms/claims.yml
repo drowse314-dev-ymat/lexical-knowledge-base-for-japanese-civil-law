@@ -60,6 +60,9 @@ terms:
         - 充当
         - 法定充当
         - 供託
+        - 引受け
+        person roles:
+        - 引受人
         attrs:
         - 供託物{kyoutakubutsu}
 

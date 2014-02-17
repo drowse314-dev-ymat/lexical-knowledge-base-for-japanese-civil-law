@@ -37,6 +37,8 @@ relations:
                 actions:
                 - kyoutaku tandokukoui
                 - juutou person_action
+                - hikiuke iten
+                - hikiuke settei
 
             契約一般:
                 actions:
@@ -119,6 +121,8 @@ relations:
                 actions:
                 - kyoutaku kyuufu
                 - houteijuutou juutou
+                person roles:
+                - hikiukenin daisansha
                 attrs:
                 - kyoutakubutsu butsu
 
@@ -180,3 +184,4 @@ relations:
             弁済:
             - juutou bensai
             - kyoutaku bensai
+            - hikiuke futan

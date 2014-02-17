@@ -90,8 +90,6 @@ relations:
                 - shutoku tokusou
                 - jouto iten
                 - jouto settei
-                - hikiuke iten
-                - hikiuke settei
                 - shoukei person_action
                 - houki tandokukoui
                 - shoyuu person_action
@@ -100,7 +98,6 @@ relations:
                 - daisanshutokusha shutokusha
                 - daisanshutokusha daisansha
                 - yuzuriukenin shutokusha
-                - hikiukenin shutokusha
                 - shoyuusha person
 
             メタ概念:

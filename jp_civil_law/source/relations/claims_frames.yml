@@ -43,6 +43,9 @@ relations:
             - hoshou hoshounin
             - ganponkakutei ganpon
 
+            弁済:
+            - hikiuke hikiukenin
+
             売買(契約):
             - baikyaku urinushi
 
@@ -73,6 +76,7 @@ relations:
             弁済:
             - kyoutaku kyoutakubutsu
             - juutou saimu
+            - hikiuke saimu
 
             契約一般:
             - koukai saiken
