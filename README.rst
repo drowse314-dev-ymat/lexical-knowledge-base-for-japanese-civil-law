@@ -12,17 +12,15 @@ Lexical Knowledge Base for Japanese Civil Law
 
 これは作者が独断と偏見と、ほんの60時間程度の民法の学習結果によって構成したもので、法律知識の正確性は若干保証しかねます。
 一方、シソーラスとして見てもオントロジーとして見てもかなり不整合なつくりになっており、領域知識と言語的知識を非常にシャローかつ感覚的な方針で混ぜ込んだ実用指向なものとなっています。
-詳しくは``./jp_civil_law/build/thesis.pdf``を参照して下さい。
+詳しくは `論文 <jp_civil_law/build/thesis.pdf>`_ を参照して下さい。
 
 つかいかた
 ~~~~~~~~~~
 以下が必要です。完全にUNIX環境を想定しています。用意が面倒なものもあると思われます。
 
 * Python2.7およびvirtualenv
-* `kakasi
-<http://kakasi.namazu.org/>`_ (kakasiコマンドとして/v2.3.5で動作確認、後方互換性のない更新がありがちなので注意)
-* `graphviz
-<http://www.graphviz.org/>`_ (dotコマンドとして)
+* `kakasi <http://kakasi.namazu.org/>`_ (kakasiコマンドとして v2.3.5で動作確認、後方互換性のない更新がありがちなので注意)
+* `graphviz <http://www.graphviz.org/>`_ (dotコマンドとして)
 
 以下、構築手順です。
 
@@ -33,7 +31,7 @@ Lexical Knowledge Base for Japanese Civil Law
     pip install -r requirements.txt # pygraphvizは一部環境で一筋縄ではいきません
     sh build.sh
 
-./jp_civil_law/build以下に語彙ネットワークのgraphviz用のdotファイルおよびこれを可視化したpdfファイルが生成されるとともに、
+`jp_civil_law/build <jp_civil_law/build>`_ 以下に語彙ネットワークのgraphviz用のdotファイルおよびこれを可視化したpdfファイルが生成されるとともに、
 サンプルケースによる<司法試験問題文> --> <民法条文>の検索が様々な余計な出力とともに実行されます。
 
 そんなものは見たくないという場合:
@@ -43,13 +41,11 @@ Lexical Knowledge Base for Japanese Civil Law
     from jp_civil_law import graph
     (lkb_graph, _, _) = graph.get_graph(as_nx=True)
 
-これで語彙ネットワークを、 `NetworkX
-<http://networkx.github.io/>`_ の有向グラフで取得できます。
+これで語彙ネットワークを、 `NetworkX <http://networkx.github.io/>`_ の有向グラフで取得できます。
 余計なものもタプルとして後ろに一緒にまとまっているのでご注意下さい。
 
 また、役立ててはいませんが、一応内部表現にはRDFグラフを利用しています。
-以下のように `rdflib
-<https://github.com/RDFLib/rdflib>`_ 製のグラフを取得できます。
+以下のように `rdflib <https://github.com/RDFLib/rdflib>`_ 製のグラフを取得できます。
 名前空間等は特に設定していません。
 
 .. code-block:: python

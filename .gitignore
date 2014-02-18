@@ -5,5 +5,6 @@
 !/jp_civil_law/build/description.txt
 !/jp_civil_law/build/__init__.py
 !/jp_civil_law/build/graph.pdf
+!/jp_civil_law/build/thesis.pdf
 
 postbuild.sh
