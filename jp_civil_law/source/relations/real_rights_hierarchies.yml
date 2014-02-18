@@ -104,14 +104,14 @@ relations:
                 - tanpofudousanshuuekishikkou actionframe
                 - tanpofudousanshuuekishikkou system
                 - start_bankruptcy actionframe
-                - start_bankruptcy tetsuduki
-                - hasantetsudukikaishi start_bankruptcy
-                - saiseitetsudukikaishi start_bankruptcy
-                - kouseitetsudukikaishi start_bankruptcy
+                - start_bankruptcy tetsuzuki
+                - hasantetsuzukikaishi start_bankruptcy
+                - saiseitetsuzukikaishi start_bankruptcy
+                - kouseitetsuzukikaishi start_bankruptcy
                 - tokubetsuseisankaishi start_bankruptcy
                 system:
-                - keibaitetsuduki tetsuduki
-                - tanpofudousanshuuekishikkoutetsuduki tetsuduki
+                - keibaitetsuzuki tetsuzuki
+                - tanpofudousanshuuekishikkoutetsuzuki tetsuzuki
 
     role_of:
         pairs:

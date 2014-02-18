@@ -132,7 +132,7 @@ terms:
         - 特別清算開始
         - 買受け{kaiuke}  # not included in law
         system:
-        - 競売手続{keibaitetsuduki}
+        - 競売手続{keibaitetsuzuki}
         - 担保不動産収益執行手続
         person roles:
         - 買受人{kaiukenin}

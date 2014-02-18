@@ -65,7 +65,7 @@ relations:
             - kisai person_action
             - chikuzou person_action
             - koutai person_action
-            - soufu tetsuduki
+            - soufu tetsuzuki
             - juryou person_action
             - shoji person_action
             - hakken person_action
@@ -106,7 +106,7 @@ relations:
                     - kitei system
                     - youken system
                     - houshiki youken
-                    - tetsuduki houshiki
+                    - tetsuzuki houshiki
                     - kouka system
                     - hourei kitei
                     - houritsu hourei

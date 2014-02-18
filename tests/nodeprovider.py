@@ -130,7 +130,7 @@ class Fixtures:
             }
         class properties:
             formalized_map = {
-                u'つづく': u'tsuduku',
+                u'つづく': u'tsuzuku',
                 u'next': u'next',
             }
         not_added = u'rectum'

@@ -30,8 +30,8 @@ relations:
             - neteitouken neteitoukensetteisha
 
             強制執行関連:
-            - keibai keibaitetsuduki
-            - tanpofudousanshuuekishikkou tanpofudousanshuuekishikkoutetsuduki
+            - keibai keibaitetsuzuki
+            - tanpofudousanshuuekishikkou tanpofudousanshuuekishikkoutetsuzuki
 
     sbj:
         pairs:

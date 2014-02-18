@@ -58,7 +58,7 @@ relations:
                 - hosa person_action
                 - hojo person_action
                 - start_protection actionframe
-                - start_protection tetsuduki
+                - start_protection tetsuzuki
                 - koukenkaishi start_protection
                 - hosakaishi start_protection
                 - hojokaishi start_protection

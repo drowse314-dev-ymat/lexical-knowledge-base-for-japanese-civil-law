@@ -32,11 +32,8 @@ roman_sets = [
 ]
 # Valid conversion order for romanization.
 conversion_order = [
-    CharSet.katakana, CharSet.kanji,
-]
-# Needed bridging set for complete romanization.
-conversion_bridge = [
-    CharSet.hiragana, CharSet.katakana,  # "ー" cannot be romanized by hiragana conversion.
+    CharSet.katakana, CharSet.hiragana,
+    CharSet.kanji, CharSet.hiragana, CharSet.katakana,
 ]
 
 
@@ -68,33 +65,26 @@ def kakasi(from_set, to_set, stdin=None):
     )
     return p
 
-def kakasi_romanize_series(targets, to_set=CharSet.ascii, stdin=None):
+def kakasi_romanize_series(to_set=CharSet.ascii, stdin=None):
     if to_set not in roman_sets:
         raise ValueError('invalid destination: "{}"'.format(to_set))
-    targets = list(targets)
     procs = []
     prev_stdin = stdin
 
-    for from_set in conversion_order:
-        if from_set in targets:
-            proc = kakasi(from_set, CharSet.hiragana, stdin=prev_stdin)
-            procs.append(proc)
-            prev_stdin = proc.stdout
-
-    for from_set in conversion_bridge:
+    order = conversion_order[:]
+    order.append(to_set)
+    for from_set, to_set in zip(order, order[1:]):
         proc = kakasi(from_set, to_set, stdin=prev_stdin)
         procs.append(proc)
         prev_stdin = proc.stdout
 
     return procs
 
-def romanize(text,
-             targets=(CharSet.kanji, CharSet.katakana),
-             encoding='utf-8'):
+def romanize(text, encoding='utf-8'):
     """Romanize text."""
     echo_text = echo(text)
     init_iconv = iconv(encoding, 'euc-jp', stdin=echo_text.stdout)
-    kakasi_romanize_procs = kakasi_romanize_series(targets, stdin=init_iconv.stdout)
+    kakasi_romanize_procs = kakasi_romanize_series(stdin=init_iconv.stdout)
     fin_iconv = iconv('euc-jp', encoding, kakasi_romanize_procs[-1].stdout)
 
     echo_text.stdout.close()
