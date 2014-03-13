@@ -6,5 +6,6 @@
 !/jp_civil_law/build/__init__.py
 !/jp_civil_law/build/graph.pdf
 !/jp_civil_law/build/thesis.pdf
+!/jp_civil_law/build/SIG-SWO-A1303-06.pdf
 
 postbuild.sh
