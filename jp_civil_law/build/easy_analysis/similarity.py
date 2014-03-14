@@ -16,6 +16,7 @@ def selective_print(key1, map_1, key2, map_2):
     def _mapped(somemap):
         return [u'{}/{}'.format(k, round(v, 2)) for k, v in somemap.iteritems() if v != 0.0]
     if None not in (q, a):
+        print(u'::Terms in question -- correct answer::')
         print(u'q({})--a({})'.format(q, a))
         print(u'===========')
         qmapped = _mapped(qmap)

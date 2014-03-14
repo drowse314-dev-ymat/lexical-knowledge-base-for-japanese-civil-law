@@ -91,7 +91,7 @@ def fn_expand(nx_graph, allterms, amplify=False, lower_expands=False):
     def _expand(termset, key):
         termset = tuple(sorted(set(termset)))
         if termset not in cache:
-            print(u'expand: {}'.format(key))
+            print(u'term expanding: {}...'.format(key))
             expand, scoremap = tex.populate(
                 termset, nx_graph,
                 methods=tex.all_methods,
@@ -650,8 +650,8 @@ def batch_similarity(nx_graph, noorder=True):
     )
     rankstack = []
     logrankstack = []
-    outstandings = []
-    closer_outstandings = []
+    # outstandings = []
+    # closer_outstandings = []
     f_vals = []
     for qkey in sorted(answers):
         qsims = [
@@ -674,18 +674,18 @@ def batch_similarity(nx_graph, noorder=True):
         for pair, score in order[:10]:
             print(u'  {} <--> {} ({})'.format(*(list(pair) + [round(score, 4)])))
         rank_, logrank = keymap_avr_rank(order, answers[qkey], qkey, noorder=noorder)
-        outstanding_, closer_outst = outstanding_rate(qsims, answers[qkey], qkey)
+        # outstanding_, closer_outst = outstanding_rate(qsims, answers[qkey], qkey)
         f_ = f_measure(F_threshold, order, answers[qkey], qkey)
         rankstack.append(rank_)
         logrankstack.append(logrank)
-        if outstanding_ != 0.0:
-            outstandings.append(outstanding_)
-            closer_outstandings.append(closer_outst)
+        # if outstanding_ != 0.0:
+        #     outstandings.append(outstanding_)
+        #     closer_outstandings.append(closer_outst)
         f_vals.append(f_)
         print(u'RANK: {}'.format(rank_))
         print(u'LOG(RANK): {}'.format(logrank))
-        print(u'INV OUTSTANDING RATE(AVR): {}'.format(outstanding_))
-        print(u'INV OUTSTANDING RATE(AVR/NEAREST): {}'.format(closer_outst))
+        # print(u'INV OUTSTANDING RATE(AVR): {}'.format(outstanding_))
+        # print(u'INV OUTSTANDING RATE(AVR/NEAREST): {}'.format(closer_outst))
         print(u'F: {}'.format(f_))
         print(u'==============\n')
 
@@ -709,22 +709,22 @@ def batch_similarity(nx_graph, noorder=True):
     sd = math.sqrt(variant)
     print(u'SD LOGRANK: {}'.format(sd))
 
-    avr_outstanding = sum(outstandings) / float(len(outstandings))
-    avr_closest_outstanding = sum(closer_outstandings) / float(len(closer_outstandings))
-    print(u'OUTSTANDING RATE(GLOBAL AVR): {}'.format(1.0 / avr_outstanding))
-    print(u'OUTSTANDING RATE(GLOBAL AVR/NEAREST): {}'.format(1.0 / avr_closest_outstanding))
-    outst_sq_errs = []
-    for outst_ in outstandings:
-        outst_sq_errs.append(pow(avr_outstanding - outst_, 2.0))
-    outst_variant = sum(outst_sq_errs) / float(len(outst_sq_errs))
-    outst_sd = math.sqrt(outst_variant)
-    cls_outst_sq_errs = []
-    for outst_ in closer_outstandings:
-        cls_outst_sq_errs.append(pow(avr_closest_outstanding - outst_, 2.0))
-    cls_outst_variant = sum(cls_outst_sq_errs) / float(len(cls_outst_sq_errs))
-    cls_outst_sd = math.sqrt(cls_outst_variant)
-    print(u'SD INVOUTST RATE: {}'.format(outst_sd))
-    print(u'SD INVOUTST RATE/NEAREST: {}'.format(cls_outst_sd))
+    # avr_outstanding = sum(outstandings) / float(len(outstandings))
+    # avr_closest_outstanding = sum(closer_outstandings) / float(len(closer_outstandings))
+    # print(u'OUTSTANDING RATE(GLOBAL AVR): {}'.format(1.0 / avr_outstanding))
+    # print(u'OUTSTANDING RATE(GLOBAL AVR/NEAREST): {}'.format(1.0 / avr_closest_outstanding))
+    # outst_sq_errs = []
+    # for outst_ in outstandings:
+    #     outst_sq_errs.append(pow(avr_outstanding - outst_, 2.0))
+    # outst_variant = sum(outst_sq_errs) / float(len(outst_sq_errs))
+    # outst_sd = math.sqrt(outst_variant)
+    # cls_outst_sq_errs = []
+    # for outst_ in closer_outstandings:
+    #     cls_outst_sq_errs.append(pow(avr_closest_outstanding - outst_, 2.0))
+    # cls_outst_variant = sum(cls_outst_sq_errs) / float(len(cls_outst_sq_errs))
+    # cls_outst_sd = math.sqrt(cls_outst_variant)
+    # print(u'SD INVOUTST RATE: {}'.format(outst_sd))
+    # print(u'SD INVOUTST RATE/NEAREST: {}'.format(cls_outst_sd))
 
     f_avr = sum(f_vals) / float(len(f_vals))
     print(u'AVR-F: {}'.format(f_avr))
