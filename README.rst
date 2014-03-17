@@ -26,10 +26,10 @@ Lexical Knowledge Base for Japanese Civil Law
 
 .. code-block:: sh
 
-    virtualenv-2.7 venv # 名前はなんでも
-    source venv/bin/activate
-    pip install -r requirements.txt # pygraphvizは一部環境で一筋縄ではいきません
-    sh build.sh
+    $ virtualenv-2.7 venv # 名前はなんでも
+    $ source venv/bin/activate
+    $ pip install -r requirements.txt # pygraphvizは一部環境で一筋縄ではいきません
+    $ sh build.sh
 
 `jp_civil_law/build <jp_civil_law/build>`_ 以下に語彙ネットワークのgraphviz用のdotファイルおよびこれを可視化したpdfファイルが生成されるとともに、
 サンプルケースによる<司法試験問題文> --> <民法条文>の検索が様々な余計な出力とともに実行されます。
