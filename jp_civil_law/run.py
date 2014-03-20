@@ -23,7 +23,7 @@ BUILD_DESTINATION = path_from_me('./build/graph.dot')
 
 
 def save_graph(nx_graph, tofile, cut_solos=False, rankcolor=False,
-               white_nodes=None, white_rels=None):
+               white_nodes=None, white_rels=None, mode=None):
 
     # complete graphs
     agraph = networkx.to_agraph(nx_graph)
@@ -31,7 +31,7 @@ def save_graph(nx_graph, tofile, cut_solos=False, rankcolor=False,
 
     # color or process
     featured = hook_color(nx_graph, agraph, rankcolor=rankcolor)
-    hook_calc(nx_orig_graph)
+    hook_calc(nx_orig_graph, mode=mode)
 
     # filter
     filter_target(nx_graph, (white_nodes + featured), white_rels)
@@ -57,8 +57,8 @@ def hook_color(nx_graph, agraph, rankcolor=False):
         featured = user_color.run(nx_graph, agraph)
     return featured
 
-def hook_calc(nx_graph):
-    user_calc.run(nx_graph)
+def hook_calc(nx_graph, mode=None):
+    user_calc.run(nx_graph, mode=mode)
 
 def filter_target(nx_graph, target_nodes=None, target_rels=None):
     if target_nodes is not None:
@@ -101,6 +101,7 @@ def run(args):
         nx_graph, args.build_destination, cut_solos=args.cut_solos,
         rankcolor=args.rankcolor,
         white_nodes=white_nodes, white_rels=white_rels,
+        mode=args.mode,
     )
     logger.notice('done. saved to "{}"'.format(args.build_destination))
 
@@ -115,5 +116,6 @@ if __name__ == '__main__':
     argparser.add_argument('--cut_solos', action='store_true', default=False)
     argparser.add_argument('--rankcolor', action='store_true', default=False)
     argparser.add_argument('--loglevel', default='INFO')
+    argparser.add_argument('-m', '--mode', default='network')
     args = argparser.parse_args()
     run(args)

@@ -577,7 +577,8 @@ def create_mapper(nx_graph=None, allterms=None, raw_titles=None, raw_sents=None)
     return mapper, relmapper
 
 
-def create_joint_mapper(nx_graph=None, allterms=None, raw_titles=None, raw_sents=None, termsets=None):
+def create_joint_mapper(nx_graph=None, allterms=None, raw_titles=None, raw_sents=None, termsets=None,
+                        mode=None):
     # mapper selection
 
     mapper_term = termmap(allterms, logscale=False)
@@ -599,20 +600,30 @@ def create_joint_mapper(nx_graph=None, allterms=None, raw_titles=None, raw_sents
     mapper_joint_idfonly = fn_joint_idfonly(allterms, mapper_idf, idfonly='qa')
     mapper_joint_passpipe = fn_joint_passpipe()
 
-    mapper_single = mapper_term
-    mapper_single_display = fn_display(mapper_single, raw_titles, raw_sents)
+    if mode == 'network':
+        # mapper_double = fn_joint_termpipe(mapper_joint_bridgehierarchy, mapper_joint_expandonly)
+        # mapper_double = fn_joint_termpipe(mapper_joint_expandonly, mapper_joint_bridgehierarchy)
+        # mapper_double = fn_joint_termpipe(mapper_joint_expandonly, mapper_joint_passpipe)
+        # mapper_double = fn_joint_termpipe(mapper_double, mapper_joint_bridgehierarchy)
+        mapper_double = fn_joint_termpipe(mapper_joint_expandonly, mapper_joint_hierarchyreduce)
+        # mapper_double = mapper_joint_expandonly
 
-    mapper_double = fn_double(mapper_single_display)
-    # mapper_double = fn_joint_termpipe(mapper_joint_bridgehierarchy, mapper_joint_expandonly)
-    # mapper_double = fn_joint_termpipe(mapper_joint_expandonly, mapper_joint_bridgehierarchy)
-    # mapper_double = fn_joint_termpipe(mapper_joint_expandonly, mapper_joint_passpipe)
-    # mapper_double = fn_joint_termpipe(mapper_double, mapper_joint_bridgehierarchy)
-    mapper_double = fn_joint_termpipe(mapper_joint_expandonly, mapper_joint_hierarchyreduce)
-    # mapper_double = mapper_joint_expandonly
+        mapper_double = fn_joint_multiply(mapper_double, mapper_joint_idfonly)
 
-    mapper_double = fn_joint_multiply(mapper_double, mapper_joint_idfonly)
+        mapper_double = fn_joint_cutoff_art(mapper_double, by_multiplication=False, termsets=termsets)
 
-    mapper_double = fn_joint_cutoff_art(mapper_double, by_multiplication=False, termsets=termsets)
+    if mode == 'nonetwork':
+        mapper_simpleidf = fn_idfweight(nx_graph, allterms, interpole=False, preinterpole=True, sqrt=False)
+        mapper_single = fn_multiply(mapper_term, mapper_simpleidf)
+
+        mapper_double = fn_double(mapper_single)
+        mapper_double = fn_joint_cutoff_art(mapper_double, by_multiplication=False, termsets=termsets)
+
+    if mode == 'baseline':
+        mapper_simpleidf = fn_idfweight(nx_graph, allterms, interpole=False, preinterpole=False, sqrt=False)
+        mapper_single = fn_multiply(mapper_term, mapper_simpleidf)
+
+        mapper_double = fn_double(mapper_single)
 
     mapper = mapper_double
 
@@ -629,12 +640,25 @@ def print_similarity(nx_graph):
         grep=u'q18/15/',
     )
 
-def batch_similarity(nx_graph, noorder=True):
-    term_sets = data.all_mixedterm_sets
-    allterms = data.mixed_allterms
+def batch_similarity(nx_graph, noorder=True, mode='network'):
+    if mode not in (u'network', u'nonetwork', u'baseline', None):
+        raise ValueError('no mode named "{}"'.format(mode))
+
+    elif mode == u'network':
+        term_sets = data.all_mixedterm_sets
+        allterms = data.mixed_allterms
+
+    elif mode == 'nonetwork':
+        term_sets = data.uniq_all_idfterm_sets
+        allterms = data.idf_allterms
+
+    elif mode == 'baseline':
+        term_sets = data.all_idfterm_sets
+        allterms = data.idf_allterms
 
     raw_titles = data.all_raw_titles
     raw_sents = data.all_raw_sents
+
     F_threshold = 3.0
 
     answers = data.answermap
@@ -642,6 +666,7 @@ def batch_similarity(nx_graph, noorder=True):
         nx_graph=nx_graph, allterms=allterms,
         raw_titles=raw_titles, raw_sents=raw_sents,
         termsets=term_sets,
+        mode=mode,
     )
 
     sims = sim.joint_dist_similarities(
@@ -915,10 +940,10 @@ def check_expansion(nx_graph):
     assert term_set_adds != term_set_expanded
 
 
-def run(nx_graph):
+def run(nx_graph, mode='network'):
     copy_graph = nx_graph.copy()
     # for src, dest, edgedata in nx_graph.edges(data=True):
     #     if edgedata['label'] in (u'antecedent_to',):
     #         copy_graph.remove_edge(src, dest)
     # print(len(copy_graph.edges()))
-    batch_similarity(copy_graph, noorder=True)
+    batch_similarity(copy_graph, noorder=True, mode=mode)

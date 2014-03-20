@@ -1379,6 +1379,8 @@ allart_idfterm_sets = idf_term_sets(allart_raw_titles, allart_raw_sents, uniqter
 allq_idfterm_sets = idf_term_sets(allq_raw_titles, allq_raw_sents, uniqterms=False)
 all_idfterm_sets = mapmerge(allart_idfterm_sets, allq_idfterm_sets)
 
+uniq_all_idfterm_sets = uniq(all_idfterm_sets)
+
 node_allterms = list(set(_nodes).difference(set(_stopwords)))
 find_nodeterms = termfind_func(_nodes, stopwords())
 def node_term_sets(raw_titles, raw_sents):
